@@ -1,0 +1,845 @@
+{%- liquid
+  if linklists.gift-wrapping.links != blank and linklists.gift-wrapping.links.first.type == 'product_link'
+    assign gift_wrapping = linklists.gift-wrapping.links.first
+
+    assign gift_wrap_id = gift_wrapping.object.variants.first.id
+    assign gift_wraps_in_cart = 0
+    for item in cart.items
+      if item.id == gift_wrap_id
+        assign gift_wraps_in_cart = item.quantity
+        break
+      endif
+    endfor
+    assign items_in_cart = cart.item_count | minus: gift_wraps_in_cart
+  endif
+-%}
+
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --section-padding-top: {{ section.settings.padding_top }}px;
+    --section-padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  #main-cart-footer .title-wrapper{
+    justify-content:center;
+  }
+  #main-cart-footer .cart__footer
+  {
+    border:1px solid #ededed;
+    padding:24px;
+    border-radius:12px;
+  }
+  cart-items .title, #main-cart-footer .title{
+    font-size:18px;
+    font-weight:500;
+  }
+  cart-items .title-wrapper{
+    padding-bottom:30px;
+    border-bottom:1px solid #ededed;
+  }
+  .cart-items li.cart-item{
+    display: flex;
+    width: 100%;
+        align-items: center;
+    column-gap: 40px;
+  }
+  .cart-item__media
+  {
+    background-image:url("{{ 'cart-p-back.svg' | asset_url }}");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center bottom;
+  }
+  .cart-item__details .caption-with-letter-spacing {
+    font-size:15px;
+    text-transform:none;
+  }
+  .cart-item__name{
+    font-size:15px;
+    font-weight:500;
+  }
+  .qua-p{
+    margin-top: 15px;
+    display: flex;
+    column-gap: 15px;
+    align-items: center;
+  }
+   .qua-p .cart-item__quantity{
+    border:1px solid #ededed;
+    padding:6px 8px;
+    border-radius:30px;
+   }
+   .qua-p .quantity__button, .qua-p .quantity__button:hover
+   {
+       background:none;
+       color:#17416f;
+   }
+   .qua-p .quantity__button:after{
+    display:none;
+   }
+   .price bdi
+   {
+       font-size:15px;
+       font-weight:500;
+   }
+   .main-cart-page{
+    max-width: 1300px;
+   }
+   .cart-itemss{
+    column-gap: 10%;
+   }
+   .cart-itemss .grid__item{
+    width: calc(46% - 3rem / 2);
+   }
+   .cart__footer .gift-box .accordion
+   {
+    margin-top:0;
+    margin-bottom:8px;
+        /*border-top: 1px solid #d2d5d9;*/
+   }
+   .gift-box {
+    padding-inline-start: 0;
+    margin-inline-end: 0;
+}
+      .cart__footer .totals {
+        justify-content: space-between;
+        margin-top: 20px;
+        margin-bottom:20px;
+    }
+    .totals p{
+        font-size:15px;
+        font-weight:500;
+    }
+    .totals .totals__subtotal.h3{
+        color:#969EAA;
+    }
+  @media(max-width:767px){
+    .cart-itemss{
+      flex-direction:column;
+    }
+    .cart-itemss .grid__item {
+    width: 100%;
+}
+  }  
+{%- endstyle -%}
+
+
+{{ 'component-cart.css' | asset_url | stylesheet_tag }}
+{{ 'component-cart-items.css' | asset_url | stylesheet_tag }}
+{{ 'component-totals.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+{{ 'component-discounts.css' | asset_url | stylesheet_tag }}
+{{ 'component-loading-overlay.css' | asset_url | stylesheet_tag }}
+{{ 'quantity-popover.css' | asset_url | stylesheet_tag }}
+
+<script src="{{ 'quantity-popover.js' | asset_url }}" defer="defer"></script>
+<div class="page-width {% if cart == empty %} is-empty{% endif %} section--padding main-cart-page">
+<div class="grid grid--1-col grid--2-col-tablet cart-itemss">
+<cart-items class="grid__item">
+  <div class="title-wrapper">
+    <h1 class="title">{{ 'sections.cart.title' | t }} <span class="count">({{  cart.item_count }})</span></h1>
+   {% comment %} <a href="{{ routes.all_products_collection_url }}" class="link link--underline">{{ 'general.continue_shopping' | t }}</a>{% endcomment %}
+  </div>
+
+  <div class="cart__warnings">
+    <p class="cart__empty-text h2">{{ 'sections.cart.empty' | t }}</p>
+    <a href="{{ routes.all_products_collection_url }}" class="button button--tertiary">{{ 'general.continue_shopping' | t }}</a>
+  </div>
+
+  <form action="{{ routes.cart_url }}" class="cart__contents critical-hidden" method="post" id="cart">
+    <div class="cart__items" id="main-cart-items" data-id="{{ section.id }}">
+      <div class="js-contents">
+        {%- if cart != empty -%}
+          <ul class="cart-items">
+         
+              {%- for item in cart.items -%}
+                <li class="cart-item" id="CartItem-{{ item.index | plus: 1 }}">
+                  <div class="cart-item__media">
+                    {% if item.image %}
+                      <span class="media-wrapper media-wrapper--small">
+                        <div class="media media--adapt"
+                          style="--image-ratio-percent: {{ 1 | divided_by: item.image.aspect_ratio | times: 100 }}%;"
+                        >
+                          <img class="cart-item__image"
+                            srcset="{{ item.image | image_url: width: 200 }} 1x, {{ item.image | image_url: width: 200 }} 2x"
+                            src="{{ item.image | image_url: width: 200 }}"
+                            alt="{{ item.image.alt | escape | split: '#' | first }}"
+                            loading="lazy"
+                            width="200"
+                            height="{{ 230 | divided_by: item.image.aspect_ratio | ceil }}"
+                            is="lazy-image"
+                          />
+                        </div>
+                      </span>
+                    {% endif %}
+                </div>
+                 <div class="p-details">
+                  <div class="cart-item__details">
+                    {%- if section.settings.show_vendor -%}
+                      <p class="caption-with-letter-spacing light">{{ item.product.vendor }}</p>
+                    {%- endif -%}
+
+                    <div>
+                      <a href="{{ item.product.url }}" class="cart-item__name link">{{ item.product.title | escape }}</a>
+                    </div>
+
+                    {%- if item.product.has_only_default_variant == false or item.properties.size != 0 or item.selling_plan_allocation != null -%}
+                      {%- if item.product.has_only_default_variant == false or item.properties.size != 0 -%}
+                        <dl>
+                          {%- if item.product.has_only_default_variant == false -%}
+                            {%- for option in item.options_with_values -%}
+                              <div class="product-option">
+                                <dt>{{ option.name }}: </dt>
+                                <dd>{{ option.value }}</dd>
+                              </div>
+                            {%- endfor -%}
+                          {%- endif -%}
+
+                          {%- for property in item.properties -%}
+                            {%- assign property_first_char = property.first | slice: 0 -%}
+                            {%- if property.last != blank and property_first_char != '_' -%}
+                              <div class="product-option">
+                                <dt>{{ property.first }}: </dt>
+                                <dd>
+                                  {%- if property.last contains '/uploads/' -%}
+                                    <a href="{{ property.last }}" target="_blank">
+                                      {{ property.last | split: '/' | last }}
+                                    </a>
+                                  {%- else -%}
+                                    {{ property.last }}
+                                  {%- endif -%}
+                                </dd>
+                              </div>
+                            {%- endif -%}
+                          {%- endfor -%}
+                        </dl>
+                      {%- endif -%}
+
+                      {%- if item.selling_plan_allocation != null -%}
+                        <div class="product-option">{{ item.selling_plan_allocation.selling_plan.name }}</div>
+                      {%- endif -%}
+                    {%- endif -%}
+
+                    {%- if item.discounts.size > 0 -%}
+                      <ul class="discounts list-unstyled" role="list" aria-label="{{ 'customer.order.discount' | t }}">
+                        {%- for discount in item.discounts -%}
+                          <li class="discounts__discount">
+                            {% render 'icon', icon: 'discount' %}
+                            {{ discount.title }}
+                          </li>
+                        {%- endfor -%}
+                      </ul>
+                    {%- endif -%}
+
+                    <p class="cart-item__error form__message errors" id="Line-item-error-{{ item.index | plus: 1 }}">
+                      <span class="cart-item__error-text"></span>
+                      {% render 'icon', icon: 'error' %}
+                    </p>
+                </div>
+
+                  <div class="cart-item__prices medium-hide large-up-hide small-hide right">
+                    <div class="cart-item__price-wrapper">
+                      {%- if item.original_price != item.final_price -%}
+                        <dl class="cart-item__discounted-prices">
+                          <dt class="visually-hidden">
+                            {{ 'products.product.price.regular_price' | t }}
+                          </dt>
+                          <dd class="price--on-sale">
+                            <s class="price price-item--regular price--end">
+                              <price-money><bdi>{% if settings.currency_code_enabled %}{{ item.original_price | money_with_currency }}{% else %}{{ item.original_price | money }}{% endif %}</bdi></price-money>
+                            </s>
+                          </dd>
+                          <dt class="visually-hidden">
+                            {{ 'products.product.price.sale_price' | t }}
+                          </dt>
+                          <dd class="price price--end">
+                            <price-money><bdi>{% if settings.currency_code_enabled %}{{ item.final_price | money_with_currency }}{% else %}{{ item.final_price | money }}{% endif %}</bdi></price-money>
+                          </dd>
+                        </dl>
+                      {%- else -%}
+                        <span class="price price--end">
+                          <price-money><bdi>{% if settings.currency_code_enabled %}{{ item.original_price | money_with_currency }}{% else %}{{ item.original_price | money }}{% endif %}</bdi></price-money>
+                        </span>
+                      {%- endif -%}
+
+                      {%- if item.variant.available and item.unit_price_measurement -%}
+                        <div class="unit-price">
+                          <span class="visually-hidden">{{ 'products.product.price.unit_price' | t }}</span>
+                          <price-money><bdi>{% if settings.currency_code_enabled %}{{ item.variant.unit_price | money_with_currency }}{% else %}{{ item.variant.unit_price | money }}{% endif %}</bdi></price-money>
+                          <span aria-hidden="true">/</span>
+                          <span class="visually-hidden">&nbsp;{{ 'accessibility.unit_price_separator' | t }}&nbsp;</span>
+                          {%- if item.variant.unit_price_measurement.reference_value != 1 -%}
+                            {{- item.variant.unit_price_measurement.reference_value -}}
+                          {%- endif -%}
+                          {{ item.variant.unit_price_measurement.reference_unit }}
+                        </div>
+                      {%- endif -%}
+                    </div>
+                </div>
+
+                  <div class="medium-hide large-up-hide right">
+                    <div class="cart-item__price-wrapper">
+                      {%- if item.original_line_price != item.final_line_price -%}
+                        <dl class="cart-item__discounted-prices">
+                          <dt class="visually-hidden">
+                            {{ 'products.product.price.regular_price' | t }}
+                          </dt>
+                          <dd class="price--on-sale">
+                            <s class="cart-item__old-price price price-item--regular price--end">
+                              <price-money><bdi>{% if settings.currency_code_enabled %}{{ item.original_line_price | money_with_currency }}{% else %}{{ item.original_line_price | money }}{% endif %}</bdi></price-money>
+                            </s>
+                          </dd>
+                          <dt class="visually-hidden">
+                            {{ 'products.product.price.sale_price' | t }}
+                          </dt>
+                          <dd class="price price--end">
+                            <price-money><bdi>{% if settings.currency_code_enabled %}{{ item.final_line_price | money_with_currency }}{% else %}{{ item.final_line_price | money }}{% endif %}</bdi></price-money>
+                          </dd>
+                        </dl>
+                      {%- else -%}
+                        <span class="price price--end">
+                          <price-money><bdi>{% if settings.currency_code_enabled %}{{ item.original_line_price | money_with_currency }}{% else %}{{ item.original_line_price | money }}{% endif %}</bdi></price-money>
+                        </span>
+                      {%- endif -%}
+
+                      {%- if item.variant.available and item.unit_price_measurement -%}
+                        <div class="unit-price">
+                          <span class="visually-hidden">{{ 'products.product.price.unit_price' | t }}</span>
+                          <price-money><bdi>{% if settings.currency_code_enabled %}{{ item.variant.unit_price | money_with_currency }}{% else %}{{ item.variant.unit_price | money }}{% endif %}</bdi></price-money>
+                          <span aria-hidden="true">/</span>
+                          <span class="visually-hidden">&nbsp;{{ 'accessibility.unit_price_separator' | t }}&nbsp;</span>
+                          {%- if item.variant.unit_price_measurement.reference_value != 1 -%}
+                            {{- item.variant.unit_price_measurement.reference_value -}}
+                          {%- endif -%}
+                          {{ item.variant.unit_price_measurement.reference_unit }}
+                        </div>
+                      {%- endif -%}
+                    </div>
+                </div>
+                <div class="qua-p">
+                  {%- liquid
+                    assign has_qty_rules = false
+                    if item.variant.quantity_rule.increment > 1 or item.variant.quantity_rule.min > 1 or item.variant.quantity_rule.max != null
+                      assign has_qty_rules = true
+                    endif
+
+                    assign has_vol_pricing = false
+                    if item.variant.quantity_price_breaks.size > 0
+                      assign has_vol_pricing = true
+                    endif
+                  -%}
+                  <div class="cart-item__quantity{% if has_qty_rules or has_vol_pricing %} cart-item__quantity--info{% endif %}">
+                    {%- if gift_wrap_id == nil or item.id != gift_wrap_id -%}
+                      <quantity-popover>
+                        <div class="cart-item__quantity-wrapper quantity-popover-wrapper">
+                          <label class="visually-hidden" for="Quantity-{{ item.index | plus: 1 }}">{{ 'products.product.quantity.label' | t }}</label>
+                          <div class="quantity-popover-container{% if has_qty_rules or has_vol_pricing %} quantity-popover-container--hover{% endif %}">
+                            {%- if has_qty_rules or has_vol_pricing -%}
+                              <button
+                                type="button"
+                                aria-expanded="false"
+                                class="quantity-popover__info-button quantity-popover__info-button--icon-only button button--tertiary small-hide medium-hide"
+                              >
+                                {%- render 'icon', icon: 'info' -%}
+                              </button>
+                            {%- endif -%}
+                            <quantity-input class="quantity">
+                              <button class="quantity__button no-js-hidden" name="minus" type="button">
+                                <span class="visually-hidden">{{ 'products.product.quantity.decrease' | t: product: item.product.title | escape }}</span>
+                                {% render 'icon', icon: 'minus' %}
+                              </button>
+                              <input
+                                class="quantity__input"
+                                data-quantity-variant-id="{{ item.variant.id }}"
+                                type="number"
+                                name="updates[]"
+                                value="{{ item.quantity }}"
+                                {% # theme-check-disable %}
+                                data-cart-quantity="{{ cart | item_count_for_variant: item.variant.id }}"
+                                min="0"
+                                data-min="{{ item.variant.quantity_rule.min }}"
+                                {% if item.variant.quantity_rule.max != null %}
+                                  max="{{ item.variant.quantity_rule.max }}"
+                                {% endif %}
+                                step="{{ item.variant.quantity_rule.increment }}"
+                                {% # theme-check-enable %}
+                                aria-label="{{ 'products.product.quantity.input_label' | t: product: item.product.title | escape }}"
+                                id="Quantity-{{ item.index | plus: 1 }}"
+                                data-index="{{ item.index | plus: 1 }}"
+                              >
+                              <button class="quantity__button no-js-hidden" name="plus" type="button">
+                                <span class="visually-hidden">{{ 'products.product.quantity.increase' | t: product: item.product.title | escape }}</span>
+                                {% render 'icon', icon: 'plus' %}
+                              </button>
+                            </quantity-input>
+                          </div>
+                        </div>
+                        {%- if has_qty_rules or has_vol_pricing -%}
+                          <button
+                            type="button"
+                            class="quantity-popover__info-button quantity-popover__info-button--icon-with-label button button--tertiary large-up-hide"
+                            aria-expanded="false"
+                          >
+                            {%- render 'icon', icon: 'info' -%}
+                            <span>
+                              {%- if has_vol_pricing -%}
+                                {{ 'products.product.volume_pricing.note' | t }}
+                              {%- elsif has_qty_rules -%}
+                                {{ 'products.product.quantity.note' | t }}
+                              {%- endif -%}
+                            </span>
+                          </button>
+                        {%- endif -%}
+                        {%- if has_vol_pricing or has_qty_rules -%}
+                          <div
+                            class="cart-items__info global-settings-popup quantity-popover__info"
+                            tabindex="-1"
+                            hidden
+                          >
+                            {%- if has_qty_rules == false -%}
+                              <span class="volume-pricing-label caption">
+                                {{- 'products.product.volume_pricing.title' | t -}}
+                              </span>
+                            {%- endif -%}
+                            <div class="quantity__rules caption">
+                              {%- if item.variant.quantity_rule.increment > 1 -%}
+                                <span class="divider">
+                                  {{-
+                                    'products.product.quantity.multiples_of'
+                                    | t: quantity: item.variant.quantity_rule.increment
+                                  -}}
+                                </span>
+                              {%- endif -%}
+                              {%- if item.variant.quantity_rule.min > 1 -%}
+                                <span class="divider">
+                                  {{-
+                                    'products.product.quantity.min_of'
+                                    | t: quantity: item.variant.quantity_rule.min
+                                  -}}
+                                </span>
+                              {%- endif -%}
+                              {%- if item.variant.quantity_rule.max != null -%}
+                                <span class="divider">
+                                  {{-
+                                    'products.product.quantity.max_of'
+                                    | t: quantity: item.variant.quantity_rule.max
+                                  -}}
+                                </span>
+                              {%- endif -%}
+                            </div>
+                            <button
+                              class="button-close button button--tertiary large-up-hide"
+                              type="button"
+                              aria-label="{{ 'accessibility.close' | t }}"
+                            >
+                              {%- render 'icon', icon: 'close' -%}
+                            </button>
+                            {%- if item.variant.quantity_price_breaks.size > 0 -%}
+                              <volume-pricing class="parent-display">
+                                <ul class="list-unstyled">
+                                  <li>
+                                    <span>{{ item.variant.quantity_rule.min }}+</span>
+                                    {%- assign price = item.variant.price | money_with_currency -%}
+                                    <span> {{ 'sections.quick_order_list.each' | t: money: price }}</span>
+                                  </li>
+                                  {%- for price_break in item.variant.quantity_price_breaks -%}
+                                    <li>
+                                      <span>
+                                        {{- price_break.minimum_quantity -}}
+                                        <span aria-hidden="true">+</span></span
+                                      >
+                                      {%- assign price = price_break.price | money_with_currency -%}
+                                      <span> {{ 'sections.quick_order_list.each' | t: money: price }}</span>
+                                    </li>
+                                  {%- endfor -%}
+                                </ul>
+                              </volume-pricing>
+                            {%- endif -%}
+                          </div>
+                        {%- endif -%}
+                      </quantity-popover>
+                    {%- else -%}
+                      <gift-quantity class="quantity"
+                        cart-items-size="{{ cart.items.size }}"
+                        gift-wraps-in-cart="{{ gift_wraps_in_cart }}"
+                        items-in-cart="{{ items_in_cart }}"
+                      >
+                        <button class="quantity__button no-js-hidden visually-hidden" name="minus" type="button" disabled="disabled">
+                          <span class="visually-hidden">{{ 'products.product.quantity.decrease' | t: product: item.product.title | escape }}</span>
+                          {% render 'icon', icon: 'minus' %}
+                        </button>
+                        <input class="quantity__input"
+                          type="number"
+                          name="updates[]"
+                          value="{{ item.quantity }}"
+                          min="0"
+                          aria-label="{{ 'products.product.quantity.input_label' | t: product: item.product.title | escape }}"
+                          id="Quantity-{{ item.index | plus: 1 }}"
+                          data-index="{{ item.index | plus: 1 }}"
+                          disabled="disabled"
+                        />
+                        <button class="quantity__button no-js-hidden visually-hidden" name="plus" type="button" disabled="disabled">
+                          <span class="visually-hidden">{{ 'products.product.quantity.increase' | t: product: item.product.title | escape }}</span>
+                          {% render 'icon', icon: 'plus' %}
+                        </button>
+                      </gift-quantity>
+                    {%- endif -%}
+                </div>
+
+                  <div class="cart-item__totals right">
+                    <div class="loading-overlay hidden">
+                      <div class="loading-overlay__spinner">
+                        {% render 'icon', icon: 'spinner' %}
+                      </div>
+                    </div>
+
+                    <div class="cart-item__price-wrapper medium-up">
+                      {%- if item.original_line_price != item.final_line_price -%}
+                        <dl class="cart-item__discounted-prices">
+                          <dt class="visually-hidden">
+                            {{ 'products.product.price.regular_price' | t }}
+                          </dt>
+                          <dd class="price--on-sale">
+                            <s class="cart-item__old-price price price-item--regular price--end">
+                              <price-money><bdi>{% if settings.currency_code_enabled %}{{ item.original_line_price | money_with_currency }}{% else %}{{ item.original_line_price | money }}{% endif %}</bdi></price-money>
+                            </s>
+                          </dd>
+                          <dt class="visually-hidden">
+                            {{ 'products.product.price.sale_price' | t }}
+                          </dt>
+                          <dd class="price price--end">
+                            <price-money><bdi>{% if settings.currency_code_enabled %}{{ item.final_line_price | money_with_currency }}{% else %}{{ item.final_line_price | money }}{% endif %}</bdi></price-money>
+                          </dd>
+                        </dl>
+                      {%- else -%}
+                        <span class="price price--end">
+                          <price-money><bdi>{% if settings.currency_code_enabled %}{{ item.original_line_price | money_with_currency }}{% else %}{{ item.original_line_price | money }}{% endif %}</bdi></price-money>
+                        </span>
+                      {%- endif -%}
+                    </div>
+
+                </div>
+              
+                </div>
+                    {%- if gift_wrap_id == nil or item.id != gift_wrap_id -%}
+                      <cart-remove-button id="Remove-{{ item.index | plus: 1 }}" data-index="{{ item.index | plus: 1 }}">
+                        <a href="{{ item.url_to_remove }}" class="button button--tertiary" aria-label="{{ 'sections.cart.remove_title' | t: title: item.title }}">
+                       {% comment %}   {% render 'icon', icon: 'remove' %}{% endcomment %}
+                        Remove
+                        </a>
+                      </cart-remove-button>
+                    {%- endif -%}
+                </div>
+                </li>
+              {%- endfor -%}
+         
+        </ul>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <p class="visually-hidden" id="cart-live-region-text" aria-live="polite" role="status"></p>
+    <p class="visually-hidden" id="shopping-cart-line-item-status" aria-live="polite" aria-hidden="true" role="status">{{ 'accessibility.loading' | t }}</p>
+  </form>
+</cart-items>
+<div class="grid__item" id="main-cart-footer" data-id="{{ section.id }}-footer">
+      <div class="title-wrapper">
+    <h1 class="title">Order summary</h1>
+   </div>
+  <div class="cart__footer">
+  <div class="gift-box">
+     {% comment %} <accordion-tab class="accordion">
+              <details>
+                <summary>
+                  <span class="summary__title">
+                    <p class="accordion__title h3"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" class="icon icon-gift" fill="none" viewBox="0 0 512 512">
+      <path d="M448 128h-.4043c11.83-15.64 18.37-35.48 15.88-57.12c-2.67-23.17-17.02-43.45-36.28-56.6C357.5-33.31 291.3 48.56 256 106C220.7 48.56 154.5-33.31 84.81 14.28c-19.26 13.15-33.61 33.43-36.28 56.6C46.03 92.52 52.57 112.4 64.4 128H64C28.65 128 0 156.7 0 192v64c0 17.67 14.33 32 32 32L32 448c0 35.35 28.65 64 64 64h320c35.35 0 64-28.65 64-64l.0001-160C497.7 288 512 273.7 512 256V192C512 156.7 483.3 128 448 128zM384 32c26.47 0 48 21.53 48 48S410.5 128 384 128h-103.9C315.3 69.01 354.8 32 384 32zM128 32c29.22 0 68.67 37.01 103.9 96H128C101.5 128 80 106.5 80 80S101.5 32 128 32zM32 255.1L32 192c0-17.64 14.36-32 32.4-32H240v95.87L32 255.1zM96 480c-17.67 0-32-14.33-32-32V288h176v192H96zM448 448c0 17.67-14.33 32-32 32h-144V288H448V448zM480 255.1L272 255.9V160H448c17.64 0 32 14.36 32 32L480 255.1z" fill="currentColor"></path>
+    </svg> Select a free gift</p>
+                  </span>
+                  <span class="icon icon-plus-alt"></span>
+                </summary>
+                <div class="accordion__content rte typeset"><ol><li>Browse our selection and add your favorite products to the cart.</li><li>When you’re ready, go to your cart and click <a href="/checkout" title="/checkout">Checkout</a>.</li><li>Enter your shipping details and choose your preferred payment method.</li><li>Confirm your order, and you’ll receive an email confirmation right away.</li></ol>
+                </div>
+              </details>
+            </accordion-tab>{% endcomment %}
+            
+            <accordion-tab class="accordion">
+              <details>
+                <summary>
+                  <span class="summary__title">
+                    <p class="accordion__title h3"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+<g clip-path="url(#clip0_1010_14100)">
+<path d="M1.75977 12.339V5.26922C1.75977 4.86894 1.75898 4.52403 1.78206 4.24146C1.80587 3.95037 1.85881 3.6606 2.0007 3.38201C2.21249 2.96648 2.55035 2.62862 2.96588 2.41683C3.24447 2.27493 3.53425 2.22199 3.82534 2.19819C4.1079 2.1751 4.45282 2.17589 4.85309 2.17589H6.91507C7.32181 2.17589 7.65154 2.50562 7.65154 2.91236C7.65154 3.31911 7.32181 3.64884 6.91507 3.64884H4.85309C4.42852 3.64884 4.15411 3.64977 3.94545 3.66682C3.79573 3.67906 3.7164 3.69717 3.67071 3.71356L3.63475 3.72939C3.53086 3.78236 3.44162 3.8589 3.37368 3.95234L3.31326 4.05087C3.29466 4.0874 3.26704 4.16164 3.25069 4.36157C3.23364 4.57024 3.23271 4.84464 3.23271 5.26922V12.339C3.23271 12.7636 3.23364 13.038 3.25069 13.2467C3.26704 13.4466 3.29466 13.5209 3.31326 13.5574L3.37368 13.6559C3.44162 13.7494 3.53086 13.8259 3.63475 13.8789C3.67068 13.8972 3.74526 13.9258 3.94473 13.9422C4.15308 13.9592 4.42709 13.9594 4.85093 13.9594H11.9251C12.3488 13.9594 12.6225 13.9592 12.8306 13.9422C13.0298 13.9259 13.1038 13.898 13.1398 13.8796C13.2787 13.8089 13.3919 13.6957 13.4628 13.5574C13.4814 13.5207 13.5097 13.4462 13.526 13.2467C13.5431 13.0385 13.5433 12.7648 13.5433 12.3412V10.2771C13.5433 9.87033 13.873 9.5406 14.2798 9.5406C14.6865 9.5406 15.0162 9.87033 15.0162 10.2771V12.3412C15.0162 12.7407 15.017 13.0853 14.994 13.3675C14.9731 13.622 14.9304 13.8754 14.8249 14.1212L14.7753 14.2263C14.5633 14.6414 14.2248 14.9788 13.8087 15.1907C13.5303 15.3328 13.2414 15.3863 12.9507 15.4101C12.6686 15.4331 12.3244 15.4324 11.9251 15.4324H4.85093C4.4514 15.4324 4.10695 15.4332 3.82462 15.4101C3.57023 15.3893 3.31686 15.3459 3.07089 15.2403L2.96588 15.1914C2.55035 14.9796 2.21249 14.6418 2.0007 14.2263C1.85881 13.9477 1.80587 13.6579 1.78206 13.3668C1.75898 13.0842 1.75977 12.7393 1.75977 12.339ZM13.0787 0.868371C13.368 0.632442 13.7944 0.649082 14.064 0.918715L16.2734 3.12813C16.561 3.41574 16.561 3.88193 16.2734 4.16954L9.64519 10.7978C9.50707 10.9359 9.3198 11.0135 9.12448 11.0135H6.91507C6.50832 11.0135 6.17859 10.6838 6.17859 10.2771V8.06766C6.17859 7.87234 6.25624 7.68507 6.39436 7.54695L13.0226 0.918715L13.0787 0.868371ZM7.65154 8.37261V9.5406H8.81953L12.5019 5.85825L11.3339 4.69025L7.65154 8.37261ZM12.3753 3.64884L13.5433 4.81683L14.7113 3.64884L13.5433 2.48084L12.3753 3.64884Z" fill="#17416F"></path>
+</g>
+<defs>
+<clipPath id="clip0_1010_14100">
+<rect width="17" height="17" fill="white" transform="translate(0.625 0.703125)"></rect>
+</clipPath>
+</defs>
+</svg> Add a delivery note</p>
+                  </span>
+                  <span class="icon icon-plus-alt"></span>
+                </summary>
+                <div class="accordion__content rte typeset">
+                    {%- if gift_wrapping != nil -%}
+        <gift-wrapping class="gift-wrapping"
+          data-gift-wrap-id="{{ gift_wrap_id }}"
+          data-gift-wrapping="{{ cart.attributes.gift-wrapping | escape }}"
+          cart-items-size="{{ cart.items.size }}"
+          gift-wraps-in-cart="{{ gift_wraps_in_cart }}"
+          items-in-cart="{{ items_in_cart }}"
+        >
+          <input
+            id="gift-wrapping"
+            type="checkbox"
+            name="attributes[gift-wrapping]"
+            value="yes"
+            {% if cart.attributes.gift-wrapping %}
+              checked="checked"
+            {% endif %}
+            class="visually-hidden"
+          />
+          <label for="gift-wrapping" class="gift-wrapping__label">
+            {%- capture gift_price -%}<price-money class="price"><bdi>{% if settings.currency_code_enabled %}{{ gift_wrapping.object.price | money_with_currency }}{% else %}{{ gift_wrapping.object.price | money }}{% endif %}</bdi></price-money>{%- endcapture -%}
+            <span class="gift-wrapping__text">{{ 'sections.cart.gift_wrapping_html' | t : price: gift_price }}</span>
+            <div class="loading-overlay hidden">
+              <div class="loading-overlay__spinner">
+                {% render 'icon', icon: 'spinner' %}
+              </div>
+            </div>
+            {% render 'icon', icon: 'checkmark', class: 'gift-wrapping__icon' %}
+          </label>
+          {%- if cart.attributes.gift-wrapping -%}
+            <gift-note class="gift-wrapping__note">
+              <textarea
+                class="text-area text-area--resize-vertical field__input"
+                name="attributes[gift-note]"
+                id="gift-note"
+                placeholder="{{ 'sections.cart.gift_note_placeholder' | t }}"
+              >{{ cart.attributes.gift-note }}</textarea>
+            </gift-note>
+          {%- endif -%}
+        </gift-wrapping>
+      {%- endif -%}
+
+      {%- if section.settings.show_cart_note -%}
+        <cart-note class="cart__note field">
+          <label for="Cart-note">{{ 'sections.cart.note' | t }}</label>
+          <textarea
+            class="text-area text-area--resize-vertical field__input"
+            name="note"
+            id="Cart-note"
+            placeholder="{{ 'sections.cart.note_placeholder' | t }}"
+          >{{ cart.note }}</textarea>
+        </cart-note>
+      {%- endif -%}
+                </div>
+              </details>
+            </accordion-tab>
+            </div> 
+   
+
+    <div>
+      {% for block in section.blocks %}
+        {%- case block.type -%}
+          {%- when 'subtotal' -%}
+            <div class="js-contents" {{ block.shopify_attributes }}>
+              <div class="totals">
+                <p class="totals__subtotal h3">{{ 'sections.cart.subtotal' | t }}</p>
+                <p class="totals__subtotal-value">{{ cart.total_price | money_with_currency }}</p>
+              </div>
+
+              <div>
+                {%- if cart.cart_level_discount_applications.size > 0 -%}
+                  <ul class="discounts list-unstyled" role="list" aria-label="{{ 'customer.order.discount' | t }}">
+                    {%- for discount in cart.cart_level_discount_applications -%}
+                      <li class="discounts__discount discounts__discount--end">
+                        {% render 'icon', icon: 'discount' %}
+                        {{ discount.title }}
+                        (&#8211;{{ discount.total_allocated_amount | money }})
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                {%- endif -%}
+              </div>
+
+              <small class="tax-note caption-large rte">
+                {%- if cart.duties_included and cart.taxes_included -%}
+                  {%- if shop.shipping_policy.body == blank -%}
+                    {{ 'sections.cart.duties_and_taxes_included_shipping_at_checkout_without_policy' | t }}
+                  {%- else -%}
+                    {{
+                      'sections.cart.duties_and_taxes_included_shipping_at_checkout_with_policy_html'
+                      | t: link: shop.shipping_policy.url
+                    }}
+                  {%- endif -%}
+                {%- elsif cart.duties_included == false and cart.taxes_included -%}
+                  {%- if shop.shipping_policy.body == blank -%}
+                    {{ 'sections.cart.taxes_included_shipping_at_checkout_without_policy' | t }}
+                  {%- else -%}
+                    {{
+                      'sections.cart.taxes_included_shipping_at_checkout_with_policy_html'
+                      | t: link: shop.shipping_policy.url
+                    }}
+                  {%- endif -%}
+                {%- elsif cart.duties_included and cart.taxes_included == false -%}
+                  {%- if shop.shipping_policy.body == blank -%}
+                    {{ 'sections.cart.duties_included_taxes_at_checkout_shipping_at_checkout_without_policy' | t }}
+                  {%- else -%}
+                    {{
+                      'sections.cart.duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_html'
+                      | t: link: shop.shipping_policy.url
+                    }}
+                  {%- endif -%}
+                {%- elsif cart.duties_included == false and cart.taxes_included == false -%}
+                  {%- if shop.shipping_policy.body == blank -%}
+                    {{ 'sections.cart.taxes_at_checkout_shipping_at_checkout_without_policy' | t }}
+                  {%- else -%}
+                    {{
+                      'sections.cart.taxes_at_checkout_shipping_at_checkout_with_policy_html'
+                      | t: link: shop.shipping_policy.url
+                    }}
+                  {%- endif -%}
+                {%- endif -%}
+              </small>
+            </div>
+          {%- when 'buttons' -%}
+            <div class="cart__ctas" {{ block.shopify_attributes }}>
+              <noscript>
+                <button type="submit" class="cart__update-button button button--secondary" form="cart">
+                  {{ 'sections.cart.update' | t }}
+                </button>
+              </noscript>
+
+              <button type="submit" class="cart__checkout-button button" name="checkout"{% if cart == empty %} disabled{% endif %} form="cart">
+                {{ 'sections.cart.checkout' | t }}
+              </button>
+            </div>
+
+            {%- if additional_checkout_buttons and block.settings.show_dynamic_checkout -%}
+              <div class="cart__dynamic-checkout-buttons additional-checkout-buttons">
+                {{ content_for_additional_checkout_buttons }}
+              </div>
+            {%- endif -%}
+          {%- when 'free_shipping' -%}
+            {%- liquid
+              if block.settings.minimum_amount != blank
+                assign free_shipping_minimum_amounts = block.settings.minimum_amount | remove: ' ' | split: ','
+                assign show_free_shipping_message = false
+
+                if free_shipping_minimum_amounts.size > 1
+                  for minimum_amount in free_shipping_minimum_amounts
+                    assign minimum_amount_parts = minimum_amount | split: ':'
+                    assign currency_code = minimum_amount_parts | first | upcase
+                    if currency_code == cart.currency.iso_code
+                      assign free_shipping_minimum_amount = minimum_amount_parts | last
+                      assign show_free_shipping_message = true
+                      break
+                    endif
+                  endfor
+                else
+                  assign free_shipping_minimum_amount = free_shipping_minimum_amounts | last
+                  if free_shipping_minimum_amount contains ':'
+                    assign free_shipping_minimum_amount = free_shipping_minimum_amounts | split: ':' | last
+                  endif
+                  assign show_free_shipping_message = true
+                endif
+                
+                if show_free_shipping_message
+                  render 'free-shipping', minimum_amount: free_shipping_minimum_amount, is_last: forloop.last
+                endif
+              endif
+            -%}
+        {%- endcase -%}
+      {% endfor %}
+
+      <div id="cart-errors" class="form__message errors"></div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+{% schema %}
+{
+  "name": "t:sections.main-cart-page.name",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_cart_note",
+      "default": false,
+      "label": "t:sections.main-cart-page.settings.show_cart_note.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "default": false,
+      "label": "t:sections.main-cart-page.settings.show_vendor.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.header.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "t:sections.all.padding.padding_top.unit",
+      "label": "t:sections.all.padding.padding_top.label",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "t:sections.all.padding.padding_bottom.unit",
+      "label": "t:sections.all.padding.padding_bottom.label",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "subtotal",
+      "name": "t:sections.main-cart-page.blocks.subtotal.name",
+      "limit": 1
+    },
+    {
+      "type": "buttons",
+      "name": "t:sections.main-cart-page.blocks.buttons.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_dynamic_checkout",
+          "default": true,
+          "label": "t:sections.main-product.blocks.buy_buttons.settings.show_dynamic_checkout.label",
+          "info": "t:sections.main-product.blocks.buy_buttons.settings.show_dynamic_checkout.info"
+        }
+      ]
+    },
+    {
+      "type": "free_shipping",
+      "name": "t:sections.main-cart-page.blocks.free_shipping.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "t:sections.main-cart-page.blocks.free_shipping.settings.paragraph.content"
+        },
+        {
+          "type": "text",
+          "id": "minimum_amount",
+          "default": "100",
+          "label": "t:sections.main-cart-page.blocks.free_shipping.settings.minimum_amount.label",
+          "info": "t:sections.main-cart-page.blocks.free_shipping.settings.minimum_amount.info"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

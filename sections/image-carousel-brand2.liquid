@@ -1,0 +1,701 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --section-padding-top: {{ section.settings.padding_top }}px;
+    --section-padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+
+  #shopify-section-{{ section.id }} .slider-3d-color {
+    background-color: {{ section.settings.bg_color }};
+    background-repeat: no-repeat;
+    background-position: {{ section.settings.bg_image_position }};
+    background-size: cover;
+    padding-top: var(--section-padding-top);
+    padding-bottom: var(--section-padding-bottom);
+  }
+
+  #shopify-section-{{ section.id }} .brand-carousel__heading {
+    color: {{ section.settings.heading_color }};
+    font-size: {{ section.settings.heading_font_size }}px;
+    text-transform: uppercase;
+    line-height: normal;
+    margin: 0;
+    letter-spacing:-2%;
+    font-weight: 600;
+  }
+
+  #shopify-section-{{ section.id }} .brand-carousel__subheading {
+    color: {{ section.settings.subheading_color }};
+    font-size: {{ section.settings.subheading_font_size }}px;
+    line-height: 100%;
+    font-family: 'CORONABRUSH400';
+    text-transform:uppercase;
+    margin: 0 0 20px;
+    letter-spacing:-1.5%;
+    font-weight:500;
+  }
+  #shopify-section-{{ section.id }} .brand-carousel__subheading .points{
+    font-size: {{ section.settings.subheading_font_size | minus: 5 }}px;
+  }
+  #shopify-section-{{ section.id }} .swiper-container-3d .swiper-slide.swiper-slide-active .slide-3d-cont {
+    background-color: {{ section.settings.caption_bg_color }};
+    color: {{ section.settings.caption_text_color }};
+    font-size: {{ section.settings.caption_font_size }}px;
+  }
+
+  @media screen and (max-width: 749px) {
+    #shopify-section-{{ section.id }} .brand-carousel__heading {
+      font-size: {{ section.settings.heading_font_size_mobile }}px;
+    }
+    #shopify-section-{{ section.id }} .brand-carousel__subheading {
+      font-size: {{ section.settings.subheading_font_size_mobile }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="slider-3d-color" {% if section.settings.bg_image != blank %}style="background-image:url({{ section.settings.bg_image | img_url:'master' }})"{% endif %}>
+
+  <!-- Header area -->
+  <div class="container">
+    <div class="brand-carousel__header">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="brand-carousel__heading {{ section.settings.heading_size }}">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.subheading != blank -%}
+        <p class="brand-carousel__subheading {{ section.settings.subheading_size }}">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+      {%- if section.settings.logo_image != blank -%}
+        <div class="widget-title not-before">
+          <img src="{{ section.settings.logo_image | img_url:'350x' }}" style="max-width: {{ section.settings.logo_width }}px;" />
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <!-- Slider -->
+  <div class="slider-3d-box">
+    <div class="container">
+      <div class="swiper-container two" id="BrandSwiper-{{ section.id }}">
+        <div class="swiper-wrapper">
+          {%- for block in section.blocks -%}
+            <div class="swiper-slide" {{ block.shopify_attributes }}>
+              <div class="slider-image">
+                {%- if block.settings.image != blank -%}
+                  <img src="{{ block.settings.image | img_url:'master' }}" alt="{{ block.settings.caption | escape }}" loading="lazy" />
+                {%- else -%}
+                  {{ 'image' | placeholder_svg_tag: 'placeholder' }}
+                {%- endif -%}
+              </div>
+              {%- if block.settings.caption != blank -%}
+                <div class="slide-3d-cont">
+                  {{ block.settings.caption }}
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        </div>
+        
+      </div>
+      <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* === Swiper Core === */
+  #shopify-section-{{ section.id }} .swiper-container {
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    width: 100%;
+  }
+  .slider-3d-box .container{
+     position:relative;
+  }
+  #shopify-section-{{ section.id }} .swiper-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    display: flex;
+    transition-property: transform;
+    box-sizing: content-box;
+  }
+
+  #shopify-section-{{ section.id }} .swiper-container-android .swiper-slide,
+  #shopify-section-{{ section.id }} .swiper-wrapper {
+    transform: translate3d(0, 0, 0);
+  }
+
+  #shopify-section-{{ section.id }} .swiper-slide {
+    flex-shrink: 0;
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+
+  #shopify-section-{{ section.id }} .swiper-slide img {
+    display: block;
+    margin: auto;
+    width: 100%;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  }
+
+  #shopify-section-{{ section.id }} .two .swiper-slide {
+    max-width: 440px;
+    padding: 0 15px;
+  }
+
+  /* === 3D / Coverflow === */
+  #shopify-section-{{ section.id }} .swiper-container-3d {
+    perspective: 1200px;
+  }
+
+  #shopify-section-{{ section.id }} .swiper-container-3d .swiper-wrapper,
+  #shopify-section-{{ section.id }} .swiper-container-3d .swiper-slide,
+  #shopify-section-{{ section.id }} .swiper-container-3d .swiper-slide-shadow-left,
+  #shopify-section-{{ section.id }} .swiper-container-3d .swiper-slide-shadow-right,
+  #shopify-section-{{ section.id }} .swiper-container-3d .swiper-slide-shadow-top,
+  #shopify-section-{{ section.id }} .swiper-container-3d .swiper-slide-shadow-bottom {
+    transform-style: preserve-3d;
+  }
+
+  #shopify-section-{{ section.id }} .swiper-container-3d .swiper-slide-shadow-left {
+    background-image: linear-gradient(to left, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
+  }
+
+  #shopify-section-{{ section.id }} .swiper-container-3d .swiper-slide-shadow-right {
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
+  }
+
+  #shopify-section-{{ section.id }} .swiper-container-3d .swiper-slide-shadow-left,
+  #shopify-section-{{ section.id }} .swiper-container-3d .swiper-slide-shadow-right,
+  #shopify-section-{{ section.id }} .swiper-container-3d .swiper-slide-shadow-top,
+  #shopify-section-{{ section.id }} .swiper-container-3d .swiper-slide-shadow-bottom {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  #shopify-section-{{ section.id }} .swiper-container-coverflow .swiper-wrapper {
+    -ms-perspective: 1200px;
+  }
+
+  /* === Nav Buttons === */
+  #shopify-section-{{ section.id }} .swiper-button-next,
+  #shopify-section-{{ section.id }} .swiper-button-prev {
+    position: absolute;
+    top: 50%;
+    width: 44px;
+    display:block;
+    background-size: 10px!important;
+    height: 44px;
+    margin-top: -22px;
+    z-index: 10;
+    cursor: pointer;
+    background-size: 20px 34px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: {{ section.settings.arrow_bg_color }};
+    border-radius: 50%;
+    border: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  }
+
+  #shopify-section-{{ section.id }} .swiper-button-prev {
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M0%2C22L22%2C0l2.1%2C2.1L4.2%2C22l19.9%2C19.9L22%2C44L0%2C22L0%2C22L0%2C22z'%20fill%3D'%23333333'%2F%3E%3C%2Fsvg%3E");
+    left: -5%;
+  }
+
+  #shopify-section-{{ section.id }} .swiper-button-next {
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M27%2C22L27%2C22L5%2C44l-2.1-2.1L22.8%2C22L2.9%2C2.1L5%2C0L27%2C22L27%2C22z'%20fill%3D'%23333333'%2F%3E%3C%2Fsvg%3E");
+    right: -5%;
+  }
+
+  #shopify-section-{{ section.id }} .swiper-button-next.swiper-button-disabled,
+  #shopify-section-{{ section.id }} .swiper-button-prev.swiper-button-disabled {
+    opacity: 0.35;
+    cursor: auto;
+    pointer-events: none;
+  }
+
+  /* === Slider 3D Layout === */
+
+
+  #shopify-section-{{ section.id }} .slider-3d-box {
+    padding: 26px 0 0;
+    position: relative;
+  }
+
+  #shopify-section-{{ section.id }} .slider-3d-box .slider-image {
+    padding-bottom: 56px;
+    border-radius: {{ section.settings.slide_radius }}px;
+    overflow: hidden;
+  }
+
+  #shopify-section-{{ section.id }} .slider-3d-box .slider-image img {
+    border-radius: {{ section.settings.slide_radius }}px;
+  }
+
+  #shopify-section-{{ section.id }} .slider-3d-box:before {
+    background-color: {{ section.settings.overlay_color }};
+    content: '';
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 94%;
+    top: 0;
+  }
+
+  /* === Caption (only on active slide) === */
+  #shopify-section-{{ section.id }} .swiper-container-3d .swiper-slide .slide-3d-cont {
+    display: none;
+  }
+
+  #shopify-section-{{ section.id }} .swiper-container-3d .swiper-slide {
+    position: relative;
+  }
+
+  #shopify-section-{{ section.id }} .swiper-container-3d .swiper-slide.swiper-slide-active .slide-3d-cont {
+    display: block;
+    position: absolute;
+    bottom: 30px;
+    text-align: center;
+    border-radius: 16px;
+    padding: 11px 10px;
+    width: 94%;
+    left: 50%;
+    transform: translateX(-50%);
+    line-height: 1.4;
+    z-index: 5;
+  }
+
+  /* === Header === */
+  #shopify-section-{{ section.id }} .brand-carousel__header {
+    text-align: center;
+    padding: 0 20px 0px;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  #shopify-section-{{ section.id }} .widget-title {
+    text-align: center;
+  }
+
+  #shopify-section-{{ section.id }} .widget-title img {
+    display: inline-block;
+    height: auto;
+  }
+
+  /* === Mobile === */
+  @media screen and (max-width: 749px) {
+    #shopify-section-{{ section.id }} .swiper-button-prev {
+      left: 0;
+    }
+
+    #shopify-section-{{ section.id }} .swiper-button-next {
+      right: 0;
+    }
+
+    #shopify-section-{{ section.id }} .widget-title img {
+      max-width: 65%;
+    }
+
+    #shopify-section-{{ section.id }} .slider-3d-color {
+      background-size: cover;
+      background-position: 60% top;
+    }
+
+    #shopify-section-{{ section.id }} .swiper-container-3d .swiper-slide.swiper-slide-active .slide-3d-cont {
+      font-size: {{ section.settings.caption_font_size | minus: 2 }}px;
+      padding: 8px 8px;
+      bottom: 62px;
+    }
+
+    #shopify-section-{{ section.id }} .swiper-button-next,
+    #shopify-section-{{ section.id }} .swiper-button-prev {
+      width: 36px;
+      height: 36px;
+      margin-top: -18px;
+      background-size: 14px 24px;
+    }
+  }
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.4.1/js/swiper.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var swiperEl = document.querySelector('#shopify-section-{{ section.id }} .swiper-container.two');
+    if (!swiperEl) return;
+
+    new Swiper(swiperEl, {
+      effect: 'coverflow',
+      loop: true,
+      centeredSlides: true,
+      slidesPerView: 'auto',
+      coverflow: {
+        rotate: 0,
+        stretch: {{ section.settings.coverflow_stretch }},
+        depth: {{ section.settings.coverflow_depth }},
+        modifier: 1.5,
+        slideShadows: false,
+      },
+      nextButton: '#shopify-section-{{ section.id }} .swiper-button-next',
+      prevButton: '#shopify-section-{{ section.id }} .swiper-button-prev',
+      autoplay: {% if section.settings.autoplay %}{{ section.settings.autoplay_speed | times: 1000 }}{% else %}0{% endif %},
+      autoplayDisableOnInteraction: true,
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Image Carousel - Brand",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "html",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Enjoy Beer"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "Small"
+        },
+        {
+          "value": "h1",
+          "label": "Medium"
+        },
+        {
+          "value": "h0",
+          "label": "Large"
+        }
+      ],
+      "default": "h1",
+      "label": "Heading size class"
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size",
+      "min": 20,
+      "max": 80,
+      "step": 2,
+      "default": 42,
+      "unit": "px",
+      "label": "Heading font size (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size_mobile",
+      "min": 16,
+      "max": 50,
+      "step": 2,
+      "default": 28,
+      "unit": "px",
+      "label": "Heading font size (mobile)"
+    },
+    {
+      "type": "header",
+      "content": "Subheading"
+    },
+    {
+      "type": "html",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "0.0% Way"
+    },
+    {
+      "type": "select",
+      "id": "subheading_size",
+      "options": [
+        {
+          "value": "h5",
+          "label": "Small"
+        },
+        {
+          "value": "h4",
+          "label": "Medium"
+        },
+        {
+          "value": "h3",
+          "label": "Large"
+        }
+      ],
+      "default": "h4",
+      "label": "Subheading size class"
+    },
+    {
+      "type": "range",
+      "id": "subheading_font_size",
+      "min": 14,
+      "max": 50,
+      "step": 2,
+      "default": 28,
+      "unit": "px",
+      "label": "Subheading font size (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "subheading_font_size_mobile",
+      "min": 10,
+      "max": 30,
+      "step": 2,
+      "default": 18,
+      "unit": "px",
+      "label": "Subheading font size (mobile)"
+    },
+    {
+      "type": "header",
+      "content": "Logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_image",
+      "label": "Logo image"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 50,
+      "max": 300,
+      "step": 10,
+      "default": 150,
+      "unit": "px",
+      "label": "Logo max width"
+    },
+    {
+      "type": "header",
+      "content": "Slide settings"
+    },
+    {
+      "type": "range",
+      "id": "slide_radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "default": 12,
+      "unit": "px",
+      "label": "Slide corner radius"
+    },
+    {
+      "type": "header",
+      "content": "3D Coverflow effect"
+    },
+    {
+      "type": "range",
+      "id": "coverflow_stretch",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "default": 100,
+      "label": "Stretch",
+      "info": "Space between slides. Higher = more overlap."
+    },
+    {
+      "type": "range",
+      "id": "coverflow_depth",
+      "min": 50,
+      "max": 300,
+      "step": 10,
+      "default": 150,
+      "label": "Depth",
+      "info": "3D depth effect. Higher = more perspective."
+    },
+    {
+      "type": "header",
+      "content": "Autoplay"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "default": false,
+      "label": "Enable autoplay"
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "default": 5,
+      "unit": "s",
+      "label": "Autoplay speed"
+    },
+    {
+      "type": "header",
+      "content": "Caption"
+    },
+    {
+      "type": "range",
+      "id": "caption_font_size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "default": 14,
+      "unit": "px",
+      "label": "Caption font size"
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Section background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Section background image"
+    },
+    {
+      "type": "select",
+      "id": "bg_image_position",
+      "options": [
+        {
+          "value": "center center",
+          "label": "Center"
+        },
+        {
+          "value": "center top",
+          "label": "Top"
+        },
+        {
+          "value": "center bottom",
+          "label": "Bottom"
+        }
+      ],
+      "default": "center center",
+      "label": "Background image position"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Slider overlay band color",
+      "default": "#c6ad7c42",
+      "info": "The semi-transparent band behind the slides."
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#4daad8"
+    },
+    {
+      "type": "color",
+      "id": "subheading_color",
+      "label": "Subheading color",
+      "default": "#4daad8"
+    },
+    {
+      "type": "color",
+      "id": "caption_bg_color",
+      "label": "Caption background color",
+      "default": "#1a2a3a"
+    },
+    {
+      "type": "color",
+      "id": "caption_text_color",
+      "label": "Caption text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "arrow_bg_color",
+      "label": "Arrow background color",
+      "default": "#e8e8e8"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 36,
+      "unit": "px",
+      "label": "Top padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 36,
+      "unit": "px",
+      "label": "Bottom padding"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Slide image"
+        },
+        {
+          "type": "textarea",
+          "id": "caption",
+          "label": "Caption text",
+          "info": "Shown as overlay on the active slide. Leave blank to hide."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image Carousel - Brand",
+      "blocks": [
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "caption": "Loungers lined up, music low, friends close. Corona Cero keeps it cool."
+          }
+        },
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

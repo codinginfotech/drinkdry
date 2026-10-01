@@ -1,0 +1,56 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-blog-events",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {
+            "show_date": true,
+            "show_author": true,
+            "show_comment_count": true
+          }
+        },
+        "summary": {
+          "type": "summary",
+          "disabled": true,
+          "settings": {}
+        },
+        "read_more": {
+          "type": "read_more",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "title",
+        "summary",
+        "read_more"
+      ],
+      "settings": {
+        "heading": "Explore<br><em>our blog</em>",
+        "heading_size": "h1",
+        "heading_alignment": "center",
+        "heading_tag": "h2",
+        "per_page": 6,
+        "show_tag_filter": false,
+        "show_image": true,
+        "image_ratio": "adapt",
+        "image_position": "center center",
+        "padding_top": 60,
+        "padding_bottom": 72
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'CORONABRUSHRegular';
+    src: url('https://cdn.shopify.com/s/files/1/0500/1664/9366/files/CORONABRUSHRegular.eot?v=1778584961');
+    src: url('https://cdn.shopify.com/s/files/1/0500/1664/9366/files/CORONABRUSHRegular.eot?v=1778584961') format('embedded-opentype'),
+         url('https://cdn.shopify.com/s/files/1/0500/1664/9366/files/CORONABRUSHRegular.woff2?v=1778584961') format('woff2'),
+         url('https://cdn.shopify.com/s/files/1/0500/1664/9366/files/CORONABRUSHRegular.woff?v=1778584960') format('woff'),
+         url('https://cdn.shopify.com/s/files/1/0500/1664/9366/files/CORONABRUSHRegular.ttf?v=1778584961') format('truetype'),
+         url('fonts/CORONABRUSHRegular.svg#CORONABRUSHRegular') format('svg');
+}

@@ -1,0 +1,157 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "blog-top-part": {
+      "type": "blog-top-part",
+      "blocks": {
+        "heading_gPWtmk": {
+          "type": "heading",
+          "settings": {
+            "heading_size": "h1",
+            "heading_tag": "h2"
+          }
+        },
+        "text_iwH4Qa": {
+          "type": "text",
+          "settings": {
+            "text_size": "typeset",
+            "secondary_color": false
+          }
+        },
+        "share_wgGhDV": {
+          "type": "share",
+          "settings": {
+            "share_label": "Share a recipe"
+          }
+        }
+      },
+      "block_order": [
+        "heading_gPWtmk",
+        "text_iwH4Qa",
+        "share_wgGhDV"
+      ],
+      "custom_css": [],
+      "settings": {
+        "bg_image_position": "center center",
+        "image_position": "center center",
+        "layout": "text_first",
+        "text_box_position": "middle",
+        "text_alignment": "left",
+        "image_ratio": "600px",
+        "enlarge_content": false,
+        "full_width": true,
+        "show_divider": false,
+        "image_behavior": "none",
+        "image_mobile": "shopify://shop_images/img_1335915e-7023-4ec3-b7df-3317aabe7145.png",
+        "mobile_layout": "text_first",
+        "mobile_text_alignment": "left",
+        "mobile_image_ratio": "adapt",
+        "use_custom_colors": true,
+        "colors_button_label": "#ffffff",
+        "colors_button_background": "#1a1b18",
+        "colors_text": "#ffffff",
+        "colors_background": "#17416f",
+        "padding_top": 0,
+        "padding_bottom": 36
+      }
+    },
+    "main": {
+      "type": "recipe-article",
+      "blocks": {
+        "metafield_EhcMBM": {
+          "type": "metafield",
+          "settings": {
+            "img": "{{ article.metafields.custom.detail_image.value }}",
+            "top": "<div class=\"wrap-tags\">\n              <ul>\n                {% for metatag in article.metafields.custom.wrap_tags.value %}\n                    <li>\n                     <p><b>{{ metatag.tags_title }}:</b> {{ metatag.tags_details }}</p>\n                    </li>\n                {% endfor %}\n                \n              </ul>\n            </div>",
+            "heading": "Ingredients",
+            "ingridients": "<p>{{ article.metafields.custom.ingridients | metafield_tag }}</p>",
+            "heading2": "Instructions",
+            "instructions": "<p>{{ article.metafields.custom.instructions | metafield_tag }}</p>",
+            "product": "{{ article.metafields.custom.product.value }}"
+          }
+        }
+      },
+      "block_order": [
+        "metafield_EhcMBM"
+      ],
+      "settings": {
+        "show_gravatar": false,
+        "padding_top": 52,
+        "padding_bottom": 36
+      }
+    },
+    "badge_AfUrka": {
+      "type": "badge",
+      "name": "t:sections.badge.name",
+      "settings": {
+        "bg_color": "#fff4c8",
+        "text": "Don't forget us to tag us on social media <span style=\"text-decoration:underline\"><em>@drinkdrystore</em></span>",
+        "img": "shopify://shop_images/Group.svg",
+        "padding_top": 36,
+        "padding_bottom": 100
+      }
+    },
+    "recipe-featured-blog": {
+      "type": "recipe-featured-blog",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {
+            "show_date": true,
+            "show_author": false,
+            "show_comment_count": true
+          }
+        },
+        "read_more_rUfJp6": {
+          "type": "read_more",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "title",
+        "read_more_rUfJp6"
+      ],
+      "custom_css": [
+        ".title {line-height: 100%;}"
+      ],
+      "settings": {
+        "bg_color": "#17416f",
+        "txt_color": "#17416f",
+        "blog": "recipes",
+        "post_limit": 3,
+        "show_view_all": false,
+        "show_divider": false,
+        "heading": "Related<br><em>recipes</em>",
+        "heading_color": "#ffffff",
+        "heading_size": "h1",
+        "heading_alignment": "left",
+        "heading_tag": "h2",
+        "columns_mobile": "1",
+        "swipe_on_mobile": true,
+        "show_image": true,
+        "show_des": false,
+        "image_ratio": "landscape",
+        "image_position": "center center",
+        "colors_highlight": "#ffb503",
+        "padding_top": 52,
+        "padding_bottom": 52,
+        "enable_highlight": false,
+        "highlight_style": "marker"
+      }
+    }
+  },
+  "order": [
+    "blog-top-part",
+    "main",
+    "badge_AfUrka",
+    "recipe-featured-blog"
+  ]
+}

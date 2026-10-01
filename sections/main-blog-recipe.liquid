@@ -1,0 +1,447 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --section-padding-top: {{ section.settings.padding_top }}px;
+    --section-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --image-position: {{ section.settings.image_position }};
+  }
+  #shopify-section-{{ section.id }} .main-blog .title, #shopify-section-{{ section.id }} .main-blog .title em, #shopify-section-{{ section.id }} .ah-nah, #shopify-section-{{ section.id }} .article-card__excerpt.rte
+  {
+    color:{{ section.settings.colors_text }};
+  }
+  .article-card__excerpt.rte{ font-size:15px; }
+  h4.ah-nah{ font-size:15px; text-transform:uppercase; margin-bottom:30px; margin-top:5px; }
+  .time-level{ display:flex; align-items:center; }
+  .time-level p{ margin:0; }
+  .time-level .time{ display:flex; align-items:center; column-gap:7px; color:#9BACBE; font-size:15px; padding-right:10px; margin-right:10px; border-right:1px solid #9BACBE; }
+  .time-level .level{ font-size:15px; color:#9BACBE; }
+  .time-level .level span{ color:#17416F; }
+  .main-blog .title, .main-blog .title em{ line-height:100%; }
+  .recipe-card__image.media img{ position:static; min-height:520px; }
+  .recipe-card__image.media{ padding-right:75px; }
+  .recipe-card__image-wrapper.media-wrapper{ overflow:visible; }
+  .recipe-card__image.media img.bottle_image{ position:absolute; opacity:1; height:auto; width:auto; max-width:163px; max-height:417px; right:0; left:auto; background:no-repeat; top:50%; min-height:inherit; transform:translateY(-50%); }
+  .recipe-article-card .article-card__header h3{ font-family:Montserrat,sans-serif; font-size:36px; line-height:100%; }
+  .recipe-article-card .article-card__header h3 em{ font-family:'Playfair Display',serif; font-style:italic; font-size:40px; }
+  .article-card__footer{ margin-top:30px; }
+  .recipe-articles-container .blog-articles{ align-items:center; margin-inline-start:0!important; margin-bottom:40px; }
+  .recipe-box{ --grid-horizontal-spacing:6rem!important; }
+  .recipe-box .recip-filter{ max-width:calc(20% - 3rem * 4 / 5); }
+  .recipe-box .blog-filter{ flex-direction:column; }
+  @media(max-width:767px){
+    .recipe-card__image.media{ padding-right:0; overflow:visible; }
+    .recipe-card__image.media img.bottle_image{ max-height:190px; right:7px; top:84%; }
+  }
+
+  /* Filter sidebar */
+  .blog-filter-sidebar h3{ font-size:16px; font-weight:600; margin-bottom:12px; text-transform:uppercase; letter-spacing:0.05em; }
+  .filter-option{ display:flex; align-items:center; gap:8px; padding:6px 0; cursor:pointer; font-size:14px; }
+  .filter-option input[type="checkbox"]{ cursor:pointer; width:16px; height:16px; }
+  .blog-filter-clear{ display:inline-block; margin-top:12px; font-size:13px; color:#17416F; text-decoration:underline; cursor:pointer; background:none; border:none; padding:0; }
+
+  /* Right column overlay loader */
+  .recip-boxx{ position:relative; min-height:200px; }
+  .recip-boxx-overlay{
+    display:none;
+    position:absolute;
+    inset:0;
+    background:rgba(255,255,255,0.8);
+    z-index:10;
+    justify-content:center;
+    align-items:center;
+  }
+  .recip-boxx-overlay.active{ display:flex; }
+  .recip-boxx-spinner{
+    width:48px; height:48px;
+    border:4px solid #f3f3f3;
+    border-top:4px solid #17416F;
+    border-radius:50%;
+    animation:recipeSpinAnim 0.8s linear infinite;
+  }
+  @keyframes recipeSpinAnim{ 0%{ transform:rotate(0deg); } 100%{ transform:rotate(360deg); } }
+
+  /* No results */
+  .recipe-no-results{ display:none; padding:60px 0; font-size:16px; color:#9BACBE; text-align:center; }
+
+  /* Load More */
+  .recipe-load-more-wrapper{ display:flex; justify-content:center; margin-top:40px; border-top:1px solid rgb(23, 65, 111); border-bottom:1px solid rgb(23, 65, 111); padding:20px 0;  }
+  .recipe-load-more-btn{     font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: #17416f; }
+ 
+  .recipe-load-more-btn:disabled{ opacity:0.5; pointer-events:none; }
+{%- endstyle -%}
+
+{{ 'component-article-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'section-main-blog.css' | asset_url | stylesheet_tag }}
+<link rel="stylesheet" href="{{ 'component-facet-sticky.css' | asset_url }}" media="print" onload="this.media='all'">
+
+{%- paginate blog.articles by section.settings.per_page -%}
+  <div class="main-blog page-width section--padding">
+
+    <div class="title-wrapper{% if section.settings.heading == blank %} title-wrapper--no-heading{% endif %} {{ section.settings.heading_alignment }}">
+      <{{ section.settings.heading_tag }} class="title {{ section.settings.heading_size }}">
+        {%- render 'highlight-text',
+          hl_input: section.settings.heading,
+          hl_style: section.settings.highlight_style,
+          hl_enable: section.settings.enable_highlight,
+          hl_animateWrap: true -%}
+      </{{ section.settings.heading_tag }}>
+    </div>
+
+    <header class="blog-header"></header>
+
+    <div class="recipe-box grid grid--1-col grid--2-col-tablet grid--2-col-desktop">
+
+      <!-- LEFT: filter sidebar -->
+      <div class="recip-filter grid__item">
+        {%- if section.settings.show_tag_filter and blog.tags.size > 0 -%}
+          <div id="blog-filter-sidebar" class="blog-filter-sidebar">
+            <h3>Filter by Tag</h3>
+            <form id="blogFilterForm">
+              {%- for tag in blog.all_tags -%}
+                <label class="filter-option">
+                  <input
+                    type="checkbox"
+                    name="tag"
+                    value="{{ tag | handleize }}"
+                    {% if current_tags contains tag %}checked{% endif %}
+                  >
+                  <span>{{ tag }}</span>
+                </label>
+              {%- endfor -%}
+            </form>
+            <button
+              type="button"
+              id="blogFilterClear"
+              class="blog-filter-clear"
+              {% unless current_tags.size > 0 %}style="display:none;"{% endunless %}
+            >Clear filters</button>
+          </div>
+        {%- endif -%}
+      </div>
+
+      <!-- RIGHT: articles + overlay -->
+      <div class="recip-boxx grid__item">
+
+        <!-- Spinner overlay — sits on top of articles while fetching -->
+        <div class="recip-boxx-overlay" id="recip-boxx-overlay">
+          <div class="recip-boxx-spinner"></div>
+        </div>
+
+        <!-- Articles -->
+        <div
+          class="recipe-articles-container"
+          id="recipe-articles-container"
+          data-next-url="{{ paginate.next.url }}"
+        >
+          {%- for article in blog.articles -%}
+            <div class="blog-articles grid grid--1-col grid--2-col-tablet grid--2-col-desktop grid--one-half">
+              <div class="recipe-image-box grid__item">
+                {%- if section.settings.show_image == true and article.image -%}
+                  <use-animate data-animate="zoom-fade-small" class="recipe-card__image-wrapper media-wrapper">
+                    <div class="recipe-card__image image-animate media media--{{ section.settings.show_image }} media--hover-effect"
+                      {%- if section.settings.show_image == 'adapt' %} style="--image-ratio-percent: {{ 1 | divided_by: article.image.aspect_ratio | times: 100 }}%;"{% endif -%}
+                    >
+                      {%- capture sizes -%}(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | divided_by: 2 }}px, (min-width: 750px) calc((100vw - 10rem) / 2), calc(100vw - 3rem){%- endcapture -%}
+                      {{ article.image | image_url: width: 1500 | image_tag:
+                        loading: 'lazy',
+                        class: 'motion-reduce',
+                        sizes: sizes,
+                        widths: '165, 360, 535, 750, 1100, 1500',
+                        is: 'lazy-image'
+                      }}
+                      {% if article.metafields.custom.bottle_image %}
+                        <img src="{{ article.metafields.custom.bottle_image | img_url:'x370' }}" loading="lazy" class="bottle_image">
+                      {% endif %}
+                    </div>
+                  </use-animate>
+                {%- endif -%}
+              </div>
+              <div class="recipe-articles__article article grid__item">
+                {%- render 'recipe-card-article', article: article, show_image: section.settings.show_image, image_ratio: section.settings.image_ratio -%}
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+
+        <!-- No results message -->
+        <div class="recipe-no-results" id="recipe-no-results">
+          No recipes found for the selected filters.
+        </div>
+
+        <!-- See More — outside container so it's never wiped by JS -->
+        {%- if paginate.pages > 1 -%}
+          <div class="recipe-load-more-wrapper" id="recipe-load-more-wrapper">
+            <a href="{{ paginate.next.url }}" class="recipe-load-more-btn" id="recipe-load-more-btn">
+              See More
+            </a>
+          </div>
+        {%- endif -%}
+
+      </div><!-- /.recip-boxx -->
+    </div><!-- /.recipe-box -->
+  </div>
+{%- endpaginate -%}
+
+<script src="{{ 'blog.js' | asset_url }}" defer="defer"></script>
+
+<script>
+(function () {
+  var blogBaseUrl  = {{ blog.url | json }};
+  var form         = document.getElementById('blogFilterForm');
+  var clearBtn     = document.getElementById('blogFilterClear');
+  var container    = document.getElementById('recipe-articles-container');
+  var overlay      = document.getElementById('recip-boxx-overlay');
+  var noResults    = document.getElementById('recipe-no-results');
+  var loadMoreWrap = document.getElementById('recipe-load-more-wrapper');
+  var loadMoreBtn  = document.getElementById('recipe-load-more-btn');
+
+  if (!container) return;
+
+  /* ── Helpers ── */
+  function showOverlay() { if (overlay) overlay.classList.add('active'); }
+  function hideOverlay() { if (overlay) overlay.classList.remove('active'); }
+
+  function setCheckboxesDisabled(disabled) {
+    if (!form) return;
+    form.querySelectorAll('input[type="checkbox"]').forEach(function (cb) {
+      cb.disabled = disabled;
+    });
+  }
+
+  function getCheckedTags() {
+    if (!form) return [];
+    return Array.from(form.querySelectorAll('input[type="checkbox"]:checked'))
+      .map(function (cb) { return cb.value; });
+  }
+
+  function buildUrl(tags) {
+    if (!tags || tags.length === 0) return blogBaseUrl;
+    return blogBaseUrl + '/tagged/' + tags.join('+');
+  }
+
+  /* ── Core fetch + render ── */
+  function fetchAndRender(url, append) {
+    showOverlay();
+    setCheckboxesDisabled(true);
+
+    fetch(url)
+      .then(function (res) { return res.text(); })
+      .then(function (html) {
+        var parser        = new DOMParser();
+        var doc           = parser.parseFromString(html, 'text/html');
+        var fetchedCont   = doc.getElementById('recipe-articles-container');
+        var newItems      = fetchedCont ? fetchedCont.querySelectorAll('.blog-articles') : [];
+        var nextUrl       = fetchedCont ? (fetchedCont.getAttribute('data-next-url') || '') : '';
+
+        if (append) {
+          // Load More: append articles
+          newItems.forEach(function (item) { container.appendChild(item); });
+        } else {
+          // Filter: replace articles
+          container.innerHTML = '';
+          newItems.forEach(function (item) { container.appendChild(item); });
+          // Update URL in browser address bar (no reload)
+          if (window.history && window.history.pushState) {
+            window.history.pushState({ url: url }, '', url);
+          }
+        }
+
+        // Update container's next URL
+        container.setAttribute('data-next-url', nextUrl);
+
+        // No results message
+        if (noResults) {
+          noResults.style.display = (newItems.length === 0 && !append) ? 'block' : 'none';
+        }
+
+        // See More button
+        if (loadMoreWrap && loadMoreBtn) {
+          if (nextUrl) {
+            loadMoreBtn.setAttribute('href', nextUrl);
+            loadMoreBtn.textContent = 'See More';
+            loadMoreBtn.disabled = false;
+            loadMoreWrap.style.display = 'flex';
+          } else {
+            loadMoreWrap.style.display = 'none';
+          }
+        }
+
+        // Clear button visibility
+        if (clearBtn) {
+          var tags = getCheckedTags();
+          clearBtn.style.display = tags.length > 0 ? 'inline-block' : 'none';
+        }
+      })
+      .catch(function (err) {
+        console.error('Recipe blog fetch error:', err);
+      })
+      .finally(function () {
+        hideOverlay();
+        setCheckboxesDisabled(false);
+      });
+  }
+
+  /* ── Checkbox filter change ── */
+  if (form) {
+    form.addEventListener('change', function () {
+      var tags = getCheckedTags();
+      fetchAndRender(buildUrl(tags), false);
+    });
+  }
+
+  /* ── Clear all filters ── */
+  if (clearBtn) {
+    clearBtn.addEventListener('click', function () {
+      if (form) {
+        form.querySelectorAll('input[type="checkbox"]').forEach(function (cb) {
+          cb.checked = false;
+        });
+      }
+      fetchAndRender(blogBaseUrl, false);
+    });
+  }
+
+  /* ── Browser back/forward ── */
+  window.addEventListener('popstate', function () {
+    // Re-sync checkboxes from URL then fetch
+    var urlTags = [];
+    var match   = window.location.pathname.match(/\/tagged\/([^/?]+)/);
+    if (match) {
+      urlTags = match[1].split('+');
+    }
+    if (form) {
+      form.querySelectorAll('input[type="checkbox"]').forEach(function (cb) {
+        cb.checked = urlTags.indexOf(cb.value) > -1;
+      });
+    }
+    if (clearBtn) {
+      clearBtn.style.display = urlTags.length > 0 ? 'inline-block' : 'none';
+    }
+    fetchAndRender(window.location.href, false);
+  });
+
+  /* ── See More / Load More ── */
+  if (loadMoreBtn) {
+    loadMoreBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+      var nextUrl = loadMoreBtn.getAttribute('href');
+      if (!nextUrl) return;
+      loadMoreBtn.textContent = 'Loading...';
+      loadMoreBtn.disabled = true;
+      fetchAndRender(nextUrl, true);
+    });
+  }
+
+})();
+</script>
+
+{% schema %}
+{
+  "name": "t:sections.main-blog.name",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "header", "content": "t:sections.all.heading.label" },
+    { "type": "color", "id": "colors_text", "label": "t:sections.all.colors.colors_text.label", "default": "#17416F" },
+    { "type": "html", "id": "heading", "default": "Blogs", "label": "t:sections.all.heading.label" },
+    {
+      "type": "select", "id": "heading_size", "default": "h1", "label": "t:sections.all.heading_size.label",
+      "options": [
+        { "value": "h2", "label": "t:sections.all.heading_size.options__1.label" },
+        { "value": "h1", "label": "t:sections.all.heading_size.options__2.label" },
+        { "value": "h0", "label": "t:sections.all.heading_size.options__3.label" }
+      ]
+    },
+    {
+      "type": "select", "id": "heading_alignment", "default": "left", "label": "t:sections.all.heading_alignment.label",
+      "options": [
+        { "value": "left",   "label": "t:sections.all.heading_alignment.options__1.label" },
+        { "value": "center", "label": "t:sections.all.heading_alignment.options__2.label" },
+        { "value": "right",  "label": "t:sections.all.heading_alignment.options__3.label" }
+      ]
+    },
+    {
+      "type": "select", "id": "heading_tag", "default": "h2", "label": "t:sections.all.heading_tag.label", "info": "t:sections.all.heading_tag.info",
+      "options": [
+        { "value": "h1",   "label": "t:sections.all.heading_tag.options__1.label" },
+        { "value": "h2",   "label": "t:sections.all.heading_tag.options__2.label" },
+        { "value": "h3",   "label": "t:sections.all.heading_tag.options__3.label" },
+        { "value": "h4",   "label": "t:sections.all.heading_tag.options__4.label" },
+        { "value": "h5",   "label": "t:sections.all.heading_tag.options__5.label" },
+        { "value": "h6",   "label": "t:sections.all.heading_tag.options__6.label" },
+        { "value": "div",  "label": "t:sections.all.heading_tag.options__7.label" },
+        { "value": "span", "label": "t:sections.all.heading_tag.options__8.label" },
+        { "value": "p",    "label": "t:sections.all.heading_tag.options__9.label" }
+      ]
+    },
+    { "type": "header", "content": "t:sections.main-blog.settings.header.content" },
+    { "type": "range", "id": "per_page", "min": 6, "max": 48, "step": 3, "default": 15, "label": "t:sections.main-blog.settings.per_page.label" },
+    { "type": "checkbox", "id": "show_tag_filter", "default": true, "label": "t:sections.main-blog.settings.show_tag_filter.label" },
+    { "type": "checkbox", "id": "show_image", "default": true, "label": "t:sections.main-blog.settings.show_image.label" },
+    {
+      "type": "select", "id": "image_ratio", "default": "landscape", "label": "t:sections.all.card_image_ratio.label", "info": "t:sections.main-blog.settings.image_ratio.info",
+      "options": [
+        { "value": "adapt",     "label": "t:sections.all.card_image_ratio.options__1.label" },
+        { "value": "square",    "label": "t:sections.all.card_image_ratio.options__2.label" },
+        { "value": "portrait",  "label": "t:sections.all.card_image_ratio.options__3.label" },
+        { "value": "landscape", "label": "t:sections.all.card_image_ratio.options__4.label" },
+        { "value": "wide",      "label": "t:sections.all.card_image_ratio.options__5.label" }
+      ]
+    },
+    {
+      "type": "select", "id": "image_position", "default": "center center", "label": "t:sections.all.image_position.label", "info": "t:sections.all.image_position.info",
+      "options": [
+        { "value": "20% 0",         "label": "t:sections.all.image_position.options__1.label" },
+        { "value": "top center",    "label": "t:sections.all.image_position.options__2.label" },
+        { "value": "80% 0",         "label": "t:sections.all.image_position.options__3.label" },
+        { "value": "20% 50%",       "label": "t:sections.all.image_position.options__4.label" },
+        { "value": "center center", "label": "t:sections.all.image_position.options__5.label" },
+        { "value": "80% 50%",       "label": "t:sections.all.image_position.options__6.label" },
+        { "value": "20% 100%",      "label": "t:sections.all.image_position.options__7.label" },
+        { "value": "bottom center", "label": "t:sections.all.image_position.options__8.label" },
+        { "value": "80% 100%",      "label": "t:sections.all.image_position.options__9.label" }
+      ]
+    },
+    { "type": "paragraph", "content": "t:sections.main-blog.settings.paragraph.content" },
+    { "type": "header", "content": "t:sections.all.padding.header.content" },
+    { "type": "range", "id": "padding_top",    "min": 0, "max": 100, "step": 4, "default": 60, "unit": "t:sections.all.padding.padding_top.unit",    "label": "t:sections.all.padding.padding_top.label" },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 100, "step": 4, "default": 36, "unit": "t:sections.all.padding.padding_bottom.unit", "label": "t:sections.all.padding.padding_bottom.label" }
+  ],
+  "blocks": [
+    {
+      "type": "title", "name": "t:sections.main-blog.blocks.title.name", "limit": 1,
+      "settings": [
+        { "type": "checkbox", "id": "show_date",          "default": true,  "label": "t:sections.main-blog.blocks.title.settings.show_date.label" },
+        { "type": "checkbox", "id": "show_author",        "default": false, "label": "t:sections.main-blog.blocks.title.settings.show_author.label" },
+        { "type": "checkbox", "id": "show_comment_count", "default": false, "label": "t:sections.main-blog.blocks.title.settings.show_comment_count.label" }
+      ]
+    },
+    {
+      "type": "summary", "name": "t:sections.main-blog.blocks.summary.name", "limit": 1,
+      "settings": [
+        { "type": "checkbox", "id": "show_des", "default": true, "label": "t:sections.main-blog.blocks.show_des.label" }
+      ]
+    },
+    {
+      "type": "read_more", "name": "t:sections.main-blog.blocks.read_more.name", "limit": 1,
+      "settings": [
+        {
+          "type": "select", "id": "button_size", "default": "medium", "label": "t:sections.all.button_size.label",
+          "options": [
+            { "value": "small",  "label": "t:sections.all.button_size.options__1.label" },
+            { "value": "medium", "label": "t:sections.all.button_size.options__2.label" },
+            { "value": "large",  "label": "t:sections.all.button_size.options__3.label" }
+          ]
+        },
+        { "type": "header",   "content": "t:sections.all.button.label" },
+        { "type": "text",     "id": "button_label",          "default": "Button label", "label": "t:sections.all.button_label.label", "info": "t:sections.all.button_label.info" },
+        { "type": "checkbox", "id": "button_style_secondary", "default": false,          "label": "t:sections.all.button_style_secondary.label" }
+      ]
+    }
+  ]
+}
+{% endschema %}

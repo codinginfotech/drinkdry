@@ -1,0 +1,116 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "image_banner_DAEtBk": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_6UDyEB": {
+          "type": "heading",
+          "settings": {
+            "heading": "Our<br><em>recipes</em>",
+            "heading_size": "h1",
+            "heading_tag": "h2",
+            "enable_highlight": false,
+            "highlight_style": "marker"
+          }
+        },
+        "text_d74PJt": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Delicious zero-proof drinks for every occasion <br>Refreshing, creative, and 100% alcohol-free.</p>",
+            "text_size": "typeset2",
+            "secondary_color": false,
+            "enable_highlight": false,
+            "highlight_style": "marker"
+          }
+        }
+      },
+      "block_order": [
+        "heading_6UDyEB",
+        "text_d74PJt"
+      ],
+      "name": "t:sections.image-banner.presets.name",
+      "settings": {
+        "image": "shopify://shop_images/section_hero_6a787c7b-509f-4df0-aba2-029c48f271e4.png",
+        "image_position": "center center",
+        "text_box_position": "bottom-left",
+        "text_alignment": "left",
+        "image_ratio": "650px",
+        "show_text_box": false,
+        "full_width": true,
+        "show_divider": false,
+        "image_behavior": "none",
+        "mobile_text_alignment": "left",
+        "mobile_image_ratio": "auto",
+        "stack_images_on_mobile": true,
+        "show_text_below": false,
+        "colors_button_label": "#1a1b18",
+        "colors_button_background": "#ffffff",
+        "colors_text": "#ffffff",
+        "colors_overlay": "#000000",
+        "colors_overlay_opacity": 28,
+        "colors_highlight": "#ffb503",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "main": {
+      "type": "main-blog-recipe",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {
+            "show_date": true,
+            "show_author": true,
+            "show_comment_count": true
+          }
+        },
+        "summary": {
+          "type": "summary",
+          "settings": {
+            "show_des": true
+          }
+        },
+        "read_more_kFGQf6": {
+          "type": "read_more",
+          "settings": {
+            "button_size": "medium",
+            "button_label": "MAKE IT YOURSELF",
+            "button_style_secondary": false
+          }
+        }
+      },
+      "block_order": [
+        "title",
+        "summary",
+        "read_more_kFGQf6"
+      ],
+      "settings": {
+        "colors_text": "#17416f",
+        "heading": "",
+        "heading_size": "h1",
+        "heading_alignment": "center",
+        "heading_tag": "h2",
+        "per_page": 6,
+        "show_tag_filter": true,
+        "show_image": true,
+        "image_ratio": "adapt",
+        "image_position": "center center",
+        "padding_top": 60,
+        "padding_bottom": 72
+      }
+    }
+  },
+  "order": [
+    "image_banner_DAEtBk",
+    "main"
+  ]
+}

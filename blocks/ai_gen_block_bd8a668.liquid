@@ -1,0 +1,1259 @@
+{% doc %}
+  @prompt
+    PDF library viewer with left PDF thumbnail list and right PDF preview
+{% enddoc %}
+
+{% assign ai_gen_id = block.id | replace: '_', '' | replace: '-', '' | downcase %}
+
+{% assign pdf_count = 0 %}
+{% assign first_pdf_url = '' %}
+{% assign first_pdf_title = '' %}
+{% assign first_pdf_key = '' %}
+
+{% if block.settings.pdf_1_url != blank %}
+  {% assign pdf_count = pdf_count | plus: 1 %}
+{% assign first_pdf_url = block.settings.pdf_1_url %}
+{% assign first_pdf_title = block.settings.pdf_1_title | default: 'Document 1' %}
+{% assign first_pdf_key = '1' %}
+{% endif %}
+
+{% if block.settings.pdf_2_url != blank %}
+  {% assign pdf_count = pdf_count | plus: 1 %}
+  {% if first_pdf_url == blank %}
+    {% assign first_pdf_url = block.settings.pdf_2_url %}
+    {% assign first_pdf_title = block.settings.pdf_2_title | default: 'Document 2' %}
+    {% assign first_pdf_key = '2' %}
+  {% endif %}
+{% endif %}
+
+{% if block.settings.pdf_3_url != blank %}
+  {% assign pdf_count = pdf_count | plus: 1 %}
+  {% if first_pdf_url == blank %}
+    {% assign first_pdf_url = block.settings.pdf_3_url %}
+    {% assign first_pdf_title = block.settings.pdf_3_title | default: 'Document 3' %}
+    {% assign first_pdf_key = '3' %}
+  {% endif %}
+{% endif %}
+
+{% if block.settings.pdf_4_url != blank %}
+  {% assign pdf_count = pdf_count | plus: 1 %}
+  {% if first_pdf_url == blank %}
+    {% assign first_pdf_url = block.settings.pdf_4_url %}
+    {% assign first_pdf_title = block.settings.pdf_4_title | default: 'Document 4' %}
+    {% assign first_pdf_key = '4' %}
+  {% endif %}
+{% endif %}
+
+{% if block.settings.pdf_5_url != blank %}
+  {% assign pdf_count = pdf_count | plus: 1 %}
+  {% if first_pdf_url == blank %}
+    {% assign first_pdf_url = block.settings.pdf_5_url %}
+    {% assign first_pdf_title = block.settings.pdf_5_title | default: 'Document 5' %}
+    {% assign first_pdf_key = '5' %}
+  {% endif %}
+{% endif %}
+
+{% if block.settings.pdf_6_url != blank %}
+  {% assign pdf_count = pdf_count | plus: 1 %}
+  {% if first_pdf_url == blank %}
+    {% assign first_pdf_url = block.settings.pdf_6_url %}
+    {% assign first_pdf_title = block.settings.pdf_6_title | default: 'Document 6' %}
+    {% assign first_pdf_key = '6' %}
+  {% endif %}
+{% endif %}
+
+{% if block.settings.pdf_7_url != blank %}
+  {% assign pdf_count = pdf_count | plus: 1 %}
+  {% if first_pdf_url == blank %}
+    {% assign first_pdf_url = block.settings.pdf_7_url %}
+    {% assign first_pdf_title = block.settings.pdf_7_title | default: 'Document 7' %}
+    {% assign first_pdf_key = '7' %}
+  {% endif %}
+{% endif %}
+
+{% if block.settings.pdf_8_url != blank %}
+  {% assign pdf_count = pdf_count | plus: 1 %}
+  {% if first_pdf_url == blank %}
+    {% assign first_pdf_url = block.settings.pdf_8_url %}
+    {% assign first_pdf_title = block.settings.pdf_8_title | default: 'Document 8' %}
+    {% assign first_pdf_key = '8' %}
+  {% endif %}
+{% endif %}
+
+{% if block.settings.pdf_9_url != blank %}
+  {% assign pdf_count = pdf_count | plus: 1 %}
+  {% if first_pdf_url == blank %}
+    {% assign first_pdf_url = block.settings.pdf_9_url %}
+    {% assign first_pdf_title = block.settings.pdf_9_title | default: 'Document 9' %}
+    {% assign first_pdf_key = '9' %}
+  {% endif %}
+{% endif %}
+
+{% if block.settings.pdf_10_url != blank %}
+  {% assign pdf_count = pdf_count | plus: 1 %}
+  {% if first_pdf_url == blank %}
+    {% assign first_pdf_url = block.settings.pdf_10_url %}
+    {% assign first_pdf_title = block.settings.pdf_10_title | default: 'Document 10' %}
+    {% assign first_pdf_key = '10' %}
+  {% endif %}
+{% endif %}
+
+{% style %}
+  .ai-pdf-library-{{ ai_gen_id }} {
+    display: block;
+    width: min({{ block.settings.desktop_width_percent }}%, 100%);
+    max-width: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+    --ai-pdf-desktop-height: {{ block.settings.viewer_height }}px;
+    --ai-pdf-mobile-height: {{ block.settings.mobile_viewer_height }}px;
+    --ai-pdf-available-height: calc(100dvh - 220px);
+    --ai-pdf-adaptive-height: clamp(420px, var(--ai-pdf-available-height), var(--ai-pdf-desktop-height));
+  }
+
+  .ai-pdf-library-{{ ai_gen_id }} *,
+  .ai-pdf-library-{{ ai_gen_id }} *::before,
+  .ai-pdf-library-{{ ai_gen_id }} *::after {
+    box-sizing: border-box;
+  }
+
+  @supports not (height: 100dvh) {
+    .ai-pdf-library-{{ ai_gen_id }} {
+      --ai-pdf-available-height: calc(100vh - 220px);
+    }
+  }
+
+  .ai-pdf-library-shell-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: minmax(200px, min({{ block.settings.sidebar_width }}px, 32vw)) minmax(0, 1fr);
+    width: 100%;
+    background: {{ block.settings.background_color }};
+    border: 1px solid {{ block.settings.border_color }};
+    border-radius: {{ block.settings.border_radius }}px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  }
+
+  .ai-pdf-library-sidebar-{{ ai_gen_id }} {
+    min-width: 0;
+    min-height: 0;
+    background: {{ block.settings.sidebar_background_color }};
+    border-right: 1px solid {{ block.settings.border_color }};
+    overflow: hidden;
+  }
+
+  .ai-pdf-library-sidebar-header-{{ ai_gen_id }} {
+    padding: 18px;
+    border-bottom: 1px solid {{ block.settings.border_color }};
+  }
+
+  .ai-pdf-library-heading-{{ ai_gen_id }} {
+    margin: 0;
+    color: {{ block.settings.heading_color }};
+    font-size: clamp(16px, 1.8vw, {{ block.settings.heading_size }}px);
+    line-height: 1.2;
+    font-weight: 700;
+  }
+
+  .ai-pdf-library-count-{{ ai_gen_id }} {
+    display: block;
+    margin-top: 6px;
+    color: {{ block.settings.muted_text_color }};
+    font-size: 13px;
+  }
+
+  .ai-pdf-library-list-{{ ai_gen_id }} {
+    padding: 12px;
+    max-height: calc(var(--ai-pdf-adaptive-height) + 69px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .ai-pdf-library-item-{{ ai_gen_id }} {
+    width: 100%;
+    appearance: none;
+    border: 1px solid transparent;
+    background: transparent;
+    color: {{ block.settings.text_color }};
+    text-align: left;
+    padding: 8px;
+    border-radius: {{ block.settings.item_border_radius }}px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .ai-pdf-library-item-{{ ai_gen_id }}:hover {
+    background: {{ block.settings.item_hover_color }};
+    transform: translateY(-1px);
+  }
+
+  .ai-pdf-library-item-{{ ai_gen_id }}.is-active {
+    background: {{ block.settings.item_active_color }};
+    border-color: {{ block.settings.button_color }};
+  }
+
+  .ai-pdf-library-thumbnail-{{ ai_gen_id }} {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 11;
+    overflow: hidden;
+    border-radius: max(0px, calc({{ block.settings.item_border_radius }}px - 2px));
+    background: #e5e7eb;
+    border: 1px solid {{ block.settings.border_color }};
+  }
+
+  .ai-pdf-library-thumbnail-{{ ai_gen_id }} img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+  }
+
+  .ai-pdf-library-thumbnail-placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: {{ block.settings.button_color }};
+    background: linear-gradient(135deg, #ffffff 0%, #eef4fb 100%);
+  }
+
+  .ai-pdf-library-icon-{{ ai_gen_id }} {
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    color: currentColor;
+  }
+
+  .ai-pdf-library-item-title-{{ ai_gen_id }} {
+    display: -webkit-box;
+    font-size: 14px;
+    line-height: 1.35;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  .ai-pdf-library-item-{{ ai_gen_id }}.is-active .ai-pdf-library-item-title-{{ ai_gen_id }} {
+    font-weight: 700;
+    color: {{ block.settings.heading_color }};
+  }
+
+  .ai-pdf-library-main-{{ ai_gen_id }} {
+    min-width: 0;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ai-pdf-library-toolbar-{{ ai_gen_id }} {
+    min-height: 68px;
+    padding: 14px 16px;
+    background: {{ block.settings.header_background_color }};
+    border-bottom: 1px solid {{ block.settings.border_color }};
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 14px;
+  }
+
+  .ai-pdf-library-current-title-{{ ai_gen_id }} {
+    min-width: 0;
+    margin: 0;
+    color: {{ block.settings.heading_color }};
+    font-size: clamp(16px, 1.6vw, {{ block.settings.title_size }}px);
+    line-height: 1.3;
+    font-weight: 700;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .ai-pdf-library-actions-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .ai-pdf-library-action-{{ ai_gen_id }} {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-height: 40px;
+    min-width: 0;
+    padding: 9px 14px;
+    border: 1px solid {{ block.settings.button_color }};
+    border-radius: {{ block.settings.button_border_radius }}px;
+    background: {{ block.settings.button_color }};
+    color: {{ block.settings.button_text_color }};
+    text-decoration: none;
+    font-size: 14px;
+    line-height: 1.2;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .ai-pdf-library-action-{{ ai_gen_id }}:hover {
+    background: {{ block.settings.button_hover_color }};
+    border-color: {{ block.settings.button_hover_color }};
+  }
+
+  .ai-pdf-library-action-secondary-{{ ai_gen_id }} {
+    background: transparent;
+    color: {{ block.settings.button_color }};
+  }
+
+  .ai-pdf-library-action-secondary-{{ ai_gen_id }}:hover {
+    background: {{ block.settings.item_hover_color }};
+    color: {{ block.settings.button_hover_color }};
+  }
+
+  .ai-pdf-library-action-{{ ai_gen_id }} svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  .ai-pdf-library-viewer-wrap-{{ ai_gen_id }} {
+    width: 100%;
+    height: var(--ai-pdf-adaptive-height);
+    min-height: 0;
+    background: #f4f4f4;
+    overflow: hidden;
+  }
+
+
+  .ai-pdf-library-frame-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    border: 0;
+    display: block;
+    background: #ffffff;
+  }
+
+  .ai-pdf-library-empty-{{ ai_gen_id }} {
+    min-height: var(--ai-pdf-adaptive-height);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    text-align: center;
+    color: {{ block.settings.muted_text_color }};
+    background: #fafafa;
+  }
+
+  @media screen and (max-width: 900px) {
+    .ai-pdf-library-{{ ai_gen_id }} {
+      width: 100%;
+      --ai-pdf-available-height: 70dvh;
+      --ai-pdf-adaptive-height: clamp(360px, var(--ai-pdf-available-height), var(--ai-pdf-mobile-height));
+    }
+
+    @supports not (height: 100dvh) {
+      .ai-pdf-library-{{ ai_gen_id }} {
+        --ai-pdf-available-height: 70vh;
+      }
+    }
+
+    .ai-pdf-library-shell-{{ ai_gen_id }} {
+      grid-template-columns: 1fr;
+    }
+
+    .ai-pdf-library-sidebar-{{ ai_gen_id }} {
+      border-right: 0;
+      border-bottom: 1px solid {{ block.settings.border_color }};
+      overflow: visible;
+    }
+
+    .ai-pdf-library-sidebar-header-{{ ai_gen_id }} {
+      padding: 14px 16px;
+    }
+
+    .ai-pdf-library-list-{{ ai_gen_id }} {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      max-height: none;
+      padding: 10px 12px 14px;
+      scroll-snap-type: x proximity;
+    }
+
+    .ai-pdf-library-item-{{ ai_gen_id }} {
+      width: clamp(140px, 42vw, 220px);
+      min-width: clamp(140px, 42vw, 220px);
+      max-width: 220px;
+      flex: 0 0 auto;
+      scroll-snap-align: start;
+    }
+
+    .ai-pdf-library-thumbnail-{{ ai_gen_id }} {
+      aspect-ratio: 4 / 3;
+    }
+
+    .ai-pdf-library-toolbar-{{ ai_gen_id }} {
+      min-height: auto;
+      flex-direction: column;
+      align-items: stretch;
+      padding: 12px;
+    }
+
+    .ai-pdf-library-current-title-{{ ai_gen_id }} {
+      white-space: normal;
+      overflow-wrap: anywhere;
+    }
+
+    .ai-pdf-library-actions-{{ ai_gen_id }} {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .ai-pdf-library-action-{{ ai_gen_id }} {
+      width: 100%;
+      min-height: 44px;
+      padding: 10px 12px;
+      white-space: normal;
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    .ai-pdf-library-{{ ai_gen_id }} {
+      --ai-pdf-available-height: 72dvh;
+      --ai-pdf-adaptive-height: clamp(340px, var(--ai-pdf-available-height), var(--ai-pdf-mobile-height));
+    }
+
+    @supports not (height: 100dvh) {
+      .ai-pdf-library-{{ ai_gen_id }} {
+        --ai-pdf-available-height: 72vh;
+      }
+    }
+
+    .ai-pdf-library-shell-{{ ai_gen_id }} {
+      border-radius: min({{ block.settings.border_radius }}px, 14px);
+    }
+
+    .ai-pdf-library-item-{{ ai_gen_id }} {
+      width: clamp(132px, 46vw, 180px);
+      min-width: clamp(132px, 46vw, 180px);
+    }
+
+    .ai-pdf-library-actions-{{ ai_gen_id }} {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media screen and (max-width: 380px) {
+    .ai-pdf-library-{{ ai_gen_id }} {
+      --ai-pdf-available-height: 70dvh;
+      --ai-pdf-adaptive-height: clamp(320px, var(--ai-pdf-available-height), var(--ai-pdf-mobile-height));
+    }
+
+    .ai-pdf-library-list-{{ ai_gen_id }} {
+      padding-inline: 8px;
+    }
+
+    .ai-pdf-library-item-{{ ai_gen_id }} {
+      width: 128px;
+      min-width: 128px;
+    }
+  }
+
+  @media screen and (max-width: 900px) and (orientation: landscape) and (max-height: 600px) {
+    .ai-pdf-library-{{ ai_gen_id }} {
+      --ai-pdf-available-height: 76dvh;
+      --ai-pdf-adaptive-height: clamp(280px, var(--ai-pdf-available-height), var(--ai-pdf-mobile-height));
+    }
+
+    .ai-pdf-library-sidebar-header-{{ ai_gen_id }} {
+      display: none;
+    }
+
+    .ai-pdf-library-thumbnail-{{ ai_gen_id }} {
+      aspect-ratio: 16 / 10;
+    }
+  }
+{% endstyle %}
+
+<pdf-library-viewer-{{ ai_gen_id }}
+  class="ai-pdf-library-{{ ai_gen_id }}"
+  data-view-mode="{{ block.settings.view_mode }}"
+  data-show-toolbar="{{ block.settings.show_toolbar }}"
+  data-initial-pdf-url="{{ first_pdf_url | escape }}"
+  data-initial-pdf-title="{{ first_pdf_title | escape }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-pdf-library-shell-{{ ai_gen_id }}">
+    <aside class="ai-pdf-library-sidebar-{{ ai_gen_id }}">
+      <div class="ai-pdf-library-sidebar-header-{{ ai_gen_id }}">
+        <h3 class="ai-pdf-library-heading-{{ ai_gen_id }}">
+          {{ block.settings.heading }}
+        </h3>
+
+        <span class="ai-pdf-library-count-{{ ai_gen_id }}">
+          {{ pdf_count }} document{% unless pdf_count == 1 %}s{% endunless %}
+        </span>
+      </div>
+
+      <div class="ai-pdf-library-list-{{ ai_gen_id }}">
+        {% if block.settings.pdf_1_url != blank %}
+          {% assign pdf_title = block.settings.pdf_1_title | default: 'Document 1' %}
+          {% assign pdf_thumbnail = block.settings.pdf_1_thumbnail %}
+          <button type="button" class="ai-pdf-library-item-{{ ai_gen_id }} {% if first_pdf_key == '1' %}is-active{% endif %}" data-pdf-trigger data-pdf-url="{{ block.settings.pdf_1_url | escape }}" data-pdf-title="{{ pdf_title | escape }}" aria-label="View {{ pdf_title | escape }}">
+            <span class="ai-pdf-library-thumbnail-{{ ai_gen_id }}">
+              {% if pdf_thumbnail != blank %}
+                <img src="{{ pdf_thumbnail | image_url: width: 520 }}" alt="{{ pdf_title | escape }} thumbnail" loading="lazy" width="520" height="360">
+              {% else %}
+                <span class="ai-pdf-library-thumbnail-placeholder-{{ ai_gen_id }}">
+                  <svg class="ai-pdf-library-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M14 2H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7z"/><path d="M14 2v5h5"/><path d="M9 13h6"/><path d="M9 17h6"/></svg>
+                </span>
+              {% endif %}
+            </span>
+            <span class="ai-pdf-library-item-title-{{ ai_gen_id }}">{{ pdf_title }}</span>
+          </button>
+        {% endif %}
+
+        {% if block.settings.pdf_2_url != blank %}
+          {% assign pdf_title = block.settings.pdf_2_title | default: 'Document 2' %}
+          {% assign pdf_thumbnail = block.settings.pdf_2_thumbnail %}
+          <button type="button" class="ai-pdf-library-item-{{ ai_gen_id }} {% if first_pdf_key == '2' %}is-active{% endif %}" data-pdf-trigger data-pdf-url="{{ block.settings.pdf_2_url | escape }}" data-pdf-title="{{ pdf_title | escape }}" aria-label="View {{ pdf_title | escape }}">
+            <span class="ai-pdf-library-thumbnail-{{ ai_gen_id }}">
+              {% if pdf_thumbnail != blank %}
+                <img src="{{ pdf_thumbnail | image_url: width: 520 }}" alt="{{ pdf_title | escape }} thumbnail" loading="lazy" width="520" height="360">
+              {% else %}
+                <span class="ai-pdf-library-thumbnail-placeholder-{{ ai_gen_id }}">
+                  <svg class="ai-pdf-library-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M14 2H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7z"/><path d="M14 2v5h5"/><path d="M9 13h6"/><path d="M9 17h6"/></svg>
+                </span>
+              {% endif %}
+            </span>
+            <span class="ai-pdf-library-item-title-{{ ai_gen_id }}">{{ pdf_title }}</span>
+          </button>
+        {% endif %}
+
+        {% if block.settings.pdf_3_url != blank %}
+          {% assign pdf_title = block.settings.pdf_3_title | default: 'Document 3' %}
+          {% assign pdf_thumbnail = block.settings.pdf_3_thumbnail %}
+          <button type="button" class="ai-pdf-library-item-{{ ai_gen_id }} {% if first_pdf_key == '3' %}is-active{% endif %}" data-pdf-trigger data-pdf-url="{{ block.settings.pdf_3_url | escape }}" data-pdf-title="{{ pdf_title | escape }}" aria-label="View {{ pdf_title | escape }}">
+            <span class="ai-pdf-library-thumbnail-{{ ai_gen_id }}">
+              {% if pdf_thumbnail != blank %}
+                <img src="{{ pdf_thumbnail | image_url: width: 520 }}" alt="{{ pdf_title | escape }} thumbnail" loading="lazy" width="520" height="360">
+              {% else %}
+                <span class="ai-pdf-library-thumbnail-placeholder-{{ ai_gen_id }}">
+                  <svg class="ai-pdf-library-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M14 2H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7z"/><path d="M14 2v5h5"/><path d="M9 13h6"/><path d="M9 17h6"/></svg>
+                </span>
+              {% endif %}
+            </span>
+            <span class="ai-pdf-library-item-title-{{ ai_gen_id }}">{{ pdf_title }}</span>
+          </button>
+        {% endif %}
+
+        {% if block.settings.pdf_4_url != blank %}
+          {% assign pdf_title = block.settings.pdf_4_title | default: 'Document 4' %}
+          {% assign pdf_thumbnail = block.settings.pdf_4_thumbnail %}
+          <button type="button" class="ai-pdf-library-item-{{ ai_gen_id }} {% if first_pdf_key == '4' %}is-active{% endif %}" data-pdf-trigger data-pdf-url="{{ block.settings.pdf_4_url | escape }}" data-pdf-title="{{ pdf_title | escape }}" aria-label="View {{ pdf_title | escape }}">
+            <span class="ai-pdf-library-thumbnail-{{ ai_gen_id }}">
+              {% if pdf_thumbnail != blank %}
+                <img src="{{ pdf_thumbnail | image_url: width: 520 }}" alt="{{ pdf_title | escape }} thumbnail" loading="lazy" width="520" height="360">
+              {% else %}
+                <span class="ai-pdf-library-thumbnail-placeholder-{{ ai_gen_id }}">
+                  <svg class="ai-pdf-library-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M14 2H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7z"/><path d="M14 2v5h5"/><path d="M9 13h6"/><path d="M9 17h6"/></svg>
+                </span>
+              {% endif %}
+            </span>
+            <span class="ai-pdf-library-item-title-{{ ai_gen_id }}">{{ pdf_title }}</span>
+          </button>
+        {% endif %}
+
+        {% if block.settings.pdf_5_url != blank %}
+          {% assign pdf_title = block.settings.pdf_5_title | default: 'Document 5' %}
+          {% assign pdf_thumbnail = block.settings.pdf_5_thumbnail %}
+          <button type="button" class="ai-pdf-library-item-{{ ai_gen_id }} {% if first_pdf_key == '5' %}is-active{% endif %}" data-pdf-trigger data-pdf-url="{{ block.settings.pdf_5_url | escape }}" data-pdf-title="{{ pdf_title | escape }}" aria-label="View {{ pdf_title | escape }}">
+            <span class="ai-pdf-library-thumbnail-{{ ai_gen_id }}">
+              {% if pdf_thumbnail != blank %}
+                <img src="{{ pdf_thumbnail | image_url: width: 520 }}" alt="{{ pdf_title | escape }} thumbnail" loading="lazy" width="520" height="360">
+              {% else %}
+                <span class="ai-pdf-library-thumbnail-placeholder-{{ ai_gen_id }}">
+                  <svg class="ai-pdf-library-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M14 2H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7z"/><path d="M14 2v5h5"/><path d="M9 13h6"/><path d="M9 17h6"/></svg>
+                </span>
+              {% endif %}
+            </span>
+            <span class="ai-pdf-library-item-title-{{ ai_gen_id }}">{{ pdf_title }}</span>
+          </button>
+        {% endif %}
+
+        {% if block.settings.pdf_6_url != blank %}
+          {% assign pdf_title = block.settings.pdf_6_title | default: 'Document 6' %}
+          {% assign pdf_thumbnail = block.settings.pdf_6_thumbnail %}
+          <button type="button" class="ai-pdf-library-item-{{ ai_gen_id }} {% if first_pdf_key == '6' %}is-active{% endif %}" data-pdf-trigger data-pdf-url="{{ block.settings.pdf_6_url | escape }}" data-pdf-title="{{ pdf_title | escape }}" aria-label="View {{ pdf_title | escape }}">
+            <span class="ai-pdf-library-thumbnail-{{ ai_gen_id }}">
+              {% if pdf_thumbnail != blank %}
+                <img src="{{ pdf_thumbnail | image_url: width: 520 }}" alt="{{ pdf_title | escape }} thumbnail" loading="lazy" width="520" height="360">
+              {% else %}
+                <span class="ai-pdf-library-thumbnail-placeholder-{{ ai_gen_id }}">
+                  <svg class="ai-pdf-library-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M14 2H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7z"/><path d="M14 2v5h5"/><path d="M9 13h6"/><path d="M9 17h6"/></svg>
+                </span>
+              {% endif %}
+            </span>
+            <span class="ai-pdf-library-item-title-{{ ai_gen_id }}">{{ pdf_title }}</span>
+          </button>
+        {% endif %}
+
+        {% if block.settings.pdf_7_url != blank %}
+          {% assign pdf_title = block.settings.pdf_7_title | default: 'Document 7' %}
+          {% assign pdf_thumbnail = block.settings.pdf_7_thumbnail %}
+          <button type="button" class="ai-pdf-library-item-{{ ai_gen_id }} {% if first_pdf_key == '7' %}is-active{% endif %}" data-pdf-trigger data-pdf-url="{{ block.settings.pdf_7_url | escape }}" data-pdf-title="{{ pdf_title | escape }}" aria-label="View {{ pdf_title | escape }}">
+            <span class="ai-pdf-library-thumbnail-{{ ai_gen_id }}">
+              {% if pdf_thumbnail != blank %}
+                <img src="{{ pdf_thumbnail | image_url: width: 520 }}" alt="{{ pdf_title | escape }} thumbnail" loading="lazy" width="520" height="360">
+              {% else %}
+                <span class="ai-pdf-library-thumbnail-placeholder-{{ ai_gen_id }}">
+                  <svg class="ai-pdf-library-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M14 2H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7z"/><path d="M14 2v5h5"/><path d="M9 13h6"/><path d="M9 17h6"/></svg>
+                </span>
+              {% endif %}
+            </span>
+            <span class="ai-pdf-library-item-title-{{ ai_gen_id }}">{{ pdf_title }}</span>
+          </button>
+        {% endif %}
+
+        {% if block.settings.pdf_8_url != blank %}
+          {% assign pdf_title = block.settings.pdf_8_title | default: 'Document 8' %}
+          {% assign pdf_thumbnail = block.settings.pdf_8_thumbnail %}
+          <button type="button" class="ai-pdf-library-item-{{ ai_gen_id }} {% if first_pdf_key == '8' %}is-active{% endif %}" data-pdf-trigger data-pdf-url="{{ block.settings.pdf_8_url | escape }}" data-pdf-title="{{ pdf_title | escape }}" aria-label="View {{ pdf_title | escape }}">
+            <span class="ai-pdf-library-thumbnail-{{ ai_gen_id }}">
+              {% if pdf_thumbnail != blank %}
+                <img src="{{ pdf_thumbnail | image_url: width: 520 }}" alt="{{ pdf_title | escape }} thumbnail" loading="lazy" width="520" height="360">
+              {% else %}
+                <span class="ai-pdf-library-thumbnail-placeholder-{{ ai_gen_id }}">
+                  <svg class="ai-pdf-library-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M14 2H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7z"/><path d="M14 2v5h5"/><path d="M9 13h6"/><path d="M9 17h6"/></svg>
+                </span>
+              {% endif %}
+            </span>
+            <span class="ai-pdf-library-item-title-{{ ai_gen_id }}">{{ pdf_title }}</span>
+          </button>
+        {% endif %}
+
+        {% if block.settings.pdf_9_url != blank %}
+          {% assign pdf_title = block.settings.pdf_9_title | default: 'Document 9' %}
+          {% assign pdf_thumbnail = block.settings.pdf_9_thumbnail %}
+          <button type="button" class="ai-pdf-library-item-{{ ai_gen_id }} {% if first_pdf_key == '9' %}is-active{% endif %}" data-pdf-trigger data-pdf-url="{{ block.settings.pdf_9_url | escape }}" data-pdf-title="{{ pdf_title | escape }}" aria-label="View {{ pdf_title | escape }}">
+            <span class="ai-pdf-library-thumbnail-{{ ai_gen_id }}">
+              {% if pdf_thumbnail != blank %}
+                <img src="{{ pdf_thumbnail | image_url: width: 520 }}" alt="{{ pdf_title | escape }} thumbnail" loading="lazy" width="520" height="360">
+              {% else %}
+                <span class="ai-pdf-library-thumbnail-placeholder-{{ ai_gen_id }}">
+                  <svg class="ai-pdf-library-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M14 2H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7z"/><path d="M14 2v5h5"/><path d="M9 13h6"/><path d="M9 17h6"/></svg>
+                </span>
+              {% endif %}
+            </span>
+            <span class="ai-pdf-library-item-title-{{ ai_gen_id }}">{{ pdf_title }}</span>
+          </button>
+        {% endif %}
+
+        {% if block.settings.pdf_10_url != blank %}
+          {% assign pdf_title = block.settings.pdf_10_title | default: 'Document 10' %}
+          {% assign pdf_thumbnail = block.settings.pdf_10_thumbnail %}
+          <button type="button" class="ai-pdf-library-item-{{ ai_gen_id }} {% if first_pdf_key == '10' %}is-active{% endif %}" data-pdf-trigger data-pdf-url="{{ block.settings.pdf_10_url | escape }}" data-pdf-title="{{ pdf_title | escape }}" aria-label="View {{ pdf_title | escape }}">
+            <span class="ai-pdf-library-thumbnail-{{ ai_gen_id }}">
+              {% if pdf_thumbnail != blank %}
+                <img src="{{ pdf_thumbnail | image_url: width: 520 }}" alt="{{ pdf_title | escape }} thumbnail" loading="lazy" width="520" height="360">
+              {% else %}
+                <span class="ai-pdf-library-thumbnail-placeholder-{{ ai_gen_id }}">
+                  <svg class="ai-pdf-library-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M14 2H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7z"/><path d="M14 2v5h5"/><path d="M9 13h6"/><path d="M9 17h6"/></svg>
+                </span>
+              {% endif %}
+            </span>
+            <span class="ai-pdf-library-item-title-{{ ai_gen_id }}">{{ pdf_title }}</span>
+          </button>
+        {% endif %}
+
+        {% if pdf_count == 0 %}
+          <p style="margin: 10px; color: {{ block.settings.muted_text_color }};">
+            Add PDF URLs in the block settings.
+          </p>
+        {% endif %}
+      </div>
+    </aside>
+
+    <main class="ai-pdf-library-main-{{ ai_gen_id }}">
+      {% if first_pdf_url != blank %}
+        <div class="ai-pdf-library-toolbar-{{ ai_gen_id }}">
+          <div class="ai-pdf-library-actions-{{ ai_gen_id }}">
+            <a href="{{ first_pdf_url }}" target="_blank" rel="noopener noreferrer" class="ai-pdf-library-action-{{ ai_gen_id }} ai-pdf-library-action-secondary-{{ ai_gen_id }}" data-pdf-view-link data-current-pdf-url="{{ first_pdf_url | escape }}">
+              View
+            </a>
+          </div>
+        </div>
+
+        <div class="ai-pdf-library-viewer-wrap-{{ ai_gen_id }}">
+          <iframe
+            src="{{ first_pdf_url }}#view={{ block.settings.view_mode }}&zoom=page-width&toolbar={{ block.settings.show_toolbar }}&navpanes=0&scrollbar=1"
+            class="ai-pdf-library-frame-{{ ai_gen_id }}"
+            title="{{ first_pdf_title | escape }}"
+            loading="lazy"
+            data-pdf-frame
+          ></iframe>
+        </div>
+      {% else %}
+        <div class="ai-pdf-library-empty-{{ ai_gen_id }}">
+          Add at least one PDF URL in the block settings.
+        </div>
+      {% endif %}
+    </main>
+  </div>
+</pdf-library-viewer-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class PdfLibraryViewer{{ ai_gen_id }} extends HTMLElement {
+      connectedCallback() {
+        this.triggers = this.querySelectorAll('[data-pdf-trigger]');
+        this.frame = this.querySelector('[data-pdf-frame]');
+        this.title = this.querySelector('[data-pdf-current-title]');
+        this.viewLink = this.querySelector('[data-pdf-view-link]');
+
+        this.viewMode = this.dataset.viewMode || 'FitH';
+        this.showToolbar = this.dataset.showToolbar || '1';
+        this.mobileQuery = window.matchMedia('(max-width: 900px)');
+        this.currentPdfUrl = this.dataset.initialPdfUrl || '';
+        this.currentPdfTitle = this.dataset.initialPdfTitle || 'PDF document';
+        this.resizeTimer = null;
+
+        if (this.viewLink) {
+          this.viewLink.addEventListener('click', (event) => {
+            const activeTrigger = this.querySelector('[data-pdf-trigger].is-active');
+            const selectedUrl = activeTrigger ? activeTrigger.dataset.pdfUrl : this.currentPdfUrl;
+            const cleanUrl = this.getCleanUrl(selectedUrl || this.currentPdfUrl);
+
+            if (!cleanUrl) return;
+
+            event.preventDefault();
+            this.viewLink.href = cleanUrl;
+            window.open(cleanUrl, '_blank', 'noopener');
+          });
+        }
+
+        this.updateAvailableHeight();
+
+        this.triggers.forEach((trigger) => {
+          trigger.addEventListener('click', () => {
+            const pdfUrl = trigger.dataset.pdfUrl;
+            const pdfTitle = trigger.dataset.pdfTitle || 'PDF document';
+
+            this.triggers.forEach((item) => item.classList.remove('is-active'));
+            trigger.classList.add('is-active');
+
+            this.loadPdf(pdfUrl, pdfTitle);
+          });
+        });
+
+        this.handleResponsiveChange = () => {
+          this.updateAvailableHeight();
+
+          if (this.currentPdfUrl) {
+            this.loadPdf(this.currentPdfUrl, this.currentPdfTitle, true);
+          }
+        };
+
+        this.handleResize = () => {
+          window.clearTimeout(this.resizeTimer);
+          this.resizeTimer = window.setTimeout(() => {
+            this.updateAvailableHeight();
+          }, 120);
+        };
+
+        if (this.mobileQuery.addEventListener) {
+          this.mobileQuery.addEventListener('change', this.handleResponsiveChange);
+        } else if (this.mobileQuery.addListener) {
+          this.mobileQuery.addListener(this.handleResponsiveChange);
+        }
+
+        window.addEventListener('resize', this.handleResize, { passive: true });
+        window.addEventListener('orientationchange', this.handleResponsiveChange, { passive: true });
+
+        if (this.currentPdfUrl && this.frame) {
+          this.loadPdf(this.currentPdfUrl, this.currentPdfTitle, true);
+        }
+      }
+
+      disconnectedCallback() {
+        window.clearTimeout(this.resizeTimer);
+
+        if (this.mobileQuery) {
+          if (this.mobileQuery.removeEventListener) {
+            this.mobileQuery.removeEventListener('change', this.handleResponsiveChange);
+          } else if (this.mobileQuery.removeListener) {
+            this.mobileQuery.removeListener(this.handleResponsiveChange);
+          }
+        }
+
+        window.removeEventListener('resize', this.handleResize);
+        window.removeEventListener('orientationchange', this.handleResponsiveChange);
+      }
+
+      updateAvailableHeight() {
+        const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
+        const rect = this.getBoundingClientRect();
+        const safeTop = Math.max(rect.top, 0);
+        const bottomGap = window.innerWidth <= 600 ? 12 : 24;
+        const minimum = window.innerWidth <= 380 ? 300 : window.innerWidth <= 900 ? 320 : 420;
+        const availableHeight = Math.max(minimum, viewportHeight - safeTop - bottomGap);
+
+        this.style.setProperty('--ai-pdf-available-height', `${Math.round(availableHeight)}px`);
+      }
+
+      getCleanUrl(pdfUrl) {
+        return String(pdfUrl || '').split('#')[0];
+      }
+
+      buildViewerUrl(pdfUrl) {
+        const cleanUrl = this.getCleanUrl(pdfUrl);
+        const isMobile = this.mobileQuery ? this.mobileQuery.matches : window.innerWidth <= 900;
+        const viewMode = isMobile ? 'FitH' : this.viewMode;
+        const toolbar = this.showToolbar;
+        const zoom = 'page-width';
+        const fragment = [
+          `view=${encodeURIComponent(viewMode)}`,
+          `zoom=${encodeURIComponent(zoom)}`,
+          `toolbar=${encodeURIComponent(toolbar)}`,
+          'navpanes=0',
+          'scrollbar=1'
+        ].join('&');
+
+        return `${cleanUrl}#${fragment}`;
+      }
+
+      loadPdf(pdfUrl, pdfTitle, forceReload = false) {
+        const cleanUrl = this.getCleanUrl(pdfUrl);
+        const viewerUrl = this.buildViewerUrl(cleanUrl);
+
+        this.currentPdfUrl = cleanUrl;
+        this.currentPdfTitle = pdfTitle;
+
+        if (this.frame && (forceReload || this.frame.src !== viewerUrl)) {
+          this.frame.src = viewerUrl;
+          this.frame.title = pdfTitle;
+        }
+
+        if (this.title) {
+          this.title.textContent = pdfTitle;
+        }
+
+        if (this.viewLink) {
+          this.viewLink.href = cleanUrl;
+          this.viewLink.setAttribute('href', cleanUrl);
+          this.viewLink.dataset.currentPdfUrl = cleanUrl;
+        }
+      }
+    }
+
+    if (!customElements.get('pdf-library-viewer-{{ ai_gen_id }}')) {
+      customElements.define('pdf-library-viewer-{{ ai_gen_id }}', PdfLibraryViewer{{ ai_gen_id }});
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "PDF library viewer",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "PDF thumbnails"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Thumbnail heading",
+      "default": "Documents"
+    },
+    {
+      "type": "text",
+      "id": "pdf_1_title",
+      "label": "PDF 1 title",
+      "default": "Document 1"
+    },
+    {
+      "type": "url",
+      "id": "pdf_1_url",
+      "label": "PDF 1 URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "pdf_1_thumbnail",
+      "label": "PDF 1 thumbnail"
+    },
+    {
+      "type": "text",
+      "id": "pdf_2_title",
+      "label": "PDF 2 title",
+      "default": "Document 2"
+    },
+    {
+      "type": "url",
+      "id": "pdf_2_url",
+      "label": "PDF 2 URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "pdf_2_thumbnail",
+      "label": "PDF 2 thumbnail"
+    },
+    {
+      "type": "text",
+      "id": "pdf_3_title",
+      "label": "PDF 3 title",
+      "default": "Document 3"
+    },
+    {
+      "type": "url",
+      "id": "pdf_3_url",
+      "label": "PDF 3 URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "pdf_3_thumbnail",
+      "label": "PDF 3 thumbnail"
+    },
+    {
+      "type": "text",
+      "id": "pdf_4_title",
+      "label": "PDF 4 title",
+      "default": "Document 4"
+    },
+    {
+      "type": "url",
+      "id": "pdf_4_url",
+      "label": "PDF 4 URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "pdf_4_thumbnail",
+      "label": "PDF 4 thumbnail"
+    },
+    {
+      "type": "text",
+      "id": "pdf_5_title",
+      "label": "PDF 5 title",
+      "default": "Document 5"
+    },
+    {
+      "type": "url",
+      "id": "pdf_5_url",
+      "label": "PDF 5 URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "pdf_5_thumbnail",
+      "label": "PDF 5 thumbnail"
+    },
+    {
+      "type": "text",
+      "id": "pdf_6_title",
+      "label": "PDF 6 title",
+      "default": "Document 6"
+    },
+    {
+      "type": "url",
+      "id": "pdf_6_url",
+      "label": "PDF 6 URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "pdf_6_thumbnail",
+      "label": "PDF 6 thumbnail"
+    },
+    {
+      "type": "text",
+      "id": "pdf_7_title",
+      "label": "PDF 7 title",
+      "default": "Document 7"
+    },
+    {
+      "type": "url",
+      "id": "pdf_7_url",
+      "label": "PDF 7 URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "pdf_7_thumbnail",
+      "label": "PDF 7 thumbnail"
+    },
+    {
+      "type": "text",
+      "id": "pdf_8_title",
+      "label": "PDF 8 title",
+      "default": "Document 8"
+    },
+    {
+      "type": "url",
+      "id": "pdf_8_url",
+      "label": "PDF 8 URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "pdf_8_thumbnail",
+      "label": "PDF 8 thumbnail"
+    },
+    {
+      "type": "text",
+      "id": "pdf_9_title",
+      "label": "PDF 9 title",
+      "default": "Document 9"
+    },
+    {
+      "type": "url",
+      "id": "pdf_9_url",
+      "label": "PDF 9 URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "pdf_9_thumbnail",
+      "label": "PDF 9 thumbnail"
+    },
+    {
+      "type": "text",
+      "id": "pdf_10_title",
+      "label": "PDF 10 title",
+      "default": "Document 10"
+    },
+    {
+      "type": "url",
+      "id": "pdf_10_url",
+      "label": "PDF 10 URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "pdf_10_thumbnail",
+      "label": "PDF 10 thumbnail"
+    },
+    {
+      "type": "header",
+      "content": "Viewer"
+    },
+    {
+      "type": "select",
+      "id": "view_mode",
+      "label": "Default view mode",
+      "options": [
+        {
+          "value": "Fit",
+          "label": "Fit to page"
+        },
+        {
+          "value": "FitH",
+          "label": "Fit width"
+        },
+        {
+          "value": "FitV",
+          "label": "Fit height"
+        }
+      ],
+      "default": "FitH"
+    },
+    {
+      "type": "select",
+      "id": "show_toolbar",
+      "label": "Browser PDF toolbar",
+      "options": [
+        {
+          "value": "1",
+          "label": "Show"
+        },
+        {
+          "value": "0",
+          "label": "Hide"
+        }
+      ],
+      "default": "1"
+    },
+    {
+      "type": "range",
+      "id": "viewer_height",
+      "label": "Viewer height on desktop",
+      "min": 400,
+      "max": 1000,
+      "step": 50,
+      "unit": "px",
+      "default": 700
+    },
+    {
+      "type": "range",
+      "id": "mobile_viewer_height",
+      "label": "Viewer height on mobile",
+      "min": 300,
+      "max": 800,
+      "step": 50,
+      "unit": "px",
+      "default": 500
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "sidebar_width",
+      "label": "Left thumbnails width",
+      "min": 220,
+      "max": 420,
+      "step": 20,
+      "unit": "px",
+      "default": 300
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Thumbnail heading size",
+      "min": 16,
+      "max": 34,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Selected PDF title size",
+      "min": 14,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Main background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "sidebar_background_color",
+      "label": "Left thumbnails background",
+      "default": "#f8fafc"
+    },
+    {
+      "type": "color",
+      "id": "header_background_color",
+      "label": "Viewer header background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#17416f"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#1f2937"
+    },
+    {
+      "type": "color",
+      "id": "muted_text_color",
+      "label": "Muted text color",
+      "default": "#6b7280"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "#e5e7eb"
+    },
+    {
+      "type": "color",
+      "id": "item_hover_color",
+      "label": "Thumbnail hover color",
+      "default": "#eef4fb"
+    },
+    {
+      "type": "color",
+      "id": "item_active_color",
+      "label": "Active thumbnail color",
+      "default": "#e7f0fb"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Button color",
+      "default": "#17416f"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_color",
+      "label": "Button hover color",
+      "default": "#0f2d4f"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Main border radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "item_border_radius",
+      "label": "Thumbnail border radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "label": "Button border radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    }
+  ],
+  "presets": [
+    {
+      "name": "PDF library viewer"
+    }
+  ]
+}
+{% endschema %}

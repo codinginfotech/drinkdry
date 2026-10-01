@@ -1,0 +1,89 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "1781772308c4778705": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_bd8a668_Gzj7nD": {
+          "type": "ai_gen_block_bd8a668",
+          "settings": {
+            "heading": "Documents",
+            "pdf_1_title": "Brand Presenter UAE",
+            "pdf_1_url": "https://cdn.shopify.com/s/files/1/0500/1664/9366/files/Drink_Dry_Brand_Presenter_UAE.pdf?v=1781773110",
+            "pdf_1_thumbnail": "shopify://shop_images/UAE_74e8a8b7-7476-4488-9719-508bd0649c96.webp",
+            "pdf_2_title": "Brand Presenter KSA",
+            "pdf_2_url": "https://cdn.shopify.com/s/files/1/0500/1664/9366/files/Brand_Presenter_KSA.pdf?v=1781782727",
+            "pdf_2_thumbnail": "shopify://shop_images/KSA.webp",
+            "pdf_3_title": "Brand Presenter Al Shaya Group",
+            "pdf_3_url": "https://cdn.shopify.com/s/files/1/0500/1664/9366/files/Brand_Presenter_Al_Shaya.pdf?v=1781861104",
+            "pdf_3_thumbnail": "shopify://shop_images/Al_Shaya.webp",
+            "pdf_4_title": "Brand Presenter Kuwait",
+            "pdf_4_url": "https://cdn.shopify.com/s/files/1/0500/1664/9366/files/Brand_Presenter_Kuwait.pdf?v=1781867462",
+            "pdf_4_thumbnail": "shopify://shop_images/Kuwait.webp",
+            "pdf_5_title": "Document 5",
+            "pdf_5_url": "",
+            "pdf_6_title": "Document 6",
+            "pdf_6_url": "",
+            "pdf_7_title": "Document 7",
+            "pdf_7_url": "",
+            "pdf_8_title": "Document 8",
+            "pdf_8_url": "",
+            "pdf_9_title": "Document 9",
+            "pdf_9_url": "",
+            "pdf_10_title": "Document 10",
+            "pdf_10_url": "",
+            "view_mode": "FitH",
+            "show_toolbar": "1",
+            "viewer_height": 700,
+            "mobile_viewer_height": 500,
+            "desktop_width_percent": 70,
+            "sidebar_width": 260,
+            "heading_size": 16,
+            "title_size": 14,
+            "background_color": "#FFFFFF",
+            "sidebar_background_color": "#ffffff",
+            "header_background_color": "#ffffff",
+            "heading_color": "#17416f",
+            "text_color": "#17416f",
+            "muted_text_color": "#17416f",
+            "border_color": "#e5e7eb",
+            "item_hover_color": "#c5ccd4",
+            "item_active_color": "#e7f0fb",
+            "button_color": "#17416f",
+            "button_text_color": "#ffffff",
+            "button_hover_color": "#0f2d4f",
+            "border_radius": 2,
+            "item_border_radius": 4,
+            "button_border_radius": 0
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_bd8a668_Gzj7nD"
+      ],
+      "settings": {}
+    },
+    "main": {
+      "type": "main-page-corona",
+      "disabled": true,
+      "settings": {
+        "narrow": true,
+        "padding_top": 60,
+        "padding_bottom": 72
+      }
+    }
+  },
+  "order": [
+    "1781772308c4778705",
+    "main"
+  ]
+}

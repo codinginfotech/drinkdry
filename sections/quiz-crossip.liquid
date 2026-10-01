@@ -1,0 +1,932 @@
+{% comment %}
+  sections/quiz-crossip.liquid
+  Interactive personality quiz with scoring, Klaviyo integration, SKU reveal.
+{% endcomment %}
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap');
+
+  .quiz-section {
+    --quiz-bg: {{ section.settings.background_color }};
+    --quiz-text: {{ section.settings.text_color }};
+    --quiz-accent: {{ section.settings.accent_color }};
+    --quiz-card-bg: {{ section.settings.card_color }};
+    --quiz-radius: 16px;
+    font-family: 'DM Sans', sans-serif;
+    background: var(--quiz-bg);
+    color: var(--quiz-text);
+    min-height: 100vh;
+    padding: 0;
+  }
+  .quiz-section * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  .quiz-hero {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 70vh;
+    overflow: hidden;
+    text-align: center;
+    padding: 60px 24px;
+  }
+  .quiz-hero__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+  .quiz-hero__bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .quiz-hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 1;
+  }
+  .quiz-hero__content {
+    position: relative;
+    z-index: 2;
+    max-width: 700px;
+  }
+  .quiz-hero__title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(36px, 6vw, 64px);
+    font-weight: 400;
+    color: #fff;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+  .quiz-hero__subtitle {
+    font-size: 18px;
+    color: rgba(255,255,255,0.85);
+    margin-bottom: 32px;
+    line-height: 1.5;
+  }
+  .quiz-hero__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 40px;
+    background: var(--quiz-accent);
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: transform 0.2s, opacity 0.2s;
+    text-decoration: none;
+  }
+  .quiz-hero__cta:hover { transform: translateY(-2px); opacity: 0.9; }
+
+  .quiz-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 60px 24px 80px;
+  }
+
+  .quiz-progress {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+  .quiz-progress__bar {
+    flex: 1;
+    height: 4px;
+    background: rgba(0,0,0,0.1);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .quiz-progress__fill {
+    height: 100%;
+    background: var(--quiz-accent);
+    border-radius: 2px;
+    transition: width 0.4s ease;
+  }
+  .quiz-progress__step {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--quiz-accent);
+    white-space: nowrap;
+  }
+
+  .quiz-question {
+    display: none;
+    animation: quizFadeIn 0.4s ease;
+  }
+  .quiz-question.is-active { display: block; }
+  @keyframes quizFadeIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .quiz-question__label {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--quiz-accent);
+    margin-bottom: 12px;
+  }
+  .quiz-question__title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 32px;
+  }
+
+  .quiz-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  @media (max-width: 600px) {
+    .quiz-options { grid-template-columns: 1fr; }
+  }
+  .quiz-option {
+    padding: 20px 24px;
+    background: var(--quiz-card-bg);
+    border: 2px solid transparent;
+    border-radius: var(--quiz-radius);
+    cursor: pointer;
+    transition: border-color 0.2s, transform 0.15s, box-shadow 0.2s;
+    text-align: left;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--quiz-text);
+    line-height: 1.4;
+  }
+  .quiz-option:hover {
+    border-color: var(--quiz-accent);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  }
+  .quiz-option.is-selected {
+    border-color: var(--quiz-accent);
+    background: var(--quiz-accent);
+    color: #fff;
+  }
+
+  .quiz-form-screen {
+    display: none;
+    animation: quizFadeIn 0.4s ease;
+  }
+  .quiz-form-screen.is-active { display: block; }
+  .quiz-form-screen__title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 12px;
+    text-align: center;
+  }
+  .quiz-form-screen__subtitle {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 36px;
+    text-align: center;
+  }
+  .quiz-form {
+    max-width: 440px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .quiz-form__group { display: flex; flex-direction: column; gap: 6px; }
+  .quiz-form__group label {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .quiz-form__group input {
+    padding: 14px 16px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 15px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+    background: #fafafa;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .quiz-form__group input:focus { border-color: var(--quiz-accent); }
+  .quiz-form__submit {
+    padding: 16px;
+    background: var(--quiz-accent);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    margin-top: 8px;
+  }
+  .quiz-form__submit:hover { opacity: 0.85; }
+  .quiz-form__msg {
+    font-size: 13px;
+    text-align: center;
+    min-height: 18px;
+  }
+
+  .quiz-result {
+    display: none;
+    animation: quizFadeIn 0.5s ease;
+    text-align: center;
+  }
+  .quiz-result.is-active { display: block; }
+  .quiz-result__badge {
+    display: inline-block;
+    padding: 6px 20px;
+    background: var(--quiz-accent);
+    color: #fff;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 20px;
+  }
+  .quiz-result__title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 400;
+    line-height: 1.15;
+    margin-bottom: 16px;
+  }
+  .quiz-result__description {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555;
+    max-width: 520px;
+    margin: 0 auto 32px;
+  }
+  .quiz-result__product {
+    background: var(--quiz-card-bg);
+    border-radius: var(--quiz-radius);
+    padding: 40px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 32px;
+  }
+  .quiz-result__product-image {
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+  }
+  .quiz-result__product-name {
+    font-size: 20px;
+    font-weight: 600;
+  }
+  .quiz-result__product-serve {
+    font-size: 14px;
+    color: #666;
+    font-style: italic;
+  }
+  .quiz-result__cta {
+    display: inline-flex;
+    padding: 16px 48px;
+    background: var(--quiz-accent);
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.2s, opacity 0.2s;
+  }
+  .quiz-result__cta:hover { transform: translateY(-2px); opacity: 0.9; }
+
+  .quiz-hidden { display: none !important; }
+</style>
+
+<!-- HERO -->
+<div class="quiz-section" id="quiz-section-{{ section.id }}">
+  <div class="quiz-hero" id="quiz-hero-{{ section.id }}">
+    {% if section.settings.hero_image != blank %}
+      <div class="quiz-hero__bg">
+        {{ section.settings.hero_image | image_url: width: 1920 | image_tag: loading: 'eager' }}
+      </div>
+    {% endif %}
+    <div class="quiz-hero__overlay"></div>
+    <div class="quiz-hero__content">
+      <h1 class="quiz-hero__title">{{ section.settings.hero_title }}</h1>
+      <p class="quiz-hero__subtitle">{{ section.settings.hero_subtitle }}</p>
+      <button class="quiz-hero__cta" id="quiz-start-{{ section.id }}">
+        {{ section.settings.hero_cta }}
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-container quiz-hidden" id="quiz-body-{{ section.id }}">
+
+    <div class="quiz-progress">
+      <div class="quiz-progress__bar">
+        <div class="quiz-progress__fill" id="quiz-progress-fill-{{ section.id }}" style="width: 0%;"></div>
+      </div>
+      <span class="quiz-progress__step" id="quiz-progress-step-{{ section.id }}">1 / 4</span>
+    </div>
+
+    {% for block in section.blocks %}
+      {% if block.type == 'question' %}
+        <div class="quiz-question" data-question="{{ forloop.index }}" {{ block.shopify_attributes }}>
+          <div class="quiz-question__label">Question {{ forloop.index }}</div>
+          <h2 class="quiz-question__title">{{ block.settings.question_text }}</h2>
+          <div class="quiz-options">
+            <button class="quiz-option" data-sku="{{ block.settings.option_1_sku }}" data-points="{{ block.settings.option_1_points }}">{{ block.settings.option_1_text }}</button>
+            <button class="quiz-option" data-sku="{{ block.settings.option_2_sku }}" data-points="{{ block.settings.option_2_points }}">{{ block.settings.option_2_text }}</button>
+            <button class="quiz-option" data-sku="{{ block.settings.option_3_sku }}" data-points="{{ block.settings.option_3_points }}">{{ block.settings.option_3_text }}</button>
+            <button class="quiz-option" data-sku="{{ block.settings.option_4_sku }}" data-points="{{ block.settings.option_4_points }}">{{ block.settings.option_4_text }}</button>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+
+    <!-- Form Screen -->
+    <div class="quiz-form-screen" id="quiz-form-screen-{{ section.id }}">
+      <h2 class="quiz-form-screen__title">{{ section.settings.form_title }}</h2>
+      <p class="quiz-form-screen__subtitle">{{ section.settings.form_subtitle }}</p>
+      <form class="quiz-form" id="quiz-form-{{ section.id }}">
+        <div class="quiz-form__group">
+          <label>Full Name *</label>
+          <input type="text" name="full_name" placeholder="Your name" required>
+        </div>
+        <div class="quiz-form__group">
+          <label>Email Address *</label>
+          <input type="email" name="email" placeholder="your@email.com" required>
+        </div>
+        <div class="quiz-form__group">
+          <label>Phone Number</label>
+          <input type="tel" name="phone" placeholder="+44 7700 000000">
+        </div>
+        <button type="submit" class="quiz-form__submit">{{ section.settings.form_cta }}</button>
+        <div class="quiz-form__msg" id="quiz-form-msg-{{ section.id }}"></div>
+      </form>
+    </div>
+
+    <!-- Result Screen -->
+    <div class="quiz-result" id="quiz-result-{{ section.id }}">
+      <div class="quiz-result__badge">Your Match</div>
+      <h2 class="quiz-result__title" id="quiz-result-title-{{ section.id }}"></h2>
+      <p class="quiz-result__description" id="quiz-result-desc-{{ section.id }}"></p>
+      <div class="quiz-result__product">
+        <img class="quiz-result__product-image" id="quiz-result-image-{{ section.id }}" src="" alt="">
+        <div class="quiz-result__product-name" id="quiz-result-product-{{ section.id }}"></div>
+        <div class="quiz-result__product-serve" id="quiz-result-serve-{{ section.id }}"></div>
+      </div>
+      <br>
+      <a class="quiz-result__cta" id="quiz-result-cta-{{ section.id }}" href="#">{{ section.settings.result_cta }}</a>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function() {
+  var sid = '{{ section.id }}';
+  var klaviyoListId = '{{ section.settings.klaviyo_list_id }}';
+
+  var skuData = {};
+  {% for block in section.blocks %}
+    {% if block.type == 'product_result' %}
+      skuData[{{ block.settings.sku_key | json }}] = {
+        name: {{ block.settings.product_name | json }},
+        description: {{ block.settings.product_description | json }},
+        serve: {{ block.settings.serve_suggestion | json }},
+        image: {{ block.settings.product_image | image_url: width: 400 | json }},
+        url: {{ block.settings.product_url | json }}
+      };
+    {% endif %}
+  {% endfor %}
+
+  var scores = {};
+  var currentQ = 1;
+  var totalQ = document.querySelectorAll('#quiz-body-' + sid + ' .quiz-question').length;
+  var winnerSku = '';
+
+  var startBtn = document.getElementById('quiz-start-' + sid);
+  var hero = document.getElementById('quiz-hero-' + sid);
+  var body = document.getElementById('quiz-body-' + sid);
+
+  if (startBtn) {
+    startBtn.addEventListener('click', function() {
+      hero.classList.add('quiz-hidden');
+      body.classList.remove('quiz-hidden');
+      showQuestion(1);
+      window.scrollTo({ top: body.offsetTop - 40, behavior: 'smooth' });
+    });
+  }
+
+  function showQuestion(n) {
+    var questions = document.querySelectorAll('#quiz-body-' + sid + ' .quiz-question');
+    questions.forEach(function(q) { q.classList.remove('is-active'); });
+    var target = document.querySelector('#quiz-body-' + sid + ' [data-question="' + n + '"]');
+    if (target) target.classList.add('is-active');
+    var fill = document.getElementById('quiz-progress-fill-' + sid);
+    var step = document.getElementById('quiz-progress-step-' + sid);
+    if (fill) fill.style.width = ((n - 1) / totalQ * 100) + '%';
+    if (step) step.textContent = n + ' / ' + totalQ;
+  }
+
+  document.querySelectorAll('#quiz-body-' + sid + ' .quiz-option').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var sku = this.getAttribute('data-sku');
+      var points = parseInt(this.getAttribute('data-points')) || 1;
+      if (!scores[sku]) scores[sku] = 0;
+      scores[sku] += points;
+
+      var siblings = this.parentElement.querySelectorAll('.quiz-option');
+      siblings.forEach(function(s) { s.classList.remove('is-selected'); });
+      this.classList.add('is-selected');
+
+      setTimeout(function() {
+        currentQ++;
+        if (currentQ <= totalQ) {
+          showQuestion(currentQ);
+        } else {
+          showFormScreen();
+        }
+      }, 400);
+    });
+  });
+
+  function showFormScreen() {
+    var questions = document.querySelectorAll('#quiz-body-' + sid + ' .quiz-question');
+    questions.forEach(function(q) { q.classList.remove('is-active'); });
+    var fill = document.getElementById('quiz-progress-fill-' + sid);
+    if (fill) fill.style.width = '100%';
+    var formScreen = document.getElementById('quiz-form-screen-' + sid);
+    if (formScreen) formScreen.classList.add('is-active');
+
+    winnerSku = '';
+    var maxScore = 0;
+    for (var sku in scores) {
+      if (scores[sku] > maxScore) {
+        maxScore = scores[sku];
+        winnerSku = sku;
+      }
+    }
+  }
+
+  var form = document.getElementById('quiz-form-' + sid);
+  var formMsg = document.getElementById('quiz-form-msg-' + sid);
+
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var fd = new FormData(form);
+      var fullName = fd.get('full_name');
+      var email = fd.get('email');
+      var phone = fd.get('phone') || '';
+
+      if (!email) { formMsg.textContent = 'Please enter your email.'; formMsg.style.color = 'red'; return; }
+      formMsg.textContent = 'Submitting...'; formMsg.style.color = '#666';
+
+      var profileAttrs = {
+        email: email,
+        first_name: fullName.split(' ')[0] || fullName,
+        last_name: fullName.split(' ').slice(1).join(' ') || '',
+        properties: {
+          quiz_result: winnerSku,
+          quiz_scores: JSON.stringify(scores)
+        }
+      };
+      if (phone) profileAttrs.phone_number = phone;
+
+      fetch('https://a.klaviyo.com/client/subscriptions/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'revision': '2024-02-15'
+        },
+        body: JSON.stringify({
+          data: {
+            type: 'subscription',
+            attributes: {
+              custom_source: 'Quiz - ' + (winnerSku || 'Unknown'),
+              profile: {
+                data: {
+                  type: 'profile',
+                  attributes: profileAttrs
+                }
+              }
+            },
+            relationships: {
+              list: {
+                data: {
+                  type: 'list',
+                  id: klaviyoListId
+                }
+              }
+            }
+          }
+        })
+      })
+      .then(function() { showResult(); })
+      .catch(function() { showResult(); });
+    });
+  }
+
+  function showResult() {
+    var formScreen = document.getElementById('quiz-form-screen-' + sid);
+    if (formScreen) formScreen.classList.remove('is-active');
+    var progressEl = document.querySelector('#quiz-body-' + sid + ' .quiz-progress');
+    if (progressEl) progressEl.style.display = 'none';
+    var result = document.getElementById('quiz-result-' + sid);
+    if (result) result.classList.add('is-active');
+
+    var data = skuData[winnerSku] || { name: winnerSku, description: '', serve: '', image: '', url: '#' };
+
+    var titleEl = document.getElementById('quiz-result-title-' + sid);
+    var descEl = document.getElementById('quiz-result-desc-' + sid);
+    var imgEl = document.getElementById('quiz-result-image-' + sid);
+    var prodEl = document.getElementById('quiz-result-product-' + sid);
+    var serveEl = document.getElementById('quiz-result-serve-' + sid);
+    var ctaEl = document.getElementById('quiz-result-cta-' + sid);
+
+    if (titleEl) titleEl.textContent = 'You are ' + data.name + '!';
+    if (descEl) descEl.textContent = data.description;
+    if (imgEl && data.image) { imgEl.src = data.image; imgEl.alt = data.name; }
+    if (prodEl) prodEl.textContent = data.name;
+    if (serveEl) serveEl.textContent = data.serve;
+    if (ctaEl && data.url) ctaEl.href = data.url;
+
+    window.scrollTo({ top: result.offsetTop - 40, behavior: 'smooth' });
+  }
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Quiz Funnel",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Hero"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero background image"
+    },
+    {
+      "type": "text",
+      "id": "hero_title",
+      "label": "Hero title",
+      "default": "Find Your Perfect Match"
+    },
+    {
+      "type": "textarea",
+      "id": "hero_subtitle",
+      "label": "Hero subtitle",
+      "default": "Take our quick quiz to discover which drink is made for you."
+    },
+    {
+      "type": "text",
+      "id": "hero_cta",
+      "label": "Hero button text",
+      "default": "Take the Quiz"
+    },
+    {
+      "type": "header",
+      "content": "Form"
+    },
+    {
+      "type": "text",
+      "id": "form_title",
+      "label": "Form title",
+      "default": "Enter Your Details to Meet Your Match"
+    },
+    {
+      "type": "text",
+      "id": "form_subtitle",
+      "label": "Form subtitle",
+      "default": "We will reveal your perfect drink and send you something special."
+    },
+    {
+      "type": "text",
+      "id": "form_cta",
+      "label": "Form submit button text",
+      "default": "Reveal My Match"
+    },
+    {
+      "type": "header",
+      "content": "Result"
+    },
+    {
+      "type": "text",
+      "id": "result_cta",
+      "label": "Result CTA button text",
+      "default": "Shop Now"
+    },
+    {
+      "type": "header",
+      "content": "Klaviyo"
+    },
+    {
+      "type": "text",
+      "id": "klaviyo_list_id",
+      "label": "Klaviyo List ID",
+      "info": "The list ID to subscribe quiz leads to. Find it in Klaviyo > Lists and Segments."
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#f8f5f0"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent / buttons",
+      "default": "#2d5016"
+    },
+    {
+      "type": "color",
+      "id": "card_color",
+      "label": "Card / option background",
+      "default": "#ffffff"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question_text",
+          "label": "Question",
+          "default": "Pick Your Moment:"
+        },
+        {
+          "type": "text",
+          "id": "option_1_text",
+          "label": "Option 1 text",
+          "default": "Brunch / daytime fun"
+        },
+        {
+          "type": "text",
+          "id": "option_1_sku",
+          "label": "Option 1 SKU key",
+          "default": "fresh"
+        },
+        {
+          "type": "range",
+          "id": "option_1_points",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 1,
+          "label": "Option 1 points"
+        },
+        {
+          "type": "text",
+          "id": "option_2_text",
+          "label": "Option 2 text",
+          "default": "Dinner / date night"
+        },
+        {
+          "type": "text",
+          "id": "option_2_sku",
+          "label": "Option 2 SKU key",
+          "default": "pure"
+        },
+        {
+          "type": "range",
+          "id": "option_2_points",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 1,
+          "label": "Option 2 points"
+        },
+        {
+          "type": "text",
+          "id": "option_3_text",
+          "label": "Option 3 text",
+          "default": "Late night / after hours"
+        },
+        {
+          "type": "text",
+          "id": "option_3_sku",
+          "label": "Option 3 SKU key",
+          "default": "dandy"
+        },
+        {
+          "type": "range",
+          "id": "option_3_points",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 1,
+          "label": "Option 3 points"
+        },
+        {
+          "type": "text",
+          "id": "option_4_text",
+          "label": "Option 4 text",
+          "default": "Pre drinks / party time"
+        },
+        {
+          "type": "text",
+          "id": "option_4_sku",
+          "label": "Option 4 SKU key",
+          "default": "blazing"
+        },
+        {
+          "type": "range",
+          "id": "option_4_points",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 1,
+          "label": "Option 4 points"
+        }
+      ]
+    },
+    {
+      "type": "product_result",
+      "name": "Product Result",
+      "settings": [
+        {
+          "type": "text",
+          "id": "sku_key",
+          "label": "SKU key",
+          "info": "Must match the SKU key used in question options (e.g. fresh, pure, dandy, blazing)"
+        },
+        {
+          "type": "text",
+          "id": "product_name",
+          "label": "Product name",
+          "default": "Crossip Fresh"
+        },
+        {
+          "type": "textarea",
+          "id": "product_description",
+          "label": "Product description",
+          "default": "Light, zesty, and effortlessly refreshing. You keep things easy and bright."
+        },
+        {
+          "type": "text",
+          "id": "serve_suggestion",
+          "label": "Serve suggestion",
+          "default": "Best served with tonic and a slice of lime"
+        },
+        {
+          "type": "image_picker",
+          "id": "product_image",
+          "label": "Product image"
+        },
+        {
+          "type": "url",
+          "id": "product_url",
+          "label": "Product URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Quiz Funnel",
+      "blocks": [
+        {
+          "type": "question",
+          "settings": {
+            "question_text": "Pick Your Moment:",
+            "option_1_text": "Brunch / daytime fun",
+            "option_1_sku": "fresh",
+            "option_1_points": 1,
+            "option_2_text": "Dinner / date night",
+            "option_2_sku": "pure",
+            "option_2_points": 1,
+            "option_3_text": "Late night / after hours",
+            "option_3_sku": "dandy",
+            "option_3_points": 1,
+            "option_4_text": "Pre drinks / party time",
+            "option_4_sku": "blazing",
+            "option_4_points": 1
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question_text": "What are you in the mood for?",
+            "option_1_text": "Fresh and zesty",
+            "option_1_sku": "fresh",
+            "option_1_points": 2,
+            "option_2_text": "Bold and bittersweet",
+            "option_2_sku": "pure",
+            "option_2_points": 2,
+            "option_3_text": "Rich and smoky",
+            "option_3_sku": "dandy",
+            "option_3_points": 2,
+            "option_4_text": "Juicy and spicy",
+            "option_4_sku": "blazing",
+            "option_4_points": 2
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question_text": "What sounds most like you?",
+            "option_1_text": "Open, relaxed, easy going",
+            "option_1_sku": "fresh",
+            "option_1_points": 1,
+            "option_2_text": "Expressive, spontaneous, a bit extra",
+            "option_2_sku": "pure",
+            "option_2_points": 1,
+            "option_3_text": "Cool, confident, understated",
+            "option_3_sku": "dandy",
+            "option_3_points": 1,
+            "option_4_text": "Energetic, bold, a bit mischievous",
+            "option_4_sku": "blazing",
+            "option_4_points": 1
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question_text": "What do you want your drink to do?",
+            "option_1_text": "Refresh and lift the mood",
+            "option_1_sku": "fresh",
+            "option_1_points": 2,
+            "option_2_text": "Be a bit of a talking point",
+            "option_2_sku": "pure",
+            "option_2_points": 2,
+            "option_3_text": "Let me sip something great all night",
+            "option_3_sku": "dandy",
+            "option_3_points": 2,
+            "option_4_text": "Wake things up and bring energy",
+            "option_4_sku": "blazing",
+            "option_4_points": 2
+          }
+        },
+        {
+          "type": "product_result",
+          "settings": {
+            "sku_key": "fresh",
+            "product_name": "Crossip Fresh",
+            "product_description": "Light, zesty, and effortlessly refreshing. You keep things easy and bright."
+          }
+        },
+        {
+          "type": "product_result",
+          "settings": {
+            "sku_key": "pure",
+            "product_name": "Crossip Pure",
+            "product_description": "Bold, expressive, and unapologetically you. A drink that matches your energy."
+          }
+        },
+        {
+          "type": "product_result",
+          "settings": {
+            "sku_key": "dandy",
+            "product_name": "Crossip Dandy",
+            "product_description": "Rich, smooth, and understated cool. For those who know what they like."
+          }
+        },
+        {
+          "type": "product_result",
+          "settings": {
+            "sku_key": "blazing",
+            "product_name": "Crossip Blazing",
+            "product_description": "Spicy, bold, and full of life. You bring the energy wherever you go."
+          }
+        }
+      ]
+    }
+  ],
+  "templates": ["page"]
+}
+{% endschema %}

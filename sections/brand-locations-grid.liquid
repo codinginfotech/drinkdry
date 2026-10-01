@@ -1,0 +1,574 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --section-padding-top: {{ section.settings.padding_top }}px;
+    --section-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --card-radius: {{ section.settings.card_radius }}px;
+    --grid-gap: {{ section.settings.grid_gap }}px;
+    --btn-bg: {{ section.settings.button_bg }};
+    --btn-text: {{ section.settings.button_text_color }};
+  }
+
+  #shopify-section-{{ section.id }} .brand-grid {
+    background-color: {{ section.settings.bg_color }};
+    padding: var(--section-padding-top) 0 var(--section-padding-bottom);
+  }
+
+  #shopify-section-{{ section.id }} .brand-grid__heading {
+    color: {{ section.settings.heading_color }};
+    font-size: {{ section.settings.heading_font_size }}px;
+  }
+
+  #shopify-section-{{ section.id }} .brand-grid__desc {
+    color: {{ section.settings.desc_color }};
+  }
+{%- endstyle -%}
+
+<div class="brand-grid">
+  <div class="brand-grid__inner page-width">
+
+    {%- comment -%} ROW 1: Info block + first 2 cards {%- endcomment -%}
+    <div class="brand-grid__row brand-grid__row--top">
+
+      <!-- Info block -->
+      <div class="brand-grid__info">
+        {%- if section.settings.logo != blank -%}
+          <div class="brand-grid__logo">
+            <img
+              src="{{ section.settings.logo | image_url: width: 400 }}"
+              alt="{{ section.settings.heading | strip_html | escape }}"
+              loading="lazy"
+              width="{{ section.settings.logo_width }}"
+              style="max-width:{{ section.settings.logo_width }}px;"
+            />
+          </div>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="brand-grid__heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.description != blank -%}
+          <div class="brand-grid__desc">{{ section.settings.description }}</div>
+        {%- endif -%}
+      </div>
+
+      <!-- First 2 blocks as cards in row 1 -->
+      {%- for block in section.blocks -%}
+        {%- if forloop.index <= 2 -%}
+          <div class="brand-grid__card" {{ block.shopify_attributes }}>
+            {%- if block.settings.image != blank -%}
+              <img
+                src="{{ block.settings.image | image_url: width: 800 }}"
+                alt="{{ block.settings.label | escape }}"
+                loading="lazy"
+                class="brand-grid__card-img"
+              />
+            {%- else -%}
+              <div class="brand-grid__card-placeholder">
+                {{ 'image' | placeholder_svg_tag: 'placeholder' }}
+              </div>
+            {%- endif -%}
+            {%- if block.settings.label != blank -%}
+              {%- if block.settings.link != blank -%}
+                <a href="{{ block.settings.link }}" class="brand-grid__btn">{{ block.settings.label }}</a>
+              {%- else -%}
+                <span class="brand-grid__btn">{{ block.settings.label }}</span>
+              {%- endif -%}
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    {%- comment -%} ROW 2: Remaining cards (3 per row) {%- endcomment -%}
+    {%- assign remaining_blocks = section.blocks | size | minus: 2 -%}
+    {%- if remaining_blocks > 0 -%}
+      <div class="brand-grid__row brand-grid__row--bottom">
+        {%- for block in section.blocks -%}
+          {%- if forloop.index > 2 -%}
+            <div class="brand-grid__card" {{ block.shopify_attributes }}>
+              {%- if block.settings.image != blank -%}
+                <img
+                  src="{{ block.settings.image | image_url: width: 800 }}"
+                  alt="{{ block.settings.label | escape }}"
+                  loading="lazy"
+                  class="brand-grid__card-img"
+                />
+              {%- else -%}
+                <div class="brand-grid__card-placeholder">
+                  {{ 'image' | placeholder_svg_tag: 'placeholder' }}
+                </div>
+              {%- endif -%}
+              {%- if block.settings.label != blank -%}
+                {%- if block.settings.link != blank -%}
+                  <a href="{{ block.settings.link }}" class="brand-grid__btn">{{ block.settings.label }}</a>
+                {%- else -%}
+                  <span class="brand-grid__btn">{{ block.settings.label }}</span>
+                {%- endif -%}
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+  </div>
+
+  {%- comment -%} MOBILE CAROUSEL: all cards, shown only on mobile {%- endcomment -%}
+  <div class="brand-grid__mobile-carousel" id="brand-carousel-{{ section.id }}">
+    <div class="brand-grid__mobile-info page-width">
+      {%- if section.settings.logo != blank -%}
+        <div class="brand-grid__logo">
+          <img
+            src="{{ section.settings.logo | image_url: width: 400 }}"
+            alt="{{ section.settings.heading | strip_html | escape }}"
+            loading="lazy"
+            width="{{ section.settings.logo_width }}"
+            style="max-width:{{ section.settings.logo_width }}px;"
+          />
+        </div>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="brand-grid__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.description != blank -%}
+        <div class="brand-grid__desc">{{ section.settings.description }}</div>
+      {%- endif -%}
+    </div>
+    <div class="brand-grid__track-wrap">
+      <div class="brand-grid__track">
+        {%- for block in section.blocks -%}
+          <div class="brand-grid__slide brand-grid__card" {{ block.shopify_attributes }}>
+            {%- if block.settings.image != blank -%}
+              <img
+                src="{{ block.settings.image | image_url: width: 800 }}"
+                alt="{{ block.settings.label | escape }}"
+                loading="lazy"
+                class="brand-grid__card-img"
+              />
+            {%- else -%}
+              <div class="brand-grid__card-placeholder"></div>
+            {%- endif -%}
+            {%- if block.settings.label != blank -%}
+              {%- if block.settings.link != blank -%}
+                <a href="{{ block.settings.link }}" class="brand-grid__btn">{{ block.settings.label }}</a>
+              {%- else -%}
+                <span class="brand-grid__btn">{{ block.settings.label }}</span>
+              {%- endif -%}
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<style>
+  /* ============================================
+     DESKTOP GRID
+     ============================================ */
+  #shopify-section-{{ section.id }} .brand-grid__inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--grid-gap);
+  }
+
+  #shopify-section-{{ section.id }} .brand-grid__row--top {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: var(--grid-gap);
+    align-items: stretch;
+  }
+
+  #shopify-section-{{ section.id }} .brand-grid__row--bottom {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--grid-gap);
+  }
+
+  /* ============================================
+     INFO BLOCK (desktop)
+     ============================================ */
+  #shopify-section-{{ section.id }} .brand-grid__info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 30px 20px 30px 0;
+    gap: 15px;
+  }
+
+  #shopify-section-{{ section.id }} .brand-grid__logo img {
+    display: block;
+    height: auto;
+  }
+
+  #shopify-section-{{ section.id }} .brand-grid__heading {
+    margin: 0;
+    text-transform: uppercase;
+    line-height: 1.1;
+    font-weight: 800;
+  }
+
+  #shopify-section-{{ section.id }} .brand-grid__desc {
+    font-size: 15px;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  #shopify-section-{{ section.id }} .brand-grid__desc p {
+    margin: 0;
+  }
+
+  /* ============================================
+     CARDS (shared)
+     ============================================ */
+  #shopify-section-{{ section.id }} .brand-grid__card {
+    position: relative;
+    border-radius: var(--card-radius);
+    overflow: hidden;
+    min-height: {{ section.settings.card_height }}px;
+  }
+
+  #shopify-section-{{ section.id }} .brand-grid__card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: transform 0.4s ease;
+  }
+
+  #shopify-section-{{ section.id }} .brand-grid__card:hover .brand-grid__card-img {
+    transform: scale(1.05);
+  }
+
+  #shopify-section-{{ section.id }} .brand-grid__card-placeholder {
+    width: 100%;
+    height: 100%;
+    min-height: {{ section.settings.card_height }}px;
+    background: #e0e0e0;
+  }
+
+  /* ============================================
+     BUTTON / LABEL (shared)
+     ============================================ */
+  #shopify-section-{{ section.id }} .brand-grid__btn {
+    position: absolute;
+    bottom: 25px;
+    left: 25px;
+    right: 25px;
+    background-color: var(--btn-bg);
+    color: var(--btn-text);
+    padding: 12px 20px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    display: block;
+    z-index: 2;
+    text-align: center;
+    transition: opacity 0.2s ease;
+    white-space: nowrap;
+  }
+
+  #shopify-section-{{ section.id }} .brand-grid__btn:hover {
+    opacity: 0.85;
+  }
+
+  /* ============================================
+     MOBILE CAROUSEL — hidden on desktop
+     ============================================ */
+  #shopify-section-{{ section.id }} .brand-grid__mobile-carousel {
+    display: none;
+  }
+
+  /* ============================================
+     TABLET
+     ============================================ */
+  @media screen and (max-width: 989px) {
+    #shopify-section-{{ section.id }} .brand-grid__row--top {
+      grid-template-columns: 1fr 1fr;
+    }
+    #shopify-section-{{ section.id }} .brand-grid__info {
+      grid-column: 1 / -1;
+      padding: 0 0 10px;
+    }
+    #shopify-section-{{ section.id }} .brand-grid__row--bottom {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  /* ============================================
+     MOBILE — switch to carousel
+     ============================================ */
+  @media screen and (max-width: 767.98px) {
+
+    /* Hide the desktop grid entirely */
+    #shopify-section-{{ section.id }} .brand-grid__inner {
+      display: none;
+    }
+
+    /* Show mobile carousel */
+    #shopify-section-{{ section.id }} .brand-grid__mobile-carousel {
+      display: block;
+    }
+
+    /* Mobile info block */
+    #shopify-section-{{ section.id }} .brand-grid__mobile-info {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-bottom: 20px;
+    }
+
+    #shopify-section-{{ section.id }} .brand-grid__mobile-info .brand-grid__heading {
+      font-size: 28px;
+    }
+
+    #shopify-section-{{ section.id }} .brand-grid__mobile-info .brand-grid__desc {
+      font-size: 14px;
+    }
+
+    #shopify-section-{{ section.id }} .brand-grid__mobile-info .brand-grid__logo img {
+      max-width: {{ section.settings.logo_width | times: 0.7 | round }}px;
+    }
+
+    /* Track wrapper: clips the overflow at section edges */
+    #shopify-section-{{ section.id }} .brand-grid__track-wrap {
+      overflow: hidden;
+      padding-left: 16px; /* left edge breathing room */
+    }
+
+    /* Track: the scrollable flex row */
+    #shopify-section-{{ section.id }} .brand-grid__track {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      gap: 12px;
+      overflow-x: scroll;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      /* right padding so last card doesn't flush to edge */
+      padding-right: 40px;
+      padding-bottom: 4px;
+    }
+
+    #shopify-section-{{ section.id }} .brand-grid__track::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Each slide card */
+    #shopify-section-{{ section.id }} .brand-grid__slide {
+      flex: 0 0 82vw;
+      width: 82vw;
+      min-width: 82vw;
+      height: 280px;
+      min-height: unset;
+      scroll-snap-align: start;
+      border-radius: var(--card-radius);
+      overflow: hidden;
+      position: relative;
+    }
+
+    #shopify-section-{{ section.id }} .brand-grid__slide .brand-grid__card-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    #shopify-section-{{ section.id }} .brand-grid__slide .brand-grid__btn {
+      bottom: 16px;
+      left: 16px;
+      right: 16px;
+      padding: 14px 16px;
+      font-size: 12px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Brand Locations Grid",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Logo & heading"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo image"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 80,
+      "max": 300,
+      "step": 10,
+      "default": 160,
+      "unit": "px",
+      "label": "Logo width"
+    },
+    {
+      "type": "html",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Home of Corona Cero"
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size",
+      "min": 20,
+      "max": 60,
+      "step": 2,
+      "default": 36,
+      "unit": "px",
+      "label": "Heading font size"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Here's a snapshot of where you can enjoy Corona Cero in the UAE.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "card_height",
+      "min": 200,
+      "max": 500,
+      "step": 10,
+      "default": 320,
+      "unit": "px",
+      "label": "Card height (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "min": 8,
+      "max": 40,
+      "step": 2,
+      "default": 20,
+      "unit": "px",
+      "label": "Grid gap"
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "default": 14,
+      "unit": "px",
+      "label": "Card corner radius"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Section background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#3b8dd4"
+    },
+    {
+      "type": "color",
+      "id": "desc_color",
+      "label": "Description color",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "button_bg",
+      "label": "Button background",
+      "default": "#f5c542"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text color",
+      "default": "#1a2a3a"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 48,
+      "unit": "px",
+      "label": "Top padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 48,
+      "unit": "px",
+      "label": "Bottom padding"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "location",
+      "name": "Location card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Location Name"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brand Locations Grid",
+      "blocks": [
+        { "type": "location", "settings": { "label": "3 Fils" } },
+        { "type": "location", "settings": { "label": "La Cantine Beach" } },
+        { "type": "location", "settings": { "label": "W Hotel The Palm" } },
+        { "type": "location", "settings": { "label": "Anantara The Palm" } },
+        { "type": "location", "settings": { "label": "Sofitel The Palm" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

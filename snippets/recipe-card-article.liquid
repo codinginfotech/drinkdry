@@ -1,0 +1,91 @@
+{% comment %}
+  Renders an article card for a given blog with settings to either show the image or not.
+
+  Accepts:
+  - blog: {Object} Blog object
+  - article: {Object} Article object
+  - show_image: {String} The setting either show the article image or not. If it's not included it will show the image by default
+  - image_ratio: {String} The setting either show the article image ratio
+
+  Usage:
+  {% render 'card-article', blog: blog, article: article, show_image: section.settings.show_image, image_ratio: section.settings.image_ratio %}
+{% endcomment %}
+
+<article class="recipe-article-card{% if article.image == blank or show_image == false %} article-card--no-image{% endif %}" aria-labelledby="Article-{{ article.id }}">
+  <div class="card">
+   
+
+    <div class="article-card__info">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'title'-%}
+            <header class="article-card__header" {{ block.shopify_attributes }}>
+              <h3 class="article-card__title h3" id="Article-{{ article.id }}">
+                {{ article.title | escape }}<br/>
+                {% if article.metafields.custom.subtitle %} <em>{{ article.metafields.custom.subtitle }}</em>{% endif %}
+              </h3>
+            {% if article.metafields.custom.alcoholic_non_alcoholic %} <h4 class="ah-nah">{{ article.metafields.custom.alcoholic_non_alcoholic }}</h4>{% endif %}
+            <div class="time-level">
+                {% if article.metafields.custom.total_time %} <div class="time"><svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21" fill="none">
+<path d="M10.5 20.1484C16.0139 20.1484 20.5 15.6624 20.5 10.1484C20.5 4.6345 16.0144 0.148438 10.5 0.148438C4.9856 0.148438 0.5 4.63404 0.5 10.1484C0.5 15.6628 4.98606 20.1484 10.5 20.1484ZM10.5 1.52383C15.2556 1.52383 19.1246 5.3928 19.1246 10.1484C19.1246 14.9041 15.2561 18.773 10.5 18.773C5.7439 18.773 1.87539 14.9041 1.87539 10.1484C1.87539 5.3928 5.74436 1.52383 10.5 1.52383Z" fill="#9BACBE"/>
+<path d="M10.2188 11.1484C10.2207 11.1484 10.2222 11.148 10.2241 11.148C10.226 11.148 10.2274 11.1484 10.2293 11.1484H13.7812C14.178 11.1484 14.5 10.8449 14.5 10.471C14.5 10.0966 14.178 9.79351 13.7812 9.79351H10.9376V4.8259C10.9376 4.45149 10.6156 4.14844 10.2188 4.14844C9.82155 4.14844 9.5 4.45149 9.5 4.8259V10.471C9.5 10.8449 9.82155 11.1484 10.2188 11.1484Z" fill="#9BACBE"/>
+</svg> Total time: {{ article.metafields.custom.total_time }}</div>{% endif %}
+ {% if article.metafields.custom.level %}<div class="level"><p><span>Level:</span> {{ article.metafields.custom.level }}</p></div>{% endif %}
+            </div>
+            {% comment %} <div>
+                {%- if block.settings.show_date -%}
+                  <span class="circle-divider caption-with-letter-spacing light">
+                    {{- article.published_at | time_tag: format: 'month_day_year' -}}
+                  </span>
+                {%- endif -%}
+                {%- if block.settings.show_author -%}
+                  <span class="circle-divider caption-with-letter-spacing light">{{ article.author }}</span>
+                {%- endif -%}
+                {%- if block.settings.show_comment_count and article.comments_count > 0 and blog.comments_enabled? -%}
+                  <span class="circle-divider caption-with-letter-spacing light">{{ 'blogs.article.comments' | t: count: article.comments_count }}</span>
+                {%- endif -%}
+              </div>{% endcomment %}
+            </header>
+
+          {%- when 'summary'-%}
+            {% assign show_des = block.settings.show_des %}
+            {%- if show_des == true -%}
+                
+            {%- if article.excerpt.size > 0 or article.content.size > 0 -%}
+              <p class="article-card__excerpt rte" {{ block.shopify_attributes }}>
+                {%- liquid
+                  if article.excerpt.size > 0
+                    echo article.excerpt | strip_html | truncatewords: 50
+                  else
+                    echo article.content | strip_html | truncatewords: 50
+                  endif
+                -%}
+              </p>
+            {%- endif -%}
+          {%- endif -%}
+          {%- when 'read_more'-%}
+            <div class="article-card__footer" {{ block.shopify_attributes }}>
+              {% comment %}<span class="article-card__link" aria-label="{{ 'blogs.article.read_more_title' | t: title: article.title | escape }}">{{ 'blogs.article.read_more' | t }}</span>{% endcomment %}
+               <div class="button-group">
+                  {%- if block.settings.button_label != blank  -%}
+                    {%- if block.settings.button_label != blank -%}
+                      {%- if block.settings.button_style_secondary -%}
+                        <a class="button button--cta button--{{ block.settings.button_size }}" href="{{ article.url }}" {{ block.shopify_attributes }}>
+                          <span class="label">{{ block.settings.button_label | escape }}</span>
+                          {% render 'icon', icon: 'arrow' %}
+                        </a>
+                      {%- else -%}
+                        <a class="button button--{{ block.settings.button_size }}" href="{{ article.url }}" {{ block.shopify_attributes }}>
+                          {{ block.settings.button_label | escape }}
+                        </a>
+                      {%- endif -%}
+                    {%- endif -%}
+                 
+                  {%- endif -%}
+                </div>
+            </div>
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+</div>
+</article>

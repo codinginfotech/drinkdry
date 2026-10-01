@@ -1,0 +1,654 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "slideshow_brand_XaVFf6": {
+      "type": "slideshow-brand",
+      "blocks": {
+        "image_JyedQ7": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Desktop_Banner_Corona_Cero_db6d7da5-9bc2-436d-888c-1d4df8eff2c6.webp",
+            "image_mobile": "shopify://shop_images/Mobile_Banner_Corona_Cero_4c67cca5-da74-47af-b68f-625da658a28c.webp",
+            "image_logo": "shopify://shop_images/Corona_Cero_Logo_Blue.png",
+            "stamp_position": "bottom-right",
+            "stamp_width": 188,
+            "image_position": "center center",
+            "text_box_position": "bottom-left",
+            "content_justify": "flex-start",
+            "content_text_align": "left",
+            "heading_color": "",
+            "subheading_color": "#ffffff",
+            "text_color": "",
+            "subheading": "",
+            "subheading_size": "h5",
+            "heading_image_width": 100,
+            "heading": "",
+            "heading_size": "h1",
+            "heading_tag": "h2",
+            "text": "",
+            "text_size": "typeset",
+            "button_label": "",
+            "button_link": "",
+            "button_size": "medium",
+            "button_style_secondary": false,
+            "button_alt_label": "",
+            "button_alt_link": "",
+            "button_alt_size": "medium",
+            "button_alt_style_secondary": false,
+            "enable_highlight": false,
+            "highlight_style": "marker",
+            "custom_css": ".slideshow__subheading {\nmargin-top: -7px;\n        line-height: 100%;\n}\n.logo-img{\n    display: flex;\n    position: absolute;\n   top:0;\n   left: 6%;\n}\n.list-text{\n   display:flex;\npadding: 0;\n    gap:24px;\n    list-style:none;\n    font-size:21px;\nfont-weight:600;\ncolor:#fff;\n}\n.list-text span{\n   color: #fff;\n   font-weight:600;\n   font-size:24px;\n}\n.list-text li:before{\n  width:3px;\nheight:21px;\ndisplay:inline-block;\ncontent:'';\nbackground-color:#fff;\nmargin-right:24px;\n}\n.list-text li:first-child:before{\n   display:none;\n}\n.slideshow__image-wrapper{\nbackground-color: #1A2741;\n}\n@media(max-width:767px){\n.slideshow__card {\n    text-align: center;\n    display: flex;\n    flex-direction: column;\n    justify-content: start;\n    align-items: center;\n    height: 100%;\n}\n.logo-img{\n   position:static;\n}\n.slideshow__heading {\n    margin-top: 0px;\n}\n.slideshow__subheading{\nmargin-top:0px;\nfont-size:40px;\n}\n.slideshow__text {\nmargin-top:0;\n}\n.list-text{\n    gap:10px;\n font-size:14px;\n}\n.list-text li{\n            position: relative;\n            padding-left: 10px;\n            flex-direction: column;\n            display: flex;\n            width: 33.33%;\n\n}\n.list-text li:first-child{\n   padding-left:0;\n}\n.list-text span{\n   font-size:20px;\n}\n.list-text li:before{\n  width:3px;\nposition:absolute;\nleft:0;\nheight:100%;\ndisplay:inline-block;\ncontent:'';\nbackground-color:#FFC72C;\nmargin-right:24px;\n}\n}"
+          }
+        }
+      },
+      "block_order": [
+        "image_JyedQ7"
+      ],
+      "name": "Slideshow - Brand",
+      "settings": {
+        "slideshow_type": "legacy",
+        "text_alignment": "left",
+        "image_ratio": "650px",
+        "autorotate": false,
+        "autorotate_speed": 5,
+        "full_width": true,
+        "custom_css_class": "",
+        "image_behavior": "none",
+        "mobile_text_alignment": "center",
+        "mobile_image_ratio": "500px",
+        "show_text_below": false,
+        "colors_button_label": "#ffffff",
+        "colors_button_background": "#1a1b18",
+        "colors_text": "#ffffff",
+        "colors_background": "#ffffff",
+        "colors_overlay": "#000000",
+        "colors_overlay_opacity": 16,
+        "colors_navigation_text": "#ffffff",
+        "colors_navigation_background": "#1a1b18",
+        "colors_highlight": "#ffb503",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "icon_bar_EjqDbC": {
+      "type": "icon-bar",
+      "blocks": {
+        "icon_item_mrTnRc": {
+          "type": "icon_item",
+          "settings": {
+            "icon_image": "shopify://shop_images/Exclude.svg",
+            "icon_svg": "",
+            "label": "100% Natural Ingredients",
+            "icon_bg_color": "#1a2741",
+            "label_color": "#1a2741"
+          }
+        },
+        "icon_item_3rcCgh": {
+          "type": "icon_item",
+          "settings": {
+            "icon_image": "shopify://shop_images/Exclude_1.svg",
+            "icon_svg": "",
+            "label": "56 Calories",
+            "icon_bg_color": "#1a2741",
+            "label_color": "#1a2741"
+          }
+        },
+        "icon_item_RXGhy8": {
+          "type": "icon_item",
+          "settings": {
+            "icon_image": "shopify://shop_images/Artwork_0-01_2_1.svg",
+            "icon_svg": "",
+            "label": "Pioneering Sustainability",
+            "icon_bg_color": "#1a2741",
+            "label_color": "#1a2741"
+          }
+        },
+        "icon_item_mp6bKA": {
+          "type": "icon_item",
+          "settings": {
+            "icon_image": "shopify://shop_images/Artwork_0-04_1_ddfe54ad-2555-40d1-8afd-2b5b4fe41e06.svg",
+            "icon_svg": "",
+            "label": "Pale Lager",
+            "icon_bg_color": "#1a2741",
+            "label_color": "#1a2741"
+          }
+        }
+      },
+      "block_order": [
+        "icon_item_mrTnRc",
+        "icon_item_3rcCgh",
+        "icon_item_RXGhy8",
+        "icon_item_mp6bKA"
+      ],
+      "name": "Icon Bar",
+      "settings": {
+        "full_width": false,
+        "show_border": true,
+        "icon_size": 80,
+        "background_color": "#f5edd4",
+        "text_color": "#1a2a3a",
+        "icon_background_color": "#1a2a3a",
+        "icon_color": "#ffffff",
+        "border_color": "#1a2a3a",
+        "mobile_columns": "2",
+        "font_size_desktop": 20,
+        "font_size_mobile": 14,
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "featured_collection_AjyK7E": {
+      "type": "featured-collection",
+      "custom_css": [
+        ".title-wrapper .title {font-size: 40px; font-weight: 600; letter-spacing: -2%;}",
+        ".card-information__button .button {font-weight: 600; font-size: 14px; letter-spacing: 1.5%;}"
+      ],
+      "name": "t:sections.featured-collection.presets.name",
+      "settings": {
+        "collection": "corona-cero",
+        "products_to_show": 10,
+        "horizontal_scroll": true,
+        "show_view_all": true,
+        "view_all_text": "More Products",
+        "show_divider": false,
+        "enable_drag": false,
+        "heading": "Best Of Corona Cero",
+        "heading_size": "h1",
+        "heading_alignment": "center",
+        "heading_tag": "h2",
+        "columns_mobile": "2",
+        "swipe_on_mobile": true,
+        "image_ratio": "adapt",
+        "image_position": "center center",
+        "enable_image_fill": true,
+        "show_secondary_image": false,
+        "secondary_image_max": 1,
+        "show_vendor": false,
+        "show_rating": false,
+        "show_quick_buy": true,
+        "enable_quick_view": true,
+        "enable_color_swatches": true,
+        "enable_countdown": true,
+        "colors_highlight": "#ffb503",
+        "atc_button_bg": "#ffc72c",
+        "atc_button_text": "#1a2741",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40,
+        "enable_highlight": false,
+        "highlight_style": "marker"
+      }
+    },
+    "image_with_text_fgqapB": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_Gj7jrm": {
+          "type": "heading",
+          "settings": {
+            "heading": "About Corona Cero",
+            "heading_size": "h1",
+            "heading_tag": "h2",
+            "top_heading": "",
+            "enable_highlight": false,
+            "highlight_style": "marker"
+          }
+        },
+        "text_tkjr8b": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Corona Cero is more than a 0.0% beer. It your invitation to pause, relax, and reconnect with what feels essential: fresh air, golden light, and good company.</p>\n\n<p>Consistently voted the best non-alcoholic beer among our consumers for its exceptional taste profile, it has become the go-to beverage choice for any occasion. Whether you enjoy it by the pool or beach, after work, or at a BBQ with friends, it is designed to help you unwind and turn small moments into refreshing rituals.</p>",
+            "text_size": "typeset",
+            "secondary_color": false,
+            "enable_highlight": false,
+            "highlight_style": "marker"
+          }
+        },
+        "button_ttdTVW": {
+          "type": "button",
+          "settings": {
+            "button_size": "medium",
+            "button_label": "View collection",
+            "button_link": "shopify://collections/corona-cero",
+            "button_style_secondary": false,
+            "button_alt_label": "",
+            "button_alt_link": "",
+            "button_alt_style_secondary": false,
+            "button_bg_color": "#ffc72c",
+            "button_text_color": "#1a2741"
+          }
+        }
+      },
+      "block_order": [
+        "heading_Gj7jrm",
+        "text_tkjr8b",
+        "button_ttdTVW"
+      ],
+      "custom_css": [
+        ".button-group .button {font-weight: 600; font-size: 14px; letter-spacing: 1.5%;}",
+        ".image-with-text__heading {font-size: 40px; font-weight: 600; line-height: normal; letter-spacing: -2%; text-transform: uppercase;}",
+        "@media screen and (min-width: 750px) {.page-width {padding: 100px 16rem; } .image-with-text__heading {font-size: 40px; } .image-with-text .image-with-text__content {padding: 0; } .grid--gapless {--grid-horizontal-spacing: 77px; }}"
+      ],
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "bg_image_position": "center center",
+        "decor_image_left": "shopify://shop_images/Mask_group_5.png",
+        "decor_left_position": "top",
+        "decor_image_right": "shopify://shop_images/Mask_group_6.png",
+        "decor_right_position": "top",
+        "decor_max_width": 200,
+        "decor_hide_mobile": false,
+        "image": "shopify://shop_images/Corona_Cero_Can_d38dbc15-d550-4055-80e6-30490708ebd5.webp",
+        "image_position": "center center",
+        "layout": "text_first",
+        "text_box_position": "middle",
+        "text_alignment": "left",
+        "image_ratio": "adapt",
+        "enlarge_content": false,
+        "full_width": false,
+        "show_divider": false,
+        "image_behavior": "none",
+        "mobile_layout": "image_first",
+        "mobile_text_alignment": "center",
+        "mobile_image_ratio": "auto",
+        "video_thumbnail": "shopify://shop_images/KV2_Can_Only.jpg",
+        "enable_video_looping": true,
+        "video_url": "",
+        "use_custom_colors": false,
+        "colors_button_label": "#ffffff",
+        "colors_button_background": "#1a1b18",
+        "colors_text": "#212326",
+        "colors_background": "rgba(0,0,0,0)",
+        "gradient_background": "",
+        "colors_highlight": "#ffb503",
+        "colors_heading": "#6aaae4",
+        "colors_description": "#1a2741",
+        "padding_top": 20,
+        "padding_bottom": 20
+      }
+    },
+    "steps_with_hero_RHYBCR": {
+      "type": "steps-with-hero",
+      "blocks": {
+        "step_kPK7Lm": {
+          "type": "step",
+          "settings": {
+            "image": "shopify://shop_images/CoronaCero_CoronaCeroBottleOpener_1920xcopy.webp",
+            "caption": "Open a Chilled Corona Cero",
+            "badge_image": "shopify://shop_images/84-841731_lemon-slice-png-lime-wedge-transparent-background-clipart_4.png"
+          }
+        },
+        "step_xbAYM6": {
+          "type": "step",
+          "settings": {
+            "image": "shopify://shop_images/Coron_Cero.webp",
+            "caption": "Select a brightly pigmented lime and slice into wedges",
+            "badge_image": "shopify://shop_images/84-841731_lemon-slice-png-lime-wedge-transparent-background-clipart_4.png"
+          }
+        },
+        "step_JB43UG": {
+          "type": "step",
+          "settings": {
+            "image": "shopify://shop_images/corona_image_1.png",
+            "caption": "Place the lime wedge in the neck of the bottle",
+            "badge_image": "shopify://shop_images/84-841731_lemon-slice-png-lime-wedge-transparent-background-clipart_4.png"
+          }
+        },
+        "step_GW8CJ4": {
+          "type": "step",
+          "settings": {
+            "image": "shopify://shop_images/corona_image_2.png",
+            "caption": "Enjoy your Corona Cero",
+            "badge_image": "shopify://shop_images/84-841731_lemon-slice-png-lime-wedge-transparent-background-clipart_4.png"
+          }
+        }
+      },
+      "block_order": [
+        "step_kPK7Lm",
+        "step_xbAYM6",
+        "step_JB43UG",
+        "step_GW8CJ4"
+      ],
+      "custom_css": [
+        "@media (max-width: 749px) {.steps-section {padding: 32px 29px; }}"
+      ],
+      "name": "Steps with hero",
+      "settings": {
+        "hero_image": "shopify://shop_images/Mask_group_8.png",
+        "heading": "How to perform",
+        "heading_size": "h2",
+        "subheading": "The lime ritual",
+        "subheading_size": "h3",
+        "heading_position": "top-left",
+        "heading_font_size_desktop": 52,
+        "heading_font_size_mobile": 40,
+        "subheading_font_size_desktop": 52,
+        "subheading_font_size_mobile": 40,
+        "full_width": false,
+        "left_width": 45,
+        "grid_gap": 80,
+        "left_padding": 0,
+        "right_padding": 0,
+        "cards_gap": 18,
+        "card_radius": 12,
+        "card_image_ratio": "1/1",
+        "caption_font_size": 18,
+        "bg_color": "#c8b99a",
+        "bg_image": "shopify://shop_images/top-view-fabric-texture-background_1.png",
+        "bg_image_position": "center center",
+        "heading_color": "#1a2a3a",
+        "subheading_color": "#1a2a3a",
+        "caption_color": "#1a2a3a",
+        "card_bg_color": "#ffffff",
+        "badge_bg_color": "rgba(0,0,0,0)",
+        "badge_text_color": "#ffffff",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "image_carousel_brand_8BQCTw": {
+      "type": "image-carousel-brand",
+      "blocks": {
+        "slide_kbbnTk": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/corona_image_1.png",
+            "caption": ""
+          }
+        },
+        "slide_3EGCyb": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/corona_image_2.png",
+            "caption": ""
+          }
+        },
+        "slide_PJUnEt": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Corona_image.png",
+            "caption": ""
+          }
+        },
+        "slide_wNYEkF": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/corona_image_3.png",
+            "caption": ""
+          }
+        }
+      },
+      "block_order": [
+        "slide_kbbnTk",
+        "slide_3EGCyb",
+        "slide_PJUnEt",
+        "slide_wNYEkF"
+      ],
+      "name": "Image Carousel - Brand",
+      "settings": {
+        "heading": "Enjoy Beer The",
+        "heading_size": "h1",
+        "heading_font_size": 40,
+        "heading_font_size_mobile": 30,
+        "subheading": "<span class=\"points\">0.0</span><span style=\"font-family:Arial,sans-serif; font-size:0.7em;  font-weight:800;\">%</span> Way",
+        "subheading_size": "h4",
+        "subheading_font_size": 40,
+        "subheading_font_size_mobile": 22,
+        "logo_image": "shopify://shop_images/Corona_Cero_Logo_Blue.png",
+        "logo_width": 120,
+        "slide_radius": 12,
+        "coverflow_stretch": 100,
+        "coverflow_depth": 150,
+        "autoplay": false,
+        "autoplay_speed": 5,
+        "caption_font_size": 14,
+        "bg_color": "#ffffff",
+        "bg_image_position": "center center",
+        "overlay_color": "rgba(0,0,0,0)",
+        "heading_color": "#4daad8",
+        "subheading_color": "#17416f",
+        "caption_bg_color": "#1a2a3a",
+        "caption_text_color": "#ffffff",
+        "arrow_bg_color": "#e8e8e8",
+        "padding_top": 80,
+        "padding_bottom": 100,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 60
+      }
+    },
+    "brand_multicolumn_new_b7AG6T": {
+      "type": "brand-multicolumn-new",
+      "blocks": {
+        "testimonial_bXTHfd": {
+          "type": "testimonial",
+          "settings": {
+            "card_bg": "#ffffff",
+            "avatar": "shopify://shop_images/4e771463e14665fff8a51459e20de2e48133bf6d.jpg",
+            "name": "Robert",
+            "name_color": "#1a2741",
+            "text": "<p>\"Honestly the best non-alcoholic lager on the market. You still get that familiar crisp Corona taste, it really feels like you're drinking a beer!\"</p>",
+            "text_color": "#1a2741"
+          }
+        },
+        "image_overlay_KU6qfp": {
+          "type": "image_overlay",
+          "settings": {
+            "image": "shopify://shop_images/54d446bf0e0ea51ac5f6e7f5708a29ae6b77c214.png",
+            "overlay_logo": "shopify://shop_images/Corona_Cero_Logo_White.png",
+            "overlay_logo_width": 120,
+            "overlay_text": "№1 most sustainable 0.0% beer brand",
+            "overlay_text_color": "#ffffff"
+          }
+        },
+        "numbers_HWfNxb": {
+          "type": "numbers",
+          "settings": {
+            "card_bg": "#ffffff",
+            "title": "Impact in Numbers",
+            "title_color": "#1a2a3a",
+            "text_color": "#333333",
+            "number1": "# 1",
+            "text1": "best selling non-alcoholic beer",
+            "number2": "# 1",
+            "text2": "beer choice in retail",
+            "number3": "200+",
+            "text3": "available across F&B outlets in the UAE"
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_bXTHfd",
+        "image_overlay_KU6qfp",
+        "numbers_HWfNxb"
+      ],
+      "name": "Brand Multicolumn",
+      "settings": {
+        "hero_image": "shopify://shop_images/wrap_img_325da466-d916-456f-aaf0-08b7e89bdd0b.png",
+        "hero_width": 35,
+        "heading": "Why People Love",
+        "heading_size": "h1",
+        "heading_font_size": 36,
+        "subheading": "Corona Cero",
+        "subheading_size": "h4",
+        "subheading_font_size": 40,
+        "full_width": false,
+        "layout_gap": 38,
+        "card_width": 350,
+        "card_height": 400,
+        "card_gap": 20,
+        "card_radius": 12,
+        "side_padding": 20,
+        "bg_color": "#1a2a3a",
+        "heading_color": "#ffffff",
+        "subheading_color": "#ffffff",
+        "number_color": "#4daad8",
+        "arrow_bg_color": "#3a4f63",
+        "arrow_icon_color": "#ffffff",
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
+    },
+    "brand_locations_grid_mRrzBU": {
+      "type": "brand-locations-grid",
+      "blocks": {
+        "location_Me8x6g": {
+          "type": "location",
+          "settings": {
+            "image": "shopify://shop_images/Screenshot_2026-03-02_at_16.21.13_1.png",
+            "label": "3 Fils",
+            "link": "https://www.3fils.com/"
+          }
+        },
+        "location_Gdjq7C": {
+          "type": "location",
+          "settings": {
+            "image": "shopify://shop_images/Screenshot_2026-03-02_at_16.22.54_1.png",
+            "label": "La Cantine Beach",
+            "link": "https://maps.app.goo.gl/NuW5X2i86PU7CEHCA"
+          }
+        },
+        "location_Kprqwc": {
+          "type": "location",
+          "settings": {
+            "image": "shopify://shop_images/dxbtp-torno-subito-2543-hor-feat_2.png",
+            "label": "W Hotel The Palm",
+            "link": "https://maps.app.goo.gl/Lpe7ytSu7AKNg6BN9"
+          }
+        },
+        "location_fEDYKV": {
+          "type": "location",
+          "settings": {
+            "image": "shopify://shop_images/anantara_the_palm_exterior_desktop_banner_new_1920x1080_1.png",
+            "label": "Anantara The Palm",
+            "link": "https://maps.app.goo.gl/kegUzhAMt9ya8cLK6"
+          }
+        },
+        "location_P3V4dx": {
+          "type": "location",
+          "settings": {
+            "image": "shopify://shop_images/sofitel-dubai-the-palm_1.png",
+            "label": "Sofitel The Palm",
+            "link": "https://maps.app.goo.gl/stWQWUGbBaDH3nny9"
+          }
+        }
+      },
+      "block_order": [
+        "location_Me8x6g",
+        "location_Gdjq7C",
+        "location_Kprqwc",
+        "location_fEDYKV",
+        "location_P3V4dx"
+      ],
+      "name": "Brand Locations Grid",
+      "settings": {
+        "logo": "shopify://shop_images/Corona_Cero_Logo_Blue.png",
+        "logo_width": 160,
+        "heading": "Home of Corona Cero",
+        "heading_font_size": 40,
+        "description": "<p>Here's a snapshot of where you can enjoy Corona Cero in the UAE.</p>",
+        "card_height": 320,
+        "grid_gap": 20,
+        "card_radius": 14,
+        "bg_color": "#ffffff",
+        "heading_color": "#3b8dd4",
+        "desc_color": "#333333",
+        "button_bg": "#f5c542",
+        "button_text_color": "#1a2a3a",
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
+    "brand_testimonials_slider_rg7b4e": {
+      "type": "brand-testimonials-slider",
+      "blocks": {
+        "testimonial_HRaXyC": {
+          "type": "testimonial",
+          "settings": {
+            "avatar": "shopify://shop_images/woman-in-sports-clothes-stands-on-a-beach-in-the-morning-light.jpg",
+            "text": "<p>Corona Cero is the ultimate crowd-pleaser for sunset moments, BBQ gatherings, and beach days. Crisp and refreshing, just like the original!</p>",
+            "name": "Alex P.",
+            "card_bg": "#ffffff",
+            "text_color": "#1a2741",
+            "name_color": "#1a2741"
+          }
+        },
+        "testimonial_934ijb": {
+          "type": "testimonial",
+          "settings": {
+            "avatar": "shopify://shop_images/fitness-workout.jpg",
+            "text": "<p>Corona Cero is a must try for adventurers. Whenever I'm hitting the trails, it's my go-to refreshment. Light, refreshing, easy to enjoy. Couldn't believe it only has 56 calories in the entire bottle!</p>",
+            "name": "John Smith",
+            "card_bg": "#ffffff",
+            "text_color": "#333333",
+            "name_color": "#1a2a3a"
+          }
+        },
+        "testimonial_64HKHH": {
+          "type": "testimonial",
+          "settings": {
+            "avatar": "shopify://shop_images/business-woman-with-laptop.jpg",
+            "text": "<p>So pleasantly surprised by how good Corona Cero tastes. It is now a staple thirst quencher for my weekend parties.</p>",
+            "name": "Jake",
+            "card_bg": "#ffffff",
+            "text_color": "#333333",
+            "name_color": "#1a2a3a"
+          }
+        },
+        "testimonial_qGzgR3": {
+          "type": "testimonial",
+          "settings": {
+            "avatar": "shopify://shop_images/woman-eats-an-apple-outdoors-and-laughs.jpg",
+            "text": "<p>After training I still want to sit down with the team, but without it affecting recovery. Corona Cero lets me join the post-session hangout without thinking twice the next morning.</p>",
+            "name": "Michael",
+            "card_bg": "#ffffff",
+            "text_color": "#333333",
+            "name_color": "#1a2a3a"
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_HRaXyC",
+        "testimonial_934ijb",
+        "testimonial_64HKHH",
+        "testimonial_qGzgR3"
+      ],
+      "name": "Brand Testimonials Slider",
+      "settings": {
+        "bg_image": "shopify://shop_images/Mask_group_12.png",
+        "bg_color": "#c4a97d",
+        "heading": "The Corona Cero<br>Experience",
+        "heading_color": "#1a2a3a",
+        "heading_font_size": 40,
+        "card_width": 390,
+        "card_min_height": 350,
+        "card_gap": 20,
+        "card_radius": 14,
+        "avatar_border_color": "#d4e8f5",
+        "arrow_bg": "#ffffff",
+        "arrow_icon_color": "#1a2a3a",
+        "arrow_border_color": "#cccccc",
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    }
+  },
+  "order": [
+    "slideshow_brand_XaVFf6",
+    "icon_bar_EjqDbC",
+    "featured_collection_AjyK7E",
+    "image_with_text_fgqapB",
+    "steps_with_hero_RHYBCR",
+    "image_carousel_brand_8BQCTw",
+    "brand_multicolumn_new_b7AG6T",
+    "brand_locations_grid_mRrzBU",
+    "brand_testimonials_slider_rg7b4e"
+  ]
+}

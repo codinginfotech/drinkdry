@@ -1,0 +1,85 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page-corona",
+      "settings": {
+        "narrow": true,
+        "padding_top": 60,
+        "padding_bottom": 72
+      }
+    },
+    "multicolumn_HYrnQV": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_GEwQkw": {
+          "type": "column",
+          "settings": {
+            "background_color": "rgba(0,0,0,0)",
+            "heading_color": "#000000",
+            "text_color": "#333333",
+            "youtube_link": "",
+            "title": "<div class=\"klaviyo-form-XDE8Lt\"></div>",
+            "font_size": "",
+            "align": "center",
+            "title_size": "h3",
+            "text": "",
+            "show_popup": false,
+            "popup_image_position": "top",
+            "justify_text": false,
+            "button_label": "",
+            "button_link": "",
+            "button_color": "",
+            "button_color_text": "",
+            "button_style_secondary": false,
+            "enable_highlight": false,
+            "highlight_style": "marker"
+          }
+        }
+      },
+      "block_order": [
+        "column_GEwQkw"
+      ],
+      "custom_css": [
+        "@media (min-width: 767px) {.multicolumn-list {padding: 0 30px; }}",
+        ".rte.typeset a {color: #fff !important;}",
+        ".page-width {padding-top: 50px !important; padding-bottom: 50px !important;}"
+      ],
+      "name": "t:sections.multicolumn.presets.name",
+      "settings": {
+        "image_ratio": "landscape",
+        "image_position": "center center",
+        "text_alignment": "left",
+        "show_divider": false,
+        "image_width": "full",
+        "columns_desktop": 1,
+        "open_in_new_tab": false,
+        "heading": "",
+        "heading_size": "h1",
+        "heading_alignment": "left",
+        "heading_tag": "h2",
+        "mobile_text_alignment": "center",
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "colors_highlight": "#ffb503",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "card_border_radius": 0,
+        "enable_highlight": false,
+        "highlight_style": "marker"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "multicolumn_HYrnQV"
+  ]
+}

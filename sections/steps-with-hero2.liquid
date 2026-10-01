@@ -1,0 +1,747 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --section-padding-top: {{ section.settings.padding_top }}px;
+    --section-padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  
+  #shopify-section-{{ section.id }} .steps-section {
+    background-color: {{ section.settings.bg_color }};
+    {% if section.settings.bg_image != blank %}
+      background-image: url({{ section.settings.bg_image | image_url: width: 3840 }});
+      background-size: cover;
+      background-position: {{ section.settings.bg_image_position }};
+      background-repeat: no-repeat;
+    {% endif %}
+  }
+
+  #shopify-section-{{ section.id }} .steps-hero__heading {
+    color: {{ section.settings.heading_color }};
+  }
+
+  #shopify-section-{{ section.id }} .steps-hero__subheading {
+    color: {{ section.settings.subheading_color }};
+  }
+
+  #shopify-section-{{ section.id }} .steps-card__caption {
+    color: {{ section.settings.caption_color }};
+  }
+
+  #shopify-section-{{ section.id }} .steps-card__badge {
+    background-color: {{ section.settings.badge_bg_color }};
+    color: {{ section.settings.badge_text_color }};
+  }
+
+  #shopify-section-{{ section.id }} .steps-card {
+    background-color: {{ section.settings.card_bg_color }};
+    border-radius: {{ section.settings.card_radius }}px;
+  }
+
+  #shopify-section-{{ section.id }} .steps-card__image img {
+    border-radius: {{ section.settings.card_radius }}px {{ section.settings.card_radius }}px 0 0;
+  }
+{%- endstyle -%}
+
+<div class="section--padding">
+  <div class="steps-section page-width{% if section.settings.full_width %} page-width--full-width{% endif %}">
+    <div class="steps-grid">
+      <!-- Left hero -->
+      <div class="steps-hero">
+        {%- if section.settings.hero_image != blank -%}
+          <img
+            src="{{ section.settings.hero_image | image_url: width: 1200 }}"
+            alt="{{ section.settings.heading | escape }}"
+            loading="lazy"
+            class="steps-hero__image"
+          />
+        {%- else -%}
+          <div class="steps-hero__placeholder"></div>
+        {%- endif -%}
+        <div class="steps-hero__content {{ section.settings.heading_position }}">
+          {%- if section.settings.heading != blank -%}
+            <h2 class="steps-hero__heading {{ section.settings.heading_size }}">{{ section.settings.heading }}</h2>
+          {%- endif -%}
+          {%- if section.settings.subheading != blank -%}
+            <p class="steps-hero__subheading {{ section.settings.subheading_size }}">{{ section.settings.subheading }}</p>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <!-- Right steps grid -->
+      <div class="steps-cards">
+        {%- for block in section.blocks -%}
+          <div class="steps-card" {{ block.shopify_attributes }}>
+            <div class="steps-card__image-wrapper">
+              {%- if block.settings.image != blank -%}
+                <img
+                  src="{{ block.settings.image | image_url: width: 800 }}"
+                  alt="{{ block.settings.caption | escape }}"
+                  loading="lazy"
+                  class="steps-card__image-el"
+                />
+              {%- else -%}
+                <div class="steps-card__image-placeholder">{{ 'image' | placeholder_svg_tag: 'placeholder' }}</div>
+              {%- endif -%}
+              {%- if block.settings.badge_image != blank -%}
+                <div class="steps-card__badge-icon">
+                  <img src="{{ block.settings.badge_image | image_url: width: 80 }}" alt="Step {{ forloop.index }}" loading="lazy" />
+                </div>
+              {%- endif -%}
+              <div class="steps-card__badge">{{ forloop.index }}</div>
+            </div>
+            {%- if block.settings.caption != blank -%}
+              <div class="steps-card__caption">{{ block.settings.caption }}</div>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  #shopify-section-{{ section.id }} .steps-section {
+    padding-top: var(--section-padding-top);
+    padding-bottom: var(--section-padding-bottom);
+    overflow: hidden;
+  }
+
+  #shopify-section-{{ section.id }} .steps-grid {
+    display: grid;
+    grid-template-columns: {{ section.settings.left_width }}% 1fr;
+    gap: {{ section.settings.grid_gap }}px;
+    align-items: stretch;
+  }
+
+  /* Hero left */
+  #shopify-section-{{ section.id }} .steps-hero {
+    position: relative;
+    border-radius: {{ section.settings.card_radius }}px;
+    overflow: hidden;
+    min-height: 400px;
+    padding: {{ section.settings.left_padding }}px;
+  }
+
+  #shopify-section-{{ section.id }} .steps-hero__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  #shopify-section-{{ section.id }} .steps-hero__placeholder {
+    width: 100%;
+    height: 100%;
+    background: #ddd;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  #shopify-section-{{ section.id }} .steps-hero__content {
+    position: relative;
+    z-index: 2;
+    padding: 50px 63px;;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  #shopify-section-{{ section.id }} .steps-hero__content.top-left {
+    justify-content: flex-start;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  #shopify-section-{{ section.id }} .steps-hero__content.top-center {
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
+  }
+
+  #shopify-section-{{ section.id }} .steps-hero__content.middle-left {
+    justify-content: center;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  #shopify-section-{{ section.id }} .steps-hero__content.middle-center {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  #shopify-section-{{ section.id }} .steps-hero__content.bottom-left {
+    justify-content: flex-end;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  #shopify-section-{{ section.id }} .steps-hero__content.bottom-center {
+    justify-content: flex-end;
+    align-items: center;
+    text-align: center;
+  }
+
+  #shopify-section-{{ section.id }} .steps-hero__heading {
+    margin: 0;
+    font-weight:600;
+    text-transform: uppercase;
+    letter-spacing:-5%;
+    line-height: 80%;
+    font-size: {{ section.settings.heading_font_size_desktop }}px;
+  }
+
+  #shopify-section-{{ section.id }} .steps-hero__subheading {
+    margin: 0;
+    line-height: 80%;
+    letter-spacing:-5%;
+    font-family: 'CORONABRUSH400';
+    font-weight:500;
+    text-transform:uppercase;
+
+    font-size: {{ section.settings.subheading_font_size_desktop }}px;
+  }
+
+  /* Steps cards grid */
+  #shopify-section-{{ section.id }} .steps-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: {{ section.settings.cards_gap }}px;
+    padding: {{ section.settings.right_padding }}px;
+  }
+
+  #shopify-section-{{ section.id }} .steps-card {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+        padding: 12.49px 12.49px 17.99px;
+  }
+
+  #shopify-section-{{ section.id }} .steps-card__image-wrapper {
+    position: relative;
+    overflow: hidden;
+  }
+
+  #shopify-section-{{ section.id }} .steps-card__image-el {
+    width: 100%;
+    aspect-ratio: {{ section.settings.card_image_ratio }};
+    object-fit: cover;
+    display: block;
+    border-radius: {{ section.settings.card_radius }}px;
+  }
+
+  #shopify-section-{{ section.id }} .steps-card__image-placeholder {
+    aspect-ratio: 4/3;
+    background: #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #shopify-section-{{ section.id }} .steps-card__image-placeholder svg {
+    width: 60px;
+    height: 60px;
+  }
+
+  #shopify-section-{{ section.id }} .steps-card__badge-icon {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    width: 34px;
+    height: 34px;
+    z-index: 2;
+  }
+
+  #shopify-section-{{ section.id }} .steps-card__badge-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  #shopify-section-{{ section.id }} .steps-card__badge {
+    position: absolute;
+    top: 8px;
+    left: 12px;
+    width: auto;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 700;
+    z-index: 2;
+  }
+
+  #shopify-section-{{ section.id }} .steps-card__badge-icon + .steps-card__badge {
+    left: 34px;
+  }
+
+  #shopify-section-{{ section.id }} .steps-card__caption {
+    padding: 17.86px 0 0;
+    font-size: {{ section.settings.caption_font_size }}px;
+    font-weight: 600;
+    text-transform: uppercase;
+    line-height: normal;
+    letter-spacing: 1.5%;
+  }
+  @media screen and (min-width: 750px) {
+  #shopify-section-{{ section.id }} .section--padding {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+  @media screen and (max-width: 749px) {
+    #shopify-section-{{ section.id }} .steps-grid {
+      grid-template-columns: 1fr;
+    }
+
+    #shopify-section-{{ section.id }} .steps-hero {
+      min-height: 350px;
+      padding: 0;
+    }
+
+    #shopify-section-{{ section.id }} .steps-hero__content {
+      padding: 25px;
+    }
+
+    #shopify-section-{{ section.id }} .steps-hero__heading {
+      font-size: {{ section.settings.heading_font_size_mobile }}px;
+    }
+
+    #shopify-section-{{ section.id }} .steps-hero__subheading {
+      font-size: {{ section.settings.subheading_font_size_mobile }}px;
+    }
+
+    #shopify-section-{{ section.id }} .steps-cards {
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      padding: 0;
+    }
+
+    #shopify-section-{{ section.id }} .steps-card__caption {
+      font-size: {{ section.settings.caption_font_size | minus: 2 }}px;
+      padding: 10px 5px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Steps with hero",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Hero image (left side)"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero image"
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "html",
+      "id": "heading",
+      "label": "Heading",
+      "default": "How to perform<br>the lime ritual"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "Small"
+        },
+        {
+          "value": "h1",
+          "label": "Medium"
+        },
+        {
+          "value": "h0",
+          "label": "Large"
+        }
+      ],
+      "default": "h1",
+      "label": "Heading size class"
+    },
+    {
+      "type": "header",
+      "content": "Subheading"
+    },
+    {
+      "type": "html",
+      "id": "subheading",
+      "label": "Subheading"
+    },
+    {
+      "type": "select",
+      "id": "subheading_size",
+      "options": [
+        {
+          "value": "h5",
+          "label": "Small"
+        },
+        {
+          "value": "h4",
+          "label": "Medium"
+        },
+        {
+          "value": "h3",
+          "label": "Large"
+        }
+      ],
+      "default": "h5",
+      "label": "Subheading size class"
+    },
+    {
+      "type": "header",
+      "content": "Hero text position"
+    },
+    {
+      "type": "select",
+      "id": "heading_position",
+      "options": [
+        {
+          "value": "top-left",
+          "label": "Top left"
+        },
+        {
+          "value": "top-center",
+          "label": "Top center"
+        },
+        {
+          "value": "middle-left",
+          "label": "Middle left"
+        },
+        {
+          "value": "middle-center",
+          "label": "Middle center"
+        },
+        {
+          "value": "bottom-left",
+          "label": "Bottom left"
+        },
+        {
+          "value": "bottom-center",
+          "label": "Bottom center"
+        }
+      ],
+      "default": "top-left",
+      "label": "Text position"
+    },
+    {
+      "type": "header",
+      "content": "Hero text font size"
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size_desktop",
+      "min": 20,
+      "max": 80,
+      "step": 2,
+      "default": 42,
+      "unit": "px",
+      "label": "Heading font size (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size_mobile",
+      "min": 16,
+      "max": 50,
+      "step": 2,
+      "default": 28,
+      "unit": "px",
+      "label": "Heading font size (mobile)"
+    },
+    {
+      "type": "range",
+      "id": "subheading_font_size_desktop",
+      "min": 12,
+      "max": 80,
+      "step": 1,
+      "default": 18,
+      "unit": "px",
+      "label": "Subheading font size (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "subheading_font_size_mobile",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "default": 14,
+      "unit": "px",
+      "label": "Subheading font size (mobile)"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "default": false,
+      "label": "Full width"
+    },
+    {
+      "type": "range",
+      "id": "left_width",
+      "min": 30,
+      "max": 70,
+      "step": 5,
+      "default": 50,
+      "unit": "%",
+      "label": "Left side width"
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "default": 16,
+      "unit": "px",
+      "label": "Gap between left and right"
+    },
+    {
+      "type": "range",
+      "id": "left_padding",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "default": 0,
+      "unit": "px",
+      "label": "Left side padding"
+    },
+    {
+      "type": "range",
+      "id": "right_padding",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "default": 0,
+      "unit": "px",
+      "label": "Right side padding"
+    },
+    {
+      "type": "range",
+      "id": "cards_gap",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "default": 16,
+      "unit": "px",
+      "label": "Gap between cards"
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "default": 12,
+      "unit": "px",
+      "label": "Card corner radius"
+    },
+    {
+      "type": "select",
+      "id": "card_image_ratio",
+      "options": [
+        {
+          "value": "1/1",
+          "label": "Square (1:1)"
+        },
+        {
+          "value": "4/3",
+          "label": "Landscape (4:3)"
+        },
+        {
+          "value": "3/4",
+          "label": "Portrait (3:4)"
+        },
+        {
+          "value": "16/9",
+          "label": "Wide (16:9)"
+        }
+      ],
+      "default": "4/3",
+      "label": "Card image ratio"
+    },
+    {
+      "type": "range",
+      "id": "caption_font_size",
+      "min": 10,
+      "max": 22,
+      "step": 1,
+      "default": 14,
+      "unit": "px",
+      "label": "Caption font size"
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#c8b99a"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image"
+    },
+    {
+      "type": "select",
+      "id": "bg_image_position",
+      "options": [
+        {
+          "value": "center center",
+          "label": "Center"
+        },
+        {
+          "value": "top center",
+          "label": "Top"
+        },
+        {
+          "value": "bottom center",
+          "label": "Bottom"
+        }
+      ],
+      "default": "center center",
+      "label": "Background image position"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#1a2a3a"
+    },
+    {
+      "type": "color",
+      "id": "subheading_color",
+      "label": "Subheading color",
+      "default": "#1a2a3a"
+    },
+    {
+      "type": "color",
+      "id": "caption_color",
+      "label": "Caption color",
+      "default": "#1a2a3a"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Card background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "badge_bg_color",
+      "label": "Badge background color",
+      "default": "#2563eb"
+    },
+    {
+      "type": "color",
+      "id": "badge_text_color",
+      "label": "Badge text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 36,
+      "unit": "px",
+      "label": "Top padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 36,
+      "unit": "px",
+      "label": "Bottom padding"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Step image"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Caption",
+          "default": "Step description"
+        },
+        {
+          "type": "image_picker",
+          "id": "badge_image",
+          "label": "Badge icon image",
+          "info": "Small icon shown next to the step number. Optional."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Steps with hero",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "caption": "Even better with a lime"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "caption": "Cut a fresh lime in half"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "caption": "Cut the half into four slices"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "caption": "Cut the white part for a more intense flavor"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

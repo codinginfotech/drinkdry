@@ -1,0 +1,431 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page-corona",
+      "disabled": true,
+      "settings": {
+        "narrow": true,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "image-banner": {
+      "type": "image-banner",
+      "blocks": {
+        "image-banner-0": {
+          "type": "heading",
+          "settings": {
+            "heading": "FAQ",
+            "heading_size": "h0",
+            "heading_tag": "h2",
+            "enable_highlight": false,
+            "highlight_style": "marker"
+          }
+        }
+      },
+      "block_order": [
+        "image-banner-0"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/sectipn_hero.png",
+        "image_position": "center center",
+        "text_box_position": "middle-center",
+        "text_alignment": "center",
+        "image_ratio": "550px",
+        "show_text_box": false,
+        "full_width": true,
+        "show_divider": false,
+        "image_behavior": "none",
+        "mobile_text_alignment": "center",
+        "mobile_image_ratio": "400px",
+        "stack_images_on_mobile": false,
+        "show_text_below": false,
+        "colors_button_label": "#1a1b18",
+        "colors_button_background": "#ffffff",
+        "colors_text": "#ffffff",
+        "colors_overlay": "#000000",
+        "colors_overlay_opacity": 28,
+        "colors_highlight": "#ffb503",
+        "padding_top": 0,
+        "padding_bottom": 36
+      }
+    },
+    "faq": {
+      "type": "faq",
+      "blocks": {
+        "question-0": {
+          "type": "question",
+          "settings": {
+            "title": "How do I place an order?",
+            "text": "<p>1. Visit <a href=\"https://drinkdrystore.com/\">www.drinkdrystore.com</a> and register your contact details to create an account. </p><p>2. Browse by Brand, Occasion, or Category and select the product(s) you want to buy by clicking <strong>“Add to Cart\". </strong></p><p>3. A pop up will appear where you can choose the pack size, add other products or remove selected products from your cart.</p><p>4. Once you are happy with your selection, click \"Checkout\" and follow the steps on the screen.</p><p>5. Once your order is placed, you will receive an email confirming your order number and product details. Please check your contact details are filled in correctly and get in touch with sales@drinkdrystore.com if you need to make any changes.</p>",
+            "enable_highlight": false,
+            "highlight_style": "marker"
+          }
+        },
+        "question-1": {
+          "type": "question",
+          "settings": {
+            "title": "Why have I not received confirmation of my order, but my payment has been taken? ",
+            "text": "<p>We apologise for the inconvenience and our team is always ready to help you track your order. Please reach out to us through one of our customer support channels and ensure you have your order number at hand so our team can best support you: </p><ul><li><strong>Facebook</strong>: <a href=\"https://www.facebook.com/drinkdry\">https://www.facebook.com/drinkdry</a></li><li><strong>Instagram</strong>: <a href=\"http://www.instagram.com/drinkdrystore/\">instagram.com/drinkdrystore/</a></li><li><strong>Email</strong>: <a href=\"https://drinkdrystore.com/#SALES@DRINKDRYSTORE.COM\">sales@drinkdrystore.com</a></li><li><strong>Whatsapp</strong>: +971 50 705 5461  </li></ul>",
+            "enable_highlight": false,
+            "highlight_style": "marker"
+          }
+        },
+        "question-2": {
+          "type": "question",
+          "settings": {
+            "title": "What if my order is missing?",
+            "text": "<p>If you have not received your order in 2-3 days from when you placed it, please reach out to us through one of our customer support channels. Our team will be happy to support you. Please ensure you have your order number at hand: </p><ul><li><strong>Facebook</strong>: <a href=\"https://www.facebook.com/drinkdry\">https://www.facebook.com/drinkdry</a></li><li><strong>Instagram</strong>: <a href=\"https://www.instagram.com/drinkdrystore/\">https://www.instagram.com/drinkdrystore</a></li><li><strong>Email</strong>: <a href=\"https://drinkdrystore.com/#SALES@DRINKDRYSTORE.COM\">sales@drinkdrystore.com</a></li><li><strong>Whatsapp</strong>: +971 50 705 5461 </li></ul>",
+            "enable_highlight": false,
+            "highlight_style": "marker"
+          }
+        },
+        "question-3": {
+          "type": "question",
+          "settings": {
+            "title": "What if my order is incomplete? ",
+            "text": "<p>Please note that we only charge you for items that we deliver to you. We apologise for any inconvenience caused by incomplete orders.</p><p>Kindly reach out to us through one of our customer support channels, and we will look into this matter and resolve it as soon as possible. Please ensure you have your order number at hand: </p><ul><li><strong>Facebook</strong>: <a href=\"https://www.facebook.com/drinkdry\">https://www.facebook.com/drinkdry</a></li><li><strong>Instagram</strong>: <a href=\"http://www.instagram.com/drinkdrystore/\">instagram.com/drinkdrystore/</a></li><li><strong>Email</strong>: <a href=\"https://drinkdrystore.com/#SALES@DRINKDRYSTORE.COM\">sales@drinkdrystore.com</a></li><li><strong>Whatsapp</strong>: +971 50 705 5461  </li></ul>",
+            "enable_highlight": false,
+            "highlight_style": "marker"
+          }
+        },
+        "question-4": {
+          "type": "question",
+          "settings": {
+            "title": "What if my order has damaged items on arrival?",
+            "text": "<p>Here at Drink Dry, our team takes special care of each order to ensure it reaches you in perfect condition. On the odd occasion that you do receive a damaged item, please reach out to us through one of our customer support channels, and our team will be happy to support you. Please ensure you have your order number at hand: </p><ul><li><strong>Facebook</strong>: <a href=\"https://www.facebook.com/drinkdry\">https://www.facebook.com/drinkdry</a></li><li><strong>Instagram</strong>: <a href=\"http://www.instagram.com/drinkdrystore/\">instagram.com/drinkdrystore/</a></li><li><strong>Email</strong>: <a href=\"https://drinkdrystore.com/#SALES@DRINKDRYSTORE.COM\">sales@drinkdrystore.com</a></li><li><strong>Whatsapp</strong>: +971 50 705 5461  </li></ul>",
+            "enable_highlight": false,
+            "highlight_style": "marker"
+          }
+        },
+        "question-5": {
+          "type": "question",
+          "settings": {
+            "title": "If I change my mind, how can I change/cancel my order?",
+            "text": "<p>We are sorry to hear that you want to cancel your order. The quickest way to do that is to contact our customer support team via one of the below channels: </p><ul><li><strong>Facebook</strong>: <a href=\"https://www.facebook.com/drinkdry\">https://www.facebook.com/drinkdry</a></li><li><strong>Instagram</strong>: <a href=\"http://www.instagram.com/drinkdrystore/\">instagram.com/drinkdrystore/</a></li><li><strong>Email</strong>: <a href=\"https://drinkdrystore.com/#SALES@DRINKDRYSTORE.COM\">sales@drinkdrystore.com</a></li><li><strong>Whatsapp</strong>: +971 50 705 5461 </li></ul><p>If you have made the purchase online with a credit card, payment will be reversed in 3-5 business days.  </p>",
+            "enable_highlight": false,
+            "highlight_style": "marker"
+          }
+        },
+        "question_bNA67E": {
+          "type": "question",
+          "settings": {
+            "title": "When will out of stock products be restocked?",
+            "text": "<p>We’re sorry if the item you want is out of stock. There are times when we will continue to show products that are out of stock so that you have access to the product details or to enable you to buy at a later date. We try our best to re-stock the product at our earliest. This might take a few days as most of our products are imported from the UK, Belgium, Spain and other countries. </p>",
+            "enable_highlight": false,
+            "highlight_style": "marker"
+          }
+        }
+      },
+      "block_order": [
+        "question-0",
+        "question-1",
+        "question-2",
+        "question-3",
+        "question-4",
+        "question-5",
+        "question_bNA67E"
+      ],
+      "settings": {
+        "narrow": true,
+        "secondary_background": false,
+        "show_divider": false,
+        "heading": "1- Orders",
+        "heading_size": "h2",
+        "heading_alignment": "left",
+        "heading_tag": "h2",
+        "colors_highlight": "#ffb503",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "enable_highlight": false,
+        "highlight_style": "marker"
+      }
+    },
+    "faq_XynUTY": {
+      "type": "faq",
+      "blocks": {
+        "question_V3PE6d": {
+          "type": "question",
+          "settings": {
+            "title": "How can I request a Return?",
+            "text": "<p>We do not accept returns for perishable goods such as drinks. Please get in touch with our Customer Care Team if you have any questions or concerns about a specific item. </p>",
+            "enable_highlight": false,
+            "highlight_style": "marker"
+          }
+        }
+      },
+      "block_order": [
+        "question_V3PE6d"
+      ],
+      "name": "t:sections.faq.presets.name",
+      "settings": {
+        "narrow": true,
+        "secondary_background": false,
+        "show_divider": false,
+        "heading": "2- Returns",
+        "heading_size": "h2",
+        "heading_alignment": "left",
+        "heading_tag": "h2",
+        "colors_highlight": "#ffb503",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "enable_highlight": false,
+        "highlight_style": "marker"
+      }
+    },
+    "faq_Q48gPC": {
+      "type": "faq",
+      "blocks": {
+        "question_67mTNB": {
+          "type": "question",
+          "settings": {
+            "title": "What is the delivery time for any purchase made online?",
+            "text": "<p><span style=\"text-decoration:underline\"><strong>Dubai Deliveries:</strong></span> Available daily, within Dubai city limits. Order before 4pm for Same Day Delivery. Order placed after 4pm will be delivered the next day. </p><p><span style=\"text-decoration:underline\"><strong>Abu Dhabi Deliveries:</strong></span> Now scheduled every Friday, and limited to addresses within Abu Dhabi city limits.</p><p><span style=\"text-decoration:underline\"><strong>Other Emirates:</strong></span> At this time, we are unable to deliver outside of Dubai and Abu Dhabi. We apologise for the inconvenience.</p>",
+            "enable_highlight": false,
+            "highlight_style": "marker"
+          }
+        },
+        "question_4UddPH": {
+          "type": "question",
+          "settings": {
+            "title": "Do you ship internationally?",
+            "text": "<p>No, right now our deliveries are limited within UAE<strong>( Dubai & Abu Dhabi )</strong>only.</p>",
+            "enable_highlight": false,
+            "highlight_style": "marker"
+          }
+        },
+        "question_wW34xV": {
+          "type": "question",
+          "settings": {
+            "title": "How can I track my shipment?",
+            "text": "<p>Currently, we do not have a live order tracking on the website. The status of your order is updated to you via SMS on a regular basis. In case you need any urgent updates on your order status,  please WhatsApp our Customer Care team.</p><ul><li><strong>Whatsapp</strong>: +971 56 415 0041 </li></ul>",
+            "enable_highlight": false,
+            "highlight_style": "marker"
+          }
+        },
+        "question_Bcwt8A": {
+          "type": "question",
+          "settings": {
+            "title": "Is delivery free? If No, what is the minimum amount of purchase required for free of charge delivery?",
+            "text": "<p>Our delivery fee is AED 25. Orders over AED 250 qualify for free shipping.</p>",
+            "enable_highlight": false,
+            "highlight_style": "marker"
+          }
+        },
+        "question_XHJPaE": {
+          "type": "question",
+          "settings": {
+            "title": "Is there any limit on the quantity, weight, or dimension of the product that I can purchase online?",
+            "text": "<p>There are no such limits. Feel free to order as many of your favourite drinks as you wish.</p>",
+            "enable_highlight": false,
+            "highlight_style": "marker"
+          }
+        },
+        "question_aEkgzw": {
+          "type": "question",
+          "settings": {
+            "title": "Can I cancel the order after dispatch but before the scheduled delivery date? If so, then how will the refund be processed?",
+            "text": "<p>No. Orders can only be cancelled before dispatch without any charges.</p>",
+            "enable_highlight": false,
+            "highlight_style": "marker"
+          }
+        },
+        "question_mPAPt7": {
+          "type": "question",
+          "settings": {
+            "title": "What if I receive an incorrect product? Can the correct product be delivered on priority?",
+            "text": "<p>If an incorrect product is delivered due to the mistake of Drink Dry, it will be replaced with the correct product within a targeted time frame of 1-2 working days <strong>(subject to availability).</strong></p>",
+            "enable_highlight": false,
+            "highlight_style": "marker"
+          }
+        },
+        "question_AYqicJ": {
+          "type": "question",
+          "settings": {
+            "title": "What if I am unavailable at the time of delivery?  Can I reschedule it? Will there be any charges for the same?",
+            "text": "<p>Yes, delivery can be rescheduled for the next available date. If you do not accept delivery for over 14 days, we reserve the right to cancel the invoice, and a store credit will be issued.</p>",
+            "enable_highlight": false,
+            "highlight_style": "marker"
+          }
+        },
+        "question_K9xnRq": {
+          "type": "question",
+          "settings": {
+            "title": "Can I nominate someone else to receive the delivery on my behalf?",
+            "text": "<p>Yes, you can nominate, but we would like to have a copy of his/her ID at the time of delivery. Please contact our customer service in advance to nominate the recipient.</p>",
+            "enable_highlight": false,
+            "highlight_style": "marker"
+          }
+        },
+        "question_VLRNFW": {
+          "type": "question",
+          "settings": {
+            "title": "Can I change the delivery address after I have purchased the product online?",
+            "text": "<p>Yes, you can change the delivery address before delivery, subject to the new location being in the same city. Please call our customer service team on +971 50 705 5461. Please note there may be some locations where we cannot make deliveries.</p>",
+            "enable_highlight": false,
+            "highlight_style": "marker"
+          }
+        },
+        "question_T4wefy": {
+          "type": "question",
+          "settings": {
+            "title": "Can I add more items to the existing order and include them in the same delivery?",
+            "text": "<p>Existing orders cannot be amended to add new products. You can raise a new order for additional products. </p>",
+            "enable_highlight": false,
+            "highlight_style": "marker"
+          }
+        }
+      },
+      "block_order": [
+        "question_67mTNB",
+        "question_4UddPH",
+        "question_wW34xV",
+        "question_Bcwt8A",
+        "question_XHJPaE",
+        "question_aEkgzw",
+        "question_mPAPt7",
+        "question_AYqicJ",
+        "question_K9xnRq",
+        "question_VLRNFW",
+        "question_T4wefy"
+      ],
+      "name": "t:sections.faq.presets.name",
+      "settings": {
+        "narrow": true,
+        "secondary_background": false,
+        "show_divider": false,
+        "heading": "3- Delivery",
+        "heading_size": "h2",
+        "heading_alignment": "left",
+        "heading_tag": "h2",
+        "colors_highlight": "#ffb503",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "enable_highlight": false,
+        "highlight_style": "marker"
+      }
+    },
+    "faq_MYXEgN": {
+      "type": "faq",
+      "blocks": {
+        "question_MEwNE4": {
+          "type": "question",
+          "settings": {
+            "title": "How can I pay?",
+            "text": "<p>When shopping at <span style=\"text-decoration:underline\">drinkdrystore.com</span>, you can be assured of an easy-to-navigate and secure site that provides easy and secure payment solutions to cater for all your needs. You can pay by card or cash on delivery. We accept Visa, Mastercard, and JCB.</p>",
+            "enable_highlight": false,
+            "highlight_style": "marker"
+          }
+        },
+        "question_dfykdn": {
+          "type": "question",
+          "settings": {
+            "title": "Credit/Debit Cards ",
+            "text": "<p>We use the most secure payment gateway to offer you a fast, safe, and secure way of paying using either MasterCard or VISA. </p>",
+            "enable_highlight": false,
+            "highlight_style": "marker"
+          }
+        },
+        "question_EUEx7J": {
+          "type": "question",
+          "settings": {
+            "title": "Cash on Delivery ",
+            "text": "<p>If you choose to pay cash on delivery, please make sure you select that as an option when placing your order. Our drivers carry change. </p>",
+            "enable_highlight": false,
+            "highlight_style": "marker"
+          }
+        }
+      },
+      "block_order": [
+        "question_MEwNE4",
+        "question_dfykdn",
+        "question_EUEx7J"
+      ],
+      "name": "t:sections.faq.presets.name",
+      "settings": {
+        "narrow": true,
+        "secondary_background": false,
+        "show_divider": false,
+        "heading": "4-Payment",
+        "heading_size": "h2",
+        "heading_alignment": "left",
+        "heading_tag": "h2",
+        "colors_highlight": "#ffb503",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "enable_highlight": false,
+        "highlight_style": "marker"
+      }
+    },
+    "faq_7MEghz": {
+      "type": "faq",
+      "blocks": {
+        "question_jcTpfQ": {
+          "type": "question",
+          "settings": {
+            "title": "How can I create an account?",
+            "text": "<p>Getting started with us is easy. Please visit us at <a href=\"https://drinkdrystore.com/\">www.drinkdrystore.com </a>and click on <strong>Create Account</strong> in the top right corner. Please follow the instructions on screen to become part of our community.</p>",
+            "enable_highlight": false,
+            "highlight_style": "marker"
+          }
+        },
+        "question_nprQPP": {
+          "type": "question",
+          "settings": {
+            "title": "How do I see my purchase history? ",
+            "text": "<p>You can log into your account at <a href=\"https://drinkdrystore.com/\">www.drinkdrystore.com</a> . Navigate to My Account, then select My Orders. </p><p>You can also reach out to us using the contact details below or through our <strong>“</strong><a href=\"https://drinkdrystore.com/pages/contact-us\"><strong>Contact Us</strong></a><strong>”</strong> page. We will be more than happy to support you with finding your purchase history.</p><ul><li><strong>Facebook</strong>: <a href=\"https://www.facebook.com/drinkdry\">https://www.facebook.com/drinkdry</a></li><li><strong>Instagram</strong>: <a href=\"http://www.instagram.com/drinkdrystore/\">instagram.com/drinkdrystore/</a></li><li><strong>Email</strong>: <a href=\"https://drinkdrystore.com/#SALES@DRINKDRYSTORE.COM\">sales@drinkdrystore.com</a></li><li><strong>Whatsapp</strong>: +971 50 705 5461</li></ul>",
+            "enable_highlight": false,
+            "highlight_style": "marker"
+          }
+        },
+        "question_qWJHTp": {
+          "type": "question",
+          "settings": {
+            "title": "How can I subscribe to all your Newsletter and online publications? ",
+            "text": "<p>We are in the process of launching our weekly newsletter. However, you can still subscribe to our mailing list by getting in touch with us using the contact details below.</p><ul><li><strong>Email</strong>: <a href=\"https://drinkdrystore.com/#SALES@DRINKDRYSTORE.COM\">sales@drinkdrystore.com</a></li><li><strong>Whatsapp</strong>: +971 50 705 5461</li></ul>",
+            "enable_highlight": false,
+            "highlight_style": "marker"
+          }
+        }
+      },
+      "block_order": [
+        "question_jcTpfQ",
+        "question_nprQPP",
+        "question_qWJHTp"
+      ],
+      "name": "t:sections.faq.presets.name",
+      "settings": {
+        "narrow": true,
+        "secondary_background": false,
+        "show_divider": false,
+        "heading": "5- Account &amp; Subscriptions",
+        "heading_size": "h2",
+        "heading_alignment": "left",
+        "heading_tag": "h2",
+        "colors_highlight": "#ffb503",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "enable_highlight": false,
+        "highlight_style": "marker"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "image-banner",
+    "faq",
+    "faq_XynUTY",
+    "faq_Q48gPC",
+    "faq_MYXEgN",
+    "faq_7MEghz"
+  ]
+}

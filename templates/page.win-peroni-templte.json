@@ -1,0 +1,47 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page-corona",
+      "disabled": true,
+      "settings": {
+        "narrow": true,
+        "padding_top": 60,
+        "padding_bottom": 72
+      }
+    },
+    "peroni-win": {
+      "type": "peroni-win",
+      "settings": {
+        "banner_image": "shopify://shop_images/Desktop_View_Banner.png",
+        "mobile_banner_image": "shopify://shop_images/Mobile_Banner_30c08876-5bac-4b2f-a85a-01a4f66d3e13.png",
+        "bg_image": "shopify://shop_images/image_1_7.png",
+        "main_heading": "Win a VIP Racing Experience in Abu Dhabi!",
+        "promo_heading": "Promotion Mechanics",
+        "promo_subheading": "Buy a Peroni Nastro Azzurro 0.0% at any Choithrams store and keep your receipt.",
+        "promo_text": "<p>1. Follow <a href=\"https://www.instagram.com/drinkdrystore/?hl=en\" target=\"_blank\" title=\"https://www.instagram.com/drinkdrystore/?hl=en\"><strong>@drinkdrystore</strong></a><strong> </strong>& <a href=\"https://www.instagram.com/choithrams\" target=\"_blank\" title=\"https://www.instagram.com/choithrams\"><strong>@choithrams</strong></a> on Instagram. </p><p>2. Like and share this <a href=\"https://www.instagram.com/p/DQmTjK6kgXx/?img_index=1\" target=\"_blank\" title=\"https://www.instagram.com/p/DQmTjK6kgXx/?img_index=1\"><strong>@post</strong></a> and tag <strong>@choithrams</strong>. </p><p>3. DM Choithrams on Instagram and send your receipt for approval.</p>",
+        "promo_btn": "SUBMIT YOUR RECEIPT NOW",
+        "promo_link": "https://www.instagram.com/choithrams/",
+        "promo_date": "<strong><p class=\"promorun\">🗓️ PROMOTION RUNS FROM </p>\n<strong>\n</strong><p><strong>1<sup> ST</sup> – 26<sup> TH</sup></strong></p></strong>\n<p>NOVEMBER 2025</p>",
+        "prize_heading": "PRIZE INCLUDES",
+        "prize_title": "<p class=\"prize-title\">2 General Admission Tickets to the\n<br> Formula 1 Etihad Airways Abu\n<br> Dhabi Grand Prix 2025</p>\n<p class=\"yas\"> GARDEN ON YAS – FRIDAY ACCESS</p>",
+        "prize_text": "<p>Includes Marina Views, Concerts, Food & Beverage Zones, and On-Track Action.</p>",
+        "prize_date": "<strong><p class=\"promorun\">🗓️ WINNER ANNOUNCEMENT</p>\n<p><b>29<sup> TH</sup></b></p></strong>\n<p>NOVEMBER 2025</p>",
+        "prize_logo": "shopify://shop_images/TCS-logo.png",
+        "note_text": "Note: The prize will be forfeited if proof of purchase is not provided within 48 hours. Only receipts dated within the promotion period will be accepted."
+      }
+    }
+  },
+  "order": [
+    "main",
+    "peroni-win"
+  ]
+}

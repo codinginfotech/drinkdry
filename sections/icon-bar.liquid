@@ -1,0 +1,376 @@
+{{ 'section-icon-bar.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --section-padding-top: {{ section.settings.padding_top }}px;
+    --section-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --icon-bar-bg: {{ section.settings.background_color }};
+    --icon-bar-text: {{ section.settings.text_color }};
+    --icon-bar-icon-bg: {{ section.settings.icon_background_color }};
+    --icon-bar-icon-color: {{ section.settings.icon_color }};
+    --icon-bar-border: {{ section.settings.border_color }};
+    --icon-bar-icon-size: {{ section.settings.icon_size }}px;
+    --icon-bar-columns: {{ section.blocks.size }};
+  }
+{%- endstyle -%}
+
+<div class="icon-bar-section section--padding" style="background-color: var(--icon-bar-bg);">
+  <div class="page-width{% if section.settings.full_width %} page-width--full-width{% endif %}">
+    <div class="icon-bar{% if section.settings.show_border %} icon-bar--bordered{% endif %}">
+      {%- for block in section.blocks -%}
+        <div class="icon-bar__item" {{ block.shopify_attributes }}>
+          <div class="icon-bar__icon-wrapper"{% if block.settings.icon_bg_color != blank and block.settings.icon_bg_color != 'rgba(0,0,0,0)' %} style="background-color: {{ block.settings.icon_bg_color }};"{% endif %}>
+            {%- if block.settings.icon_image != blank -%}
+              <img 
+                src="{{ block.settings.icon_image | image_url: width: 100 }}" 
+                alt="{{ block.settings.label | escape }}"
+                width="50"
+                height="50"
+                loading="lazy"
+                class="icon-bar__icon-img"
+              />
+            {%- elsif block.settings.icon_svg != blank -%}
+              <div class="icon-bar__icon-svg">
+                {{ block.settings.icon_svg }}
+              </div>
+            {%- else -%}
+              <div class="icon-bar__icon-placeholder">
+                {% render 'icon', icon: 'checkmark' %}
+              </div>
+            {%- endif -%}
+          </div>
+          {%- if block.settings.label != blank -%}
+            <p class="icon-bar__label"{% if block.settings.label_color != blank and block.settings.label_color != 'rgba(0,0,0,0)' %} style="color: {{ block.settings.label_color }};"{% endif %}>{{ block.settings.label }}</p>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+<style>
+  .icon-bar-section {
+    padding-top: var(--section-padding-top);
+    padding-bottom: var(--section-padding-bottom);
+  }
+
+  .icon-bar {
+    display: grid;
+    grid-template-columns: repeat(var(--icon-bar-columns, 4), 1fr);
+    gap: 20px;
+    padding: 30px 0px;
+  }
+
+  .icon-bar__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+  }
+
+  .icon-bar__icon-wrapper {
+    width: var(--icon-bar-icon-size, 80px);
+    height: var(--icon-bar-icon-size, 80px);
+    border-radius: 50%;
+    background-color: var(--icon-bar-icon-bg, #1a2a3a);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .icon-bar__icon-img {
+    width: 50%;
+    height: 50%;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+  }
+
+  .icon-bar__icon-svg {
+    width: 50%;
+    height: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--icon-bar-icon-color, #ffffff);
+  }
+
+  .icon-bar__icon-svg svg {
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
+  }
+
+  .icon-bar__icon-placeholder {
+    width: 50%;
+    height: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--icon-bar-icon-color, #ffffff);
+  }
+
+  .icon-bar__label {
+    font-size: {{ section.settings.font_size_desktop }}px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: -2%;
+    margin: 0;
+    line-height: normal;
+  }
+
+  @media screen and (max-width: 989px) {
+    .icon-bar {
+      overflow: scroll;
+      flex-wrap: nowrap;
+      overflow-y: hidden;
+      display: flex;
+      gap: 30px 20px;
+      padding: 30px 20px;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+  .icon-bar {
+    display: flex!important;
+    flex-direction: row!important;
+    flex-wrap: nowrap!important;
+    width:376px;
+    height:99px;
+    overflow-x: auto!important;
+    overflow-y: hidden!important;
+    gap: 0!important;
+    padding: 16px 0!important;
+    scrollbar-width: none!important;
+  }
+
+  .icon-bar__item {
+    flex-direction: row!important;
+    align-items: center!important;
+    text-align: left!important;
+    gap: 8px!important;
+    flex: 0 0 auto!important;
+    min-width: 200px!important;
+    padding: 0 12px!important;
+  }
+
+  .icon-bar__icon-wrapper {
+    width: 46.14px!important;
+    height: 46.14px!important;
+    flex-shrink: 0!important;
+  }
+
+  .icon-bar__label {
+    font-size: {{ section.settings.font_size_mobile }}px;
+    white-space: normal!important;
+    line-height: 1.1!important;
+    max-width: 120px!important;
+    font-weight:700;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Icon Bar",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 8,
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "default": false,
+      "label": "Full width"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_border",
+      "default": true,
+      "label": "Show border"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "min": 50,
+      "max": 120,
+      "step": 5,
+      "default": 80,
+      "unit": "px",
+      "label": "Icon circle size"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#f5edd4"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#1a2a3a"
+    },
+    {
+      "type": "color",
+      "id": "icon_background_color",
+      "label": "Icon background color",
+      "default": "#1a2a3a"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "#1a2a3a"
+    },
+    {
+      "type": "header",
+      "content": "Mobile layout"
+    },
+    {
+      "type": "select",
+      "id": "mobile_columns",
+      "options": [
+        {
+          "value": "1",
+          "label": "1 column"
+        },
+        {
+          "value": "2",
+          "label": "2 columns"
+        }
+      ],
+      "default": "2",
+      "label": "Mobile columns"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "font_size_desktop",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "default": 13,
+      "unit": "px",
+      "label": "Label font size (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "font_size_mobile",
+      "min": 8,
+      "max": 20,
+      "step": 1,
+      "default": 11,
+      "unit": "px",
+      "label": "Label font size (mobile)"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "icon_item",
+      "name": "Icon item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon_image",
+          "label": "Icon image",
+          "info": "Upload a white icon on transparent background. Recommended: 100x100px."
+        },
+        {
+          "type": "html",
+          "id": "icon_svg",
+          "label": "Icon SVG code",
+          "info": "Paste SVG code here as an alternative to an image. Leave blank if using an image."
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Feature"
+        },
+        {
+          "type": "color",
+          "id": "icon_bg_color",
+          "label": "Icon background color",
+          "info": "Leave blank to use section default."
+        },
+        {
+          "type": "color",
+          "id": "label_color",
+          "label": "Label text color",
+          "info": "Leave blank to use section default."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Icon Bar",
+      "blocks": [
+        {
+          "type": "icon_item",
+          "settings": {
+            "label": "100% Natural Ingredients"
+          }
+        },
+        {
+          "type": "icon_item",
+          "settings": {
+            "label": "56 Calories"
+          }
+        },
+        {
+          "type": "icon_item",
+          "settings": {
+            "label": "Pioneering Sustainability"
+          }
+        },
+        {
+          "type": "icon_item",
+          "settings": {
+            "label": "Pale Lager"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

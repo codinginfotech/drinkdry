@@ -1,0 +1,934 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --section-padding-top: {{ section.settings.padding_top }}px;
+    --section-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --card-border-radius: {{ section.settings.card_radius }}px;
+    --card-height: {{ section.settings.card_height }}px;
+    --card-width: {{ section.settings.card_width }}px;
+    --card-gap: {{ section.settings.card_gap }}px;
+    --hero-width: {{ section.settings.hero_width }}%;
+  }
+
+  #shopify-section-{{ section.id }} .brand-multi {
+    background-color: {{ section.settings.bg_color }};
+    padding: var(--section-padding-top) 0 var(--section-padding-bottom);
+    overflow: visible;
+  }
+
+  #shopify-section-{{ section.id }} .brand-multi__heading {
+    color: {{ section.settings.heading_color }};
+    font-size: {{ section.settings.heading_font_size }}px;
+  }
+
+  #shopify-section-{{ section.id }} .brand-multi__subheading {
+    color: {{ section.settings.subheading_color }};
+    font-size: {{ section.settings.subheading_font_size }}px;
+  }
+
+  #shopify-section-{{ section.id }} .brand-multi__arrow {
+    background-color: {{ section.settings.arrow_bg_color }};
+    color: {{ section.settings.arrow_icon_color }};
+  }
+
+  #shopify-section-{{ section.id }} .brand-num__value {
+    color: {{ section.settings.number_color }};
+  }
+
+  @media screen and (max-width: 749px) {
+    #shopify-section-{{ section.id }} .brand-multi__heading {
+      font-size: {{ section.settings.heading_font_size | times: 0.7 | round }}px;
+    }
+    #shopify-section-{{ section.id }} .brand-multi__subheading {
+      font-size: {{ section.settings.subheading_font_size | times: 0.75 | round }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="brand-multi">
+  <div class="corona-brand-testimonials page-width{% if section.settings.full_width %} page-width--full-width{% endif %}">
+    <div class="brand-multi__layout">
+
+      <!-- Left hero image -->
+      {%- if section.settings.hero_image != blank -%}
+        <div class="brand-multi__hero">
+          <img
+            src="{{ section.settings.hero_image | image_url: width: 1200 }}"
+            alt="{{ section.settings.heading | strip_html | escape }}"
+            loading="lazy"
+            class="brand-multi__hero-img"
+          />
+        </div>
+      {%- endif -%}
+
+      <!-- Right content -->
+      <div class="brand-multi__right">
+        <!-- Header row -->
+        <div class="brand-multi__header">
+          <div class="brand-multi__header-left">
+            {%- if section.settings.heading != blank -%}
+              <h2 class="brand-multi__heading {{ section.settings.heading_size }}">{{ section.settings.heading }}</h2>
+            {%- endif -%}
+            {%- if section.settings.subheading != blank -%}
+              <p class="brand-multi__subheading {{ section.settings.subheading_size }}">{{ section.settings.subheading }}</p>
+            {%- endif -%}
+          </div>
+          {%- if section.blocks.size > 1 -%}
+            <div class="brand-multi__arrows">
+              <button class="brand-multi__arrow brand-multi__arrow--prev" aria-label="Previous" data-brand-prev="{{ section.id }}">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+              </button>
+              <button class="brand-multi__arrow brand-multi__arrow--next" aria-label="Next" data-brand-next="{{ section.id }}">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+            </div>
+          {%- endif -%}
+        </div>
+
+        <!-- Slider track -->
+        <div class="brand-multi__slider-wrap">
+          <div class="brand-multi__track" id="BrandMultiTrack-{{ section.id }}">
+            {%- for block in section.blocks -%}
+              {%- case block.type -%}
+
+                {%- when 'image' -%}
+                  <div class="brand-multi__card brand-multi__card--image" {{ block.shopify_attributes }}>
+                    {%- if block.settings.image != blank -%}
+                      <img src="{{ block.settings.image | image_url: width: 800 }}" alt="{{ block.settings.image.alt | escape }}" loading="lazy" class="brand-multi__card-img" />
+                    {%- else -%}
+                      <div class="brand-multi__card-placeholder">{{ 'image' | placeholder_svg_tag: 'placeholder' }}</div>
+                    {%- endif -%}
+                  </div>
+
+                {%- when 'testimonial' -%}
+                  <div class="brand-multi__card brand-multi__card--testimonial" {{ block.shopify_attributes }} {% if block.settings.card_bg != blank %}style="background-color:{{ block.settings.card_bg }};"{% endif %}>
+                    <div class="brand-testi__inner">
+                      {%- if block.settings.avatar != blank -%}
+                        <img src="{{ block.settings.avatar | image_url: width: 120 }}" alt="{{ block.settings.name | escape }}" class="brand-testi__avatar" loading="lazy" />
+                      {%- endif -%}
+                      {%- if block.settings.name != blank -%}
+                        <p class="brand-testi__name" {% if block.settings.name_color != blank %}style="color:{{ block.settings.name_color }};"{% endif %}>{{ block.settings.name }}</p>
+                      {%- endif -%}
+                      {%- if block.settings.text != blank -%}
+                        <div class="brand-testi__text" {% if block.settings.text_color != blank %}style="color:{{ block.settings.text_color }};"{% endif %}>{{ block.settings.text }}</div>
+                      {%- endif -%}
+                    </div>
+                  </div>
+
+                {%- when 'image_overlay' -%}
+                  <div class="brand-multi__card brand-multi__card--overlay" {{ block.shopify_attributes }}>
+                    {%- if block.settings.image != blank -%}
+                      <img src="{{ block.settings.image | image_url: width: 800 }}" alt="{{ block.settings.overlay_text | escape }}" loading="lazy" class="brand-multi__card-img" />
+                    {%- else -%}
+                      <div class="brand-multi__card-placeholder">{{ 'image' | placeholder_svg_tag: 'placeholder' }}</div>
+                    {%- endif -%}
+                    {%- if block.settings.overlay_logo != blank or block.settings.overlay_text != blank -%}
+                      <div class="overlay-cont">
+                        {%- if block.settings.overlay_logo != blank -%}
+                          <div class="brand-overlay__logo">
+                            <img src="{{ block.settings.overlay_logo | image_url: width: 300 }}" alt="" loading="lazy" style="max-width:{{ block.settings.overlay_logo_width }}px;" />
+                          </div>
+                        {%- endif -%}
+                        {%- if block.settings.overlay_text != blank -%}
+                          <div class="brand-overlay__text" {% if block.settings.overlay_text_color != blank %}style="color:{{ block.settings.overlay_text_color }};"{% endif %}>
+                            {{ block.settings.overlay_text }}
+                          </div>
+                        {%- endif -%}
+                      </div>
+                    {%- endif -%}
+                  </div>
+
+                {%- when 'numbers' -%}
+                  <div class="brand-multi__card brand-multi__card--numbers" {{ block.shopify_attributes }} {% if block.settings.card_bg != blank %}style="background-color:{{ block.settings.card_bg }};"{% endif %}>
+                    <div class="brand-num__inner">
+                      {%- if block.settings.title != blank -%}
+                        <p class="brand-num__title" {% if block.settings.title_color != blank %}style="color:{{ block.settings.title_color }};"{% endif %}>{{ block.settings.title }}</p>
+                      {%- endif -%}
+                      {%- for i in (1..3) -%}
+                        {%- assign num_key = 'number' | append: i -%}
+                        {%- assign txt_key = 'text' | append: i -%}
+                        {%- assign num_val = block.settings[num_key] -%}
+                        {%- assign txt_val = block.settings[txt_key] -%}
+                        {%- if num_val != blank or txt_val != blank -%}
+                          <div class="brand-num__stat">
+                            {%- if num_val != blank -%}
+                              <p class="brand-num__value">{{ num_val }}</p>
+                            {%- endif -%}
+                            {%- if txt_val != blank -%}
+                              <p class="brand-num__label" {% if block.settings.text_color != blank %}style="color:{{ block.settings.text_color }};"{% endif %}>{{ txt_val }}</p>
+                            {%- endif -%}
+                          </div>
+                        {%- endif -%}
+                      {%- endfor -%}
+                    </div>
+                  </div>
+
+              {%- endcase -%}
+            {%- endfor -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* ===== CONTAINER ===== */
+  #shopify-section-{{ section.id }} .corona-brand-testimonials {
+    position: relative;
+    overflow: visible;
+  }
+
+  /* ===== LAYOUT: hero left + content right ===== */
+  #shopify-section-{{ section.id }} .brand-multi__layout {
+    display: grid;
+    grid-template-columns: var(--hero-width) 1fr;
+    gap: {{ section.settings.layout_gap }}px;
+    align-items: stretch;
+    padding: 0 {{ section.settings.side_padding }}px;
+  }
+
+  /* ===== HERO IMAGE ===== */
+  #shopify-section-{{ section.id }} .brand-multi__hero {
+    border-radius: var(--card-border-radius);
+    overflow: hidden;
+    position: relative;
+    min-height: 400px;
+  }
+
+  #shopify-section-{{ section.id }} .brand-multi__hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  /* ===== RIGHT SIDE ===== */
+  #shopify-section-{{ section.id }} .brand-multi__right {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    overflow: visible;
+  }
+
+  /* ===== HEADER ===== */
+  #shopify-section-{{ section.id }} .brand-multi__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+  }
+
+  #shopify-section-{{ section.id }} .brand-multi__heading {
+    margin: 0 0 5px;
+    text-transform: uppercase;
+    line-height: 1.1;
+    font-weight: 800;
+  }
+
+  #shopify-section-{{ section.id }} .brand-multi__subheading {
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  /* ===== ARROWS ===== */
+  #shopify-section-{{ section.id }} .brand-multi__arrows {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  #shopify-section-{{ section.id }} .brand-multi__arrow {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.2s;
+  }
+
+  #shopify-section-{{ section.id }} .brand-multi__arrow:hover {
+    opacity: 0.8;
+  }
+
+  /* ===== SLIDER WRAP ===== */
+  #shopify-section-{{ section.id }} .brand-multi__slider-wrap {
+  position: relative;
+  width: 100%;
+  overflow: visible;
+  margin-right: calc(-1 * ((100vw - 100%) / 2));
+  }
+
+  /* ===== TRACK — no flex/gap before Flickity init ===== */
+  #shopify-section-{{ section.id }} .brand-multi__track {
+    padding: 0;
+  }
+
+  /* ===== FLICKITY OVERRIDES ===== */
+  #shopify-section-{{ section.id }} .brand-multi__track.flickity-enabled {
+    display: block;
+  }
+
+  #shopify-section-{{ section.id }} .brand-multi__track .flickity-viewport {
+    overflow: visible;
+    height: var(--card-height) !important;
+  }
+
+  /* IMPORTANT: Do NOT add display:flex to .flickity-slider — Flickity
+     uses position:absolute + translateX on each cell. Adding flex breaks it. */
+
+  /* ===== CARDS ===== */
+  #shopify-section-{{ section.id }} .brand-multi__card {
+     width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--card-border-radius);
+  overflow: hidden;
+  position: relative;
+  margin-right: var(--card-gap);
+  }
+  #shopify-section-{{ section.id }} .flickity-slider
+  {
+    display:flex;
+  }
+  #shopify-section-{{ section.id }} .brand-multi__card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  #shopify-section-{{ section.id }} .brand-multi__card-placeholder {
+    width: 100%;
+    height: 100%;
+    min-height: 300px;
+    background: #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #shopify-section-{{ section.id }} .brand-multi__card-placeholder svg {
+    width: 50px;
+    height: 50px;
+    opacity: 0.3;
+  }
+
+  /* ===== TESTIMONIAL ===== */
+  #shopify-section-{{ section.id }} .brand-multi__card--testimonial {
+    background-color: #fff;
+  }
+
+  #shopify-section-{{ section.id }} .brand-testi__inner {
+    padding: 30px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  #shopify-section-{{ section.id }} .brand-testi__avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+  }
+
+  #shopify-section-{{ section.id }} .brand-testi__name {
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin: 0 0 15px;
+    letter-spacing: 0.03em;
+  }
+
+  #shopify-section-{{ section.id }} .brand-testi__text {
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* ===== IMAGE OVERLAY ===== */
+  #shopify-section-{{ section.id }} .brand-multi__card--overlay {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #shopify-section-{{ section.id }} .overlay-cont {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -70%);
+    z-index: 2;
+    width: 85%;
+    text-align: center;
+  }
+
+  #shopify-section-{{ section.id }} .brand-overlay__text {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #fff;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    width: 100%;
+    line-height: 1.3;
+    z-index: 2;
+  }
+
+  /* ===== NUMBERS ===== */
+  #shopify-section-{{ section.id }} .brand-multi__card--numbers {
+    background-color: #fff;
+  }
+
+  #shopify-section-{{ section.id }} .brand-num__inner {
+    padding: 30px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 12px;
+  }
+
+  #shopify-section-{{ section.id }} .brand-num__title {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 5px;
+  }
+
+  #shopify-section-{{ section.id }} .brand-num__stat {
+    margin: 0;
+  }
+
+  #shopify-section-{{ section.id }} .brand-num__value {
+    font-size: 48px;
+    font-weight: 800;
+    line-height: 1.1;
+    margin: 0;
+  }
+
+  #shopify-section-{{ section.id }} .brand-num__label {
+    font-size: 14px;
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  /* ===== MOBILE ===== */
+  @media screen and (max-width: 749px) {
+    #shopify-section-{{ section.id }} .brand-multi__layout {
+      grid-template-columns: 1fr;
+      padding: 0 15px;
+    }
+
+    #shopify-section-{{ section.id }} .brand-multi__hero {
+      min-height: 300px;
+    }
+
+    #shopify-section-{{ section.id }} .brand-multi__slider-wrap {
+      position: static;
+      transform: none;
+    }
+
+    #shopify-section-{{ section.id }} .brand-multi__card {
+      width: 85vw;
+      height: auto;
+      min-height: 300px;
+    }
+
+    #shopify-section-{{ section.id }} .brand-multi__track .flickity-viewport {
+      height: auto !important;
+    }
+
+    #shopify-section-{{ section.id }} .brand-testi__inner,
+    #shopify-section-{{ section.id }} .brand-num__inner {
+      padding: 20px;
+    }
+
+    #shopify-section-{{ section.id }} .brand-num__value {
+      font-size: 36px;
+    }
+
+    #shopify-section-{{ section.id }} .brand-multi__arrow {
+      width: 36px;
+      height: 36px;
+    }
+  }
+</style>
+
+
+<script>
+  (function() {
+    var sectionId = {{ section.id | json }};
+
+    function initBrandSlider() {
+      var track = document.getElementById('BrandMultiTrack-' + sectionId);
+      if (!track || track.children.length === 0) return;
+
+      /* Destroy existing instance */
+      if (track.flickityInstance) {
+        track.flickityInstance.destroy();
+        track.flickityInstance = null;
+      }
+
+    
+      var flkty = new Flickity(track, {
+  cellAlign: 'left',
+  contain: false,
+  freeScroll: true,
+  friction: 0.2,
+  prevNextButtons: false,
+  pageDots: false,
+  draggable: true,
+  wrapAround: false,
+  selectedAttraction: 0.01,
+  freeScrollFriction: 0.03,
+  percentPosition: false
+});
+
+      track.flickityInstance = flkty;
+
+      /* Hook up custom arrows — use onclick to avoid stacking listeners on resize */
+      var prevBtn = document.querySelector('[data-brand-prev="' + sectionId + '"]');
+      var nextBtn = document.querySelector('[data-brand-next="' + sectionId + '"]');
+      if (prevBtn) prevBtn.onclick = function() { flkty.previous(); };
+      if (nextBtn) nextBtn.onclick = function() { flkty.next(); };
+    }
+
+    /* Wait for Flickity JS to load */
+    function waitForFlickity() {
+      if (typeof Flickity !== 'undefined') {
+        initBrandSlider();
+      } else {
+        setTimeout(waitForFlickity, 100);
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', waitForFlickity);
+    } else {
+      waitForFlickity();
+    }
+
+    /* Reinit on resize (debounced) */
+    var resizeTimer;
+    window.addEventListener('resize', function() {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(initBrandSlider, 250);
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Brand Multicolumn New",
+  "tag": "section",
+  "class": "section brands-multicolumn-new",
+  "max_blocks": 10,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Hero image (left side)"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero image"
+    },
+    {
+      "type": "range",
+      "id": "hero_width",
+      "min": 25,
+      "max": 55,
+      "step": 5,
+      "default": 40,
+      "unit": "%",
+      "label": "Hero width"
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "html",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Why People Love"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        { "value": "h2", "label": "Small" },
+        { "value": "h1", "label": "Medium" },
+        { "value": "h0", "label": "Large" }
+      ],
+      "default": "h1",
+      "label": "Heading size"
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size",
+      "min": 20,
+      "max": 60,
+      "step": 2,
+      "default": 36,
+      "unit": "px",
+      "label": "Heading font size"
+    },
+    {
+      "type": "header",
+      "content": "Subheading"
+    },
+    {
+      "type": "html",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Corona Cero"
+    },
+    {
+      "type": "select",
+      "id": "subheading_size",
+      "options": [
+        { "value": "h5", "label": "Small" },
+        { "value": "h4", "label": "Medium" },
+        { "value": "h3", "label": "Large" }
+      ],
+      "default": "h4",
+      "label": "Subheading size"
+    },
+    {
+      "type": "range",
+      "id": "subheading_font_size",
+      "min": 14,
+      "max": 50,
+      "step": 2,
+      "default": 28,
+      "unit": "px",
+      "label": "Subheading font size"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "default": false,
+      "label": "Full width"
+    },
+    {
+      "type": "range",
+      "id": "layout_gap",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "default": 16,
+      "unit": "px",
+      "label": "Gap between hero and cards"
+    },
+    {
+      "type": "range",
+      "id": "card_width",
+      "min": 250,
+      "max": 500,
+      "step": 10,
+      "default": 340,
+      "unit": "px",
+      "label": "Card width"
+    },
+    {
+      "type": "range",
+      "id": "card_height",
+      "min": 300,
+      "max": 700,
+      "step": 20,
+      "default": 480,
+      "unit": "px",
+      "label": "Card height (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "default": 16,
+      "unit": "px",
+      "label": "Gap between cards"
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "default": 12,
+      "unit": "px",
+      "label": "Card corner radius"
+    },
+    {
+      "type": "range",
+      "id": "side_padding",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "default": 20,
+      "unit": "px",
+      "label": "Side padding"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Section background",
+      "default": "#1a2a3a"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "subheading_color",
+      "label": "Subheading color",
+      "default": "#8bbad8"
+    },
+    {
+      "type": "color",
+      "id": "number_color",
+      "label": "Numbers stat color",
+      "default": "#4daad8"
+    },
+    {
+      "type": "color",
+      "id": "arrow_bg_color",
+      "label": "Arrow background",
+      "default": "#3a4f63"
+    },
+    {
+      "type": "color",
+      "id": "arrow_icon_color",
+      "label": "Arrow icon color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 40,
+      "unit": "px",
+      "label": "Top padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 40,
+      "unit": "px",
+      "label": "Bottom padding"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        }
+      ]
+    },
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "color",
+          "id": "card_bg",
+          "label": "Card background",
+          "default": "#ffffff"
+        },
+        {
+          "type": "image_picker",
+          "id": "avatar",
+          "label": "Avatar image"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name",
+          "default": "Robert"
+        },
+        {
+          "type": "color",
+          "id": "name_color",
+          "label": "Name color",
+          "default": "#1a2a3a"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Testimonial text",
+          "default": "<p>\"Honestly the best non-alcoholic lager on the market.\"</p>"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text color",
+          "default": "#333333"
+        }
+      ]
+    },
+    {
+      "type": "image_overlay",
+      "name": "Image with overlay",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Background image"
+        },
+        {
+          "type": "image_picker",
+          "id": "overlay_logo",
+          "label": "Overlay logo image"
+        },
+        {
+          "type": "range",
+          "id": "overlay_logo_width",
+          "min": 50,
+          "max": 250,
+          "step": 10,
+          "default": 120,
+          "unit": "px",
+          "label": "Logo width"
+        },
+        {
+          "type": "text",
+          "id": "overlay_text",
+          "label": "Overlay text",
+          "default": "No1 Most Sustainable 0.0% Beer Brand"
+        },
+        {
+          "type": "color",
+          "id": "overlay_text_color",
+          "label": "Overlay text color",
+          "default": "#ffffff"
+        }
+      ]
+    },
+    {
+      "type": "numbers",
+      "name": "Numbers / Stats",
+      "settings": [
+        {
+          "type": "color",
+          "id": "card_bg",
+          "label": "Card background",
+          "default": "#ffffff"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Impact in Numbers"
+        },
+        {
+          "type": "color",
+          "id": "title_color",
+          "label": "Title color",
+          "default": "#1a2a3a"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Label text color",
+          "default": "#333333"
+        },
+        {
+          "type": "text",
+          "id": "number1",
+          "label": "Number 1",
+          "default": "# 1"
+        },
+        {
+          "type": "text",
+          "id": "text1",
+          "label": "Label 1",
+          "default": "best selling non-alcoholic beer"
+        },
+        {
+          "type": "text",
+          "id": "number2",
+          "label": "Number 2",
+          "default": "# 1"
+        },
+        {
+          "type": "text",
+          "id": "text2",
+          "label": "Label 2",
+          "default": "beer choice in retail"
+        },
+        {
+          "type": "text",
+          "id": "number3",
+          "label": "Number 3",
+          "default": "200+"
+        },
+        {
+          "type": "text",
+          "id": "text3",
+          "label": "Label 3",
+          "default": "available across F&B outlets in the UAE"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brand Multicolumn New",
+      "blocks": [
+        {
+          "type": "testimonial",
+          "settings": {
+            "name": "Robert",
+            "text": "<p>\"Honestly the best non-alcoholic lager on the market. You still get that familiar crisp Corona taste, it really feels like you're drinking a beer!\"</p>"
+          }
+        },
+        {
+          "type": "image_overlay",
+          "settings": {
+            "overlay_text": "No1 Most Sustainable 0.0% Beer Brand"
+          }
+        },
+        { "type": "numbers" }
+      ]
+    }
+  ]
+}
+{% endschema %}

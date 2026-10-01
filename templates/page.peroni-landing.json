@@ -1,0 +1,48 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page-corona",
+      "disabled": true,
+      "settings": {
+        "narrow": true,
+        "padding_top": 60,
+        "padding_bottom": 72
+      }
+    },
+    "peroni-landing-section": {
+      "type": "peroni-landing-section",
+      "settings": {
+        "banner_image": "shopify://shop_images/Desktop_View_Banner.png",
+        "mobile_banner_image": "shopify://shop_images/Mobile_Banner_30c08876-5bac-4b2f-a85a-01a4f66d3e13.png",
+        "bg_image": "shopify://shop_images/image_1_7.png",
+        "form_show": true,
+        "form_heading": "Sign up and win",
+        "logo_heading": "Participating Stores",
+        "first_logo": "shopify://shop_images/Spinneys_Logo.svg",
+        "second_logo": "shopify://shop_images/Waitrose_Logo.svg",
+        "right_heading": "Win an exclusive hospitality experience in abu dhabi",
+        "top_heading": "PROMOTION MECHANICS",
+        "top_content": "<ul><li>1. Purchase a bottle of Peroni Nastro Azzurro 0.0% at any  participating <strong>SPINNEYS</strong> or <strong>WAITROSE STORES</strong> and keep your receipt as proof of purchase. This promotion applies to in-store purchases only and excludes online orders.</li><li> 2. Winners will be contacted via the details provided and ask for your receipt.</li></ul>",
+        "middle_heading": "PRIZE INCLUDES",
+        "middle_subheading": "2X HOSPITALITY TICKETS (WORTH AED 5,995 EACH)",
+        "middle_content": "<p>Enjoy 4 days of thrilling race action, panoramic views, after-race concerts, food & beverages, and more.</p>",
+        "bottom_left": "<p>🗓️ PROMOTION RUNS FROM</p><p><strong>13th – 26th </strong></p><p>November 2025</p>",
+        "bottom_right": "<p>🗓️ WINNER ANNOUNCEMENT</p><p><strong>28th</strong></p><p>November 2025</p>",
+        "botom_content": "<p>Note: The prize will be forfeited if proof of purchase is not provided within 48 hours. Only receipts dated within the promotion period will be accepted.</p>"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "peroni-landing-section"
+  ]
+}

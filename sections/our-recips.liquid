@@ -1,0 +1,434 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --section-padding-top: {{ section.settings.padding_top }}px;
+    --section-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --image-position: {{ section.settings.image_position }};
+    --card-border-radius: {{ section.settings.card_border_radius }}px;
+    --color-highlight: {{ section.settings.colors_highlight.red }}, {{ section.settings.colors_highlight.green }}, {{ section.settings.colors_highlight.blue }};
+    {% if section.settings.bg_color %}
+        background-color: {{ section.settings.bg_color }}
+    {% endif %}  
+}
+{% if section.settings.heading_color %}
+.recipe .title-wrapper .title{
+    color:{{ section.settings.heading_color }};
+}{% endif %}
+.recipe .title-wrapper .title{
+    line-height:100%;
+
+}
+.recipes-slider .carousel-cell h3 em{
+  font-family: Playfair Display, serif;
+    font-style: italic;
+}
+.image-title-box{
+    position:relative;
+}
+.image-title-box img{
+  max-width:100%;
+}
+.image-title-box .title-wrapper{
+    position:absolute;
+    top:0px;
+    left:0px;
+    background-image:url('{{ "dots.svg" | asset_url }}');
+        background-size: cover;
+    padding: 50px;
+    margin: 0;
+    background-repeat: no-repeat;
+    width: 272px;
+    height: 253px;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+.recipes-slider{
+    padding:0;
+}
+.recipes-slider  .carousel-cell .img-text{
+  min-height:300px;
+  position:relative;
+      overflow: hidden;
+}
+.recipes-slider  .carousel-cell .img-text img{
+  position:absolute;
+  top:0;
+  left:0;
+  object-fit:cover;
+}
+.recipes-slider .carousel-cell{
+      background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    border-radius: 12px;
+    padding: 40px;
+    row-gap: 10px;
+    width:393px;
+    justify-content: space-between;
+    color:{{ section.settings.txt_color }};
+    margin-right:15px;
+  
+}
+.img-text p{
+    margin:0;
+}
+.view-all-box{
+    width:100%;
+    text-align:center;
+    margin: 15px 0;
+}
+.view-all{
+   font-weight: bold;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #fff;
+    text-decoration: none;
+}
+
+.recipes-slider .carousel-cell h3{
+    margin:0;
+    font-size:24px;
+    font-weight:500;
+    color:{{ section.settings.txt_color }};
+    min-height: 65px;
+}
+.recipes-slider .carousel-cell .img-text img{
+  max-height:300px;
+  max-width:100%;
+  border-radius: 15px;
+}
+.detail-s p{
+    font-size:21px;
+    font-family: "Playfair Display", serif;
+    line-height:100%;
+    color:{{ section.settings.txt_color }};
+    margin: 0;
+}
+.recipes-box-footer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.recipes-box-footer .time{
+    display: flex;
+    align-items: center;
+    column-gap: 5px;
+    font-size:15px;
+    color:#9BACBE;
+}
+.recipes-box-footer a{
+    font-size:12px;
+    color:{{ section.settings.txt_color }};
+    font-weight:bold;
+}
+.recipe{
+    position:relative;
+}
+
+
+.recipes-slider-box button .flickity-button-icon{
+    fill:#fff;
+}
+.recipes-slider-box{
+    position:absolute;
+    right:0;
+    top:50%;
+    transform:translateY(-54%);
+    width:100%;
+}
+.recipes-slider-box .flickity-prev-next-button.previous{
+    top: -10%;
+    right: 7%;
+    left: auto;
+}
+.recipes-slider-box button
+{
+    background-color: #204975;
+}
+.recipes-slider-box .flickity-prev-next-button.next{
+        top: -10%;
+    right: 3.5%;
+}
+@media (max-width:749px){
+  .recipes-slider .carousel-cell {
+    padding: 30px 20px;
+    width: 88%;
+ 
+}
+.recipes-slider-box .flickity-slider{
+  /*transform: translateX(10px)!important;*/
+}
+.recipes-slider-box{
+    position:static;
+    transform:translateY(-10%);
+  }
+  .recipes-slider-box .flickity-prev-next-button.previous {
+    top: -10%;
+    right: 18%;
+    left: auto;
+}
+}
+{%- endstyle -%}
+
+
+<div class="section--padding{% if section.settings.show_divider %} section--divider{% endif %}">
+  <div class="recipe page-width">
+    <div class="img-text">
+    <div class="image-title-box">
+     {% if section.settings.section_image %}
+        <img src="{{ section.settings.section_image | img_url:'original' }}" />
+     {% endif %}   
+    <div class="title-wrapper{% if section.settings.heading == blank %} title-wrapper--no-heading{% endif %} ">
+      <{{ section.settings.heading_tag }} class="title {{ section.settings.heading_size }}">
+        {%- render 'highlight-text', 
+          hl_input: section.settings.heading, 
+          hl_animateWrap: true -%}
+      </{{ section.settings.heading_tag }}>
+    </div>
+    </div>
+</div>
+    <div class="recipes-slider-box">
+      <div id="Slider-{{ section.id }}" class="recipes-slider carousel">
+       {% assign my_blog = blogs['recipes'] %} 
+    
+    {% for article in my_blog.articles limit:10 %}
+          <div class="carousel-cell">
+             <h3> {{ article.title | escape }}<br/>
+                {% if article.metafields.custom.subtitle %} <em>{{ article.metafields.custom.subtitle }}</em>{% endif %}</h3>
+             <div class="img-text">
+                   {%- capture sizes -%}(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | divided_by: 2 }}px, (min-width: 750px) calc((100vw - 10rem) / 2), calc(100vw - 3rem){%- endcapture -%}
+          {{ article.image | image_url: width: 1500 | image_tag:
+            loading: 'lazy',
+            class: 'motion-reduce',
+            sizes: sizes,
+            widths: '165, 360, 535, 750, 1100, 1500',
+            is: 'lazy-image'
+          }}
+         
+            </div>
+             <div class="detail-s">
+              {%- liquid
+                  if article.excerpt.size > 0
+                    echo '<p class="small-hide medium-hide">'
+                    echo article.excerpt | strip_html | truncatewords: 6
+                    echo '</p>'
+                  else
+                  echo '<p class="small-hide medium-hide">'
+                    echo article.content | strip_html | truncatewords: 6
+                    echo '</p>'
+                  endif
+                -%}
+                </div>
+             <div class="recipes-box-footer">
+               {% if article.metafields.custom.total_time %} <div class="time"><svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21" fill="none">
+<path d="M10.5 20.1484C16.0139 20.1484 20.5 15.6624 20.5 10.1484C20.5 4.6345 16.0144 0.148438 10.5 0.148438C4.9856 0.148438 0.5 4.63404 0.5 10.1484C0.5 15.6628 4.98606 20.1484 10.5 20.1484ZM10.5 1.52383C15.2556 1.52383 19.1246 5.3928 19.1246 10.1484C19.1246 14.9041 15.2561 18.773 10.5 18.773C5.7439 18.773 1.87539 14.9041 1.87539 10.1484C1.87539 5.3928 5.74436 1.52383 10.5 1.52383Z" fill="#9BACBE"/>
+<path d="M10.2188 11.1484C10.2207 11.1484 10.2222 11.148 10.2241 11.148C10.226 11.148 10.2274 11.1484 10.2293 11.1484H13.7812C14.178 11.1484 14.5 10.8449 14.5 10.471C14.5 10.0966 14.178 9.79351 13.7812 9.79351H10.9376V4.8259C10.9376 4.45149 10.6156 4.14844 10.2188 4.14844C9.82155 4.14844 9.5 4.45149 9.5 4.8259V10.471C9.5 10.8449 9.82155 11.1484 10.2188 11.1484Z" fill="#9BACBE"/>
+</svg> Total time: {{ article.metafields.custom.total_time }}</div>{% endif %}
+                <a href="{{ article.url }}">Read More</a>
+             </div>
+            </div>
+          {% endfor %}
+      </div>
+    </div>
+    {% if section.settings.view_all %}
+        <div class="view-all-box">
+        <a href="{{ section.settings.view_link }}" class="view-all">{{ section.settings.view_all }}</a>
+        </div>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+  /* setTimeout(() => {
+    $('.recipes-slider').flickity({
+        freeScroll: true,
+        pageDots: false,
+        lazyLoad: 1 // Adjust lazyLoad value as needed
+    });
+}, 3000);*/
+
+  function initRecipesSlider() {
+    var isMobile = window.innerWidth < 768;
+    var $slider = $('.recipes-slider');
+
+    // Destroy existing Flickity instance if it exists
+    if ($slider.data('flickity')) {
+      $slider.flickity('destroy');
+    }
+
+    $slider.flickity({
+      freeScroll: !isMobile,
+      pageDots: false,
+      lazyLoad: 1
+    });
+  }
+
+  // Delay to ensure elements are loaded
+  setTimeout(initRecipesSlider, 3000);
+  $(window).on('resize', initRecipesSlider);
+</script>
+
+{% schema %}
+{
+  "name": "t:sections.recipes.name",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+          "type": "color",
+          "id": "bg_color",
+          "label": "t:sections.recipes.settings.background_color.label",
+          "default": "#f2f2f2"
+        },
+        {
+          "type": "color",
+          "id": "txt_color",
+          "label": "t:sections.recipes.settings.txt_color.label",
+          "default": "#000"
+        },
+    {
+          "type": "image_picker",
+          "id": "section_image",
+          "label": "t:sections.recipes.settings.image.label"
+        },    
+   {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 3,
+      "label": "t:sections.recipes.settings.columns_desktop.label"
+    },
+   
+    {
+      "type": "header",
+      "content": "t:sections.all.heading.label"
+    },
+        {
+      "type": "html",
+      "id": "heading",
+      "default": "Recipes",
+      "label": "t:sections.all.heading.label"
+    },
+    {
+          "type": "color",
+          "id": "heading_color",
+          "label": "t:sections.recipes.settings.heading_color.label",
+          "default": "#000000"
+        },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "t:sections.all.heading_size.options__1.label"
+        },
+        {
+          "value": "h1",
+          "label": "t:sections.all.heading_size.options__2.label"
+        },
+        {
+          "value": "h0",
+          "label": "t:sections.all.heading_size.options__3.label"
+        }
+      ],
+      "default": "h1",
+      "label": "t:sections.all.heading_size.label"
+    },
+   
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "options": [
+        {
+          "value": "h1",
+          "label": "t:sections.all.heading_tag.options__1.label"
+        },
+        {
+          "value": "h2",
+          "label": "t:sections.all.heading_tag.options__2.label"
+        },
+        {
+          "value": "h3",
+          "label": "t:sections.all.heading_tag.options__3.label"
+        },
+        {
+          "value": "h4",
+          "label": "t:sections.all.heading_tag.options__4.label"
+        },
+        {
+          "value": "h5",
+          "label": "t:sections.all.heading_tag.options__5.label"
+        },
+        {
+          "value": "h6",
+          "label": "t:sections.all.heading_tag.options__6.label"
+        },
+        {
+          "value": "div",
+          "label": "t:sections.all.heading_tag.options__7.label"
+        },
+        {
+          "value": "span",
+          "label": "t:sections.all.heading_tag.options__8.label"
+        },
+        {
+          "value": "p",
+          "label": "t:sections.all.heading_tag.options__9.label"
+        }
+      ],
+      "default": "h2",
+      "label": "t:sections.all.heading_tag.label",
+      "info": "t:sections.all.heading_tag.info"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.header.content"
+    },
+    {
+      "type": "text",
+      "id": "view_all",
+     "label": "t:sections.all.view_all.label"
+    },
+    {
+      "type": "url",
+      "id": "view_link",
+     "label": "t:sections.all.link.label"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "t:sections.all.padding.padding_top.unit",
+      "label": "t:sections.all.padding.padding_top.label",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "t:sections.all.padding.padding_bottom.unit",
+      "label": "t:sections.all.padding.padding_bottom.label",
+      "default": 36
+    }
+    
+  ],
+  
+  "presets": [
+    {
+      "name": "t:sections.recipes.presets.name"
+      
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "footer", "custom.overlay"]
+  }
+}
+{% endschema %}

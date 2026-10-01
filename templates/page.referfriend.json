@@ -1,0 +1,182 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "referfriend-page",
+      "disabled": true,
+      "settings": {
+        "narrow": true,
+        "padding_top": 60,
+        "padding_bottom": 72
+      }
+    },
+    "1774256094939c319d": {
+      "type": "apps",
+      "blocks": {
+        "yotpo_loyalty_rewards_rewards_module_app_block_t7Vag3": {
+          "type": "shopify://apps/yotpo-loyalty-rewards/blocks/rewards-module-app-block/2f9660df-5018-4e02-9868-ee1fb88d6ccd",
+          "settings": {
+            "instance_placeholder_id": "367437"
+          }
+        }
+      },
+      "block_order": [
+        "yotpo_loyalty_rewards_rewards_module_app_block_t7Vag3"
+      ],
+      "custom_css": [
+        ".page-width {margin: 0; padding: 0;}",
+        ".yotpo-widget-referral-widget .yotpo-background.yotpo-center-background {height: auto !important; padding: 80px 0;}"
+      ],
+      "settings": {
+        "include_margins": true,
+        "show_divider": false,
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "newsletter_UyGF7W": {
+      "type": "newsletter",
+      "blocks": {
+        "heading_TV8KP9": {
+          "type": "heading",
+          "settings": {
+            "heading": "Join our<br><em>mailing list</em>",
+            "heading_tag": "h2",
+            "enable_highlight": false,
+            "highlight_style": "marker"
+          }
+        },
+        "paragraph_TFhDmb": {
+          "type": "paragraph",
+          "settings": {
+            "paragraph": "<p>Your VIP pass to new arrivals, insider offers &amp; <br>expertly curated picks straight to your inbox.</p>",
+            "enable_highlight": false,
+            "highlight_style": "marker"
+          }
+        },
+        "email_form_LdqYwL": {
+          "type": "email_form",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "heading_TV8KP9",
+        "paragraph_TFhDmb",
+        "email_form_LdqYwL"
+      ],
+      "name": "t:sections.newsletter.presets.name",
+      "settings": {
+        "return_url": "",
+        "text_alignment": "left",
+        "mobile_text_alignment": "left",
+        "full_width": true,
+        "show_divider": false,
+        "colors_text": "#17416f",
+        "colors_border": "rgba(0,0,0,0)",
+        "colors_background": "#ffffff",
+        "gradient_background": "",
+        "colors_highlight": "#ffb503",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "guarantees_6NCwJR": {
+      "type": "guarantees",
+      "blocks": {
+        "guarantee_TGVnFC": {
+          "type": "guarantee",
+          "settings": {
+            "icon": "none",
+            "icon_size": "medium",
+            "custom_icon": "",
+            "title": "Write to Us",
+            "title_size": "h3",
+            "text": "<p>At sales <span style=\"text-decoration:underline\">@drinkdrystore.com </span>or use our</p><p>Contact Form</p>",
+            "enable_highlight": false,
+            "highlight_style": "marker"
+          }
+        },
+        "guarantee_aUzBrK": {
+          "type": "guarantee",
+          "settings": {
+            "icon": "none",
+            "icon_size": "medium",
+            "custom_icon": "",
+            "title": "Talk to Us",
+            "title_size": "h3",
+            "text": "<p>Call us on <span style=\"text-decoration:underline\">+971 50 705 5461</span></p><p>Monday – Friday: (9.00am – 5.00pm)</p>",
+            "enable_highlight": false,
+            "highlight_style": "marker"
+          }
+        },
+        "guarantee_QBhjmM": {
+          "type": "guarantee",
+          "settings": {
+            "icon": "none",
+            "icon_size": "medium",
+            "custom_icon": "",
+            "title": "FAQs",
+            "title_size": "h3",
+            "text": "<p>For queries, please<br/>refer to our <span style=\"text-decoration:underline\">FAQs</span></p>",
+            "enable_highlight": false,
+            "highlight_style": "marker"
+          }
+        }
+      },
+      "block_order": [
+        "guarantee_TGVnFC",
+        "guarantee_aUzBrK",
+        "guarantee_QBhjmM"
+      ],
+      "custom_css": [
+        ".guarantees {max-width: inherit;}",
+        ".guarantee__item .h3 {font-size: 18px; font-weight: 600; margin-bottom: 14px;}",
+        ".guarantee__item .rte a {color: #17416f !important; text-decoration: underline;}",
+        ".guarantee__item .rte p {margin: 0 0 5px;}",
+        "slider-component ul {margin-top: 0;}",
+        "slider-component ul li {padding: 60px 10px 65px; border-right: 1px solid #ededed;}",
+        "slider-component ul li:last-child {border: none;}",
+        ".page-width {border-bottom: 1px solid #ededed; border-top: 1px solid #ededed; margin-bottom: 40px;}"
+      ],
+      "name": "t:sections.guarantees.presets.name",
+      "settings": {
+        "bg_color": "",
+        "layout": "default",
+        "column_alignment": "center",
+        "horizontal_content": false,
+        "full_width": true,
+        "show_divider": true,
+        "columns_desktop": 3,
+        "heading": "",
+        "heading_size": "h1",
+        "heading_tag": "h2",
+        "columns_mobile": "1",
+        "swipe_on_mobile": true,
+        "use_custom_colors": false,
+        "colors_icon": "#ffffff",
+        "colors_text": "#1a1b18",
+        "colors_background": "#ffffff",
+        "gradient_background": "",
+        "colors_highlight": "#ffb503",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "enable_highlight": false,
+        "highlight_style": "marker"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "1774256094939c319d",
+    "newsletter_UyGF7W",
+    "guarantees_6NCwJR"
+  ]
+}

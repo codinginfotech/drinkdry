@@ -1,0 +1,471 @@
+{% comment %} <div class="page-tpl">
+  <div class="container">
+    {% include 'breadcrumb' %}
+
+    <header class="page-header">
+      <h2>
+        {% include 'multilang' with page.title %}
+      </h2>      
+    </header>
+
+    {% comment %}
+    Regular page content goes here.
+    {% endcomment %}
+
+    {% if settings.enable_multilang and page.content contains '[lang2]' %}
+    <div class="rte lang1">
+      {{ page.content | split: '[lang2]' | first }}
+    </div>
+    <div class="rte lang2">
+      {{ page.content | split: '[lang2]' | last }}
+    </div>
+    {% else %}
+    <div class="rte">
+      {{ page.content | split: '[lang2]' | first }}
+    </div>
+    {% endif %}
+  </div>
+</div> {% endcomment %}
+<style>
+ @font-face {
+    font-family: 'ITCAvantGardeProBk';
+    src: url('https://cdn.shopify.com/s/files/1/0500/1664/9366/files/ITCAvantGardeProBk_c91f4b89-f423-4b17-8b48-d9b86d149274.eot');
+    src: url('https://cdn.shopify.com/s/files/1/0500/1664/9366/files/ITCAvantGardeProBk_c91f4b89-f423-4b17-8b48-d9b86d149274.eot') format('embedded-opentype'),
+         url('https://cdn.shopify.com/s/files/1/0500/1664/9366/files/ITCAvantGardeProBk_a6b175ca-04c5-4f2d-be6e-cf76c48e0d0e.woff2') format('woff2'),
+         url('https://cdn.shopify.com/s/files/1/0500/1664/9366/files/ITCAvantGardeProBk_4cc68410-5458-4658-9558-9f07d4a5e254.woff') format('woff'),
+         url('https://cdn.shopify.com/s/files/1/0500/1664/9366/files/ITCAvantGardeProBk_d5b3acd5-a198-4fc6-b88e-df0aad9f3c1b.ttf') format('truetype'),
+         url('fonts/ITCAvantGardeProBk.svg#ITCAvantGardeProBk') format('svg');
+}
+@font-face {
+    font-family: 'ITCAvantGardeProDemi';
+    src: url('https://cdn.shopify.com/s/files/1/0500/1664/9366/files/ITCAvantGardeProDemi_70075830-a962-4f73-a1fb-1c0f7121078c.eot?v=1761825312');
+    src: url('https://cdn.shopify.com/s/files/1/0500/1664/9366/files/ITCAvantGardeProDemi_70075830-a962-4f73-a1fb-1c0f7121078c.eot?v=1761825312') format('embedded-opentype'),
+         url('https://cdn.shopify.com/s/files/1/0500/1664/9366/files/ITCAvantGardeProDemi_4e9ee4e1-d6a2-48bb-b4bb-bee569e54d3f.woff2?v=1761825311') format('woff2'),
+         url('https://cdn.shopify.com/s/files/1/0500/1664/9366/files/ITCAvantGardeProDemi_f786227a-86e2-43e3-bc81-55ed92bd0dc0.woff?v=1761825311') format('woff'),
+         url('https://cdn.shopify.com/s/files/1/0500/1664/9366/files/ITCAvantGardeProDemi_72113031-9210-4cc1-8870-4d74503597f1.ttf?v=1761825312') format('truetype'),
+         url('fonts/ITCAvantGardeProDemi.svg#ITCAvantGardeProDemi') format('svg');
+}
+.peroni-landing-box ul{
+    list-style:none;
+    padding:0;
+}
+ .peroni-landing-box h4 {
+    font-size: 17px;
+    margin-bottom: 1.5em;
+    margin-top:0;
+}
+.peroni-landing-box h1, .peroni-landing-box h2, .peroni-landing-box h3, .peroni-landing-box h4, .peroni-landing-box h5, .peroni-landing-box h6 {
+    font-weight: 700;
+    line-height: 1.25em;
+    margin: 0;
+    padding: 0;
+}
+.peroni-landing-box h2{
+    margin-bottom: 1em;
+    }
+.peroni-landing-box ul li, .peroni-landing-box ol li {
+    margin-bottom: .25em;
+        font-size: 15px;
+}
+ 
+    .peroni-box{
+background-color:#ffffffa1;
+border: 1px solid #707070;
+border-radius: 15px;
+padding:20px 30px;
+    }
+   .top-title{
+          text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+   } 
+    .peroni-landing-box{
+      background: transparent radial-gradient(closest-side at 50% 50%, #4A6694 0%, #143160 100%) 0% 0% no-repeat padding-box;
+opacity: 1;
+position:relative;
+    padding: 35px 0 60px;
+    }
+    
+   .peroni-landing-box h2, .peroni-landing-box h3, .peroni-landing-box h4, .peroni-landing-box ul li, .peroni-landing-box p, .peroni-landing-box{
+color:#fff;
+font-family: 'ITCAvantGardeProBk';
+}
+.form-box h2{
+    text-transform:uppercase;
+    font-size:30px;
+    text-align: center;
+    margin-bottom: 50px;
+     font-family: 'ITCAvantGardeProDemi';
+}
+.form-box form label{
+   color:#fff;
+}
+.form-box form .intl-tel-input{
+    margin-bottom:0;
+}
+.form-group .btn{
+   width:100%;
+   background-color:#17416F;
+   color:#fff;
+   text-transform:uppercase;
+}
+.logo-box{
+margin-top:30px;
+}
+.logo-box h3
+{
+    font-size:20px;
+    text-align:center;
+  opacity:0.5;
+  text-transform:uppercase;
+  font-weight:normal;
+   font-family: 'ITCAvantGardeProDemi';
+  
+}
+.right-box h2{
+  font-size:42px;
+  text-transform:uppercase;
+  text-align: center;
+   font-family: 'ITCAvantGardeProDemi';
+}
+.content-box
+{
+  background: #25406B 0% 0% no-repeat padding-box;
+border-radius: 15px;
+padding:30px 0;
+}
+.top-text{
+   padding:0 40px 30px; 
+}
+.middle-box{
+   background-color:#fff;
+   text-align:center;
+  
+   padding:30px 40px;
+}
+.middle-box h3
+{
+    font-size:30px;
+    text-transform:uppercase;
+    color:#25406B;
+    margin-bottom:15px;
+     font-family: 'ITCAvantGardeProDemi';
+}
+.middle-box .sub-title p{
+   font-family: 'ITCAvantGardeProDemi';
+   font-size:21px;
+}
+.middle-box p{
+  color:#25406B;
+  margin-bottom:0;
+}
+.middle-box h6{
+  color:#25406B;
+  margin-bottom:0;
+   font-family: 'ITCAvantGardeProDemi';
+}
+.bottom-box{
+    padding:30px 40px 30px
+}
+.time-box{
+   margin-bottom:20px;
+   text-align: center;
+}
+.logos
+{
+    display: flex;
+    flex-direction: column;
+    gap: 70px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+}
+.logos img{
+  max-width:100%;
+  width:230px;
+}
+.main-content{
+   padding-bottom:0;
+}
+@media(max-width:767px){
+  .form-box h2 {
+    font-size: 27px;
+    margin-bottom: 15px;
+  }
+  .middle-box .sub-title p{
+   font-size:17px;
+}
+.peroni-box{
+   gap:50px;
+   padding: 20px 15px;
+}
+.right-box h2 {
+    font-size: 29px;
+}
+.time-box {
+    gap: 45px;
+}
+.logos {
+        gap: 35px;
+    margin-bottom: 40px;
+}
+.top-text {
+    padding: 0 15px 30px;
+}
+.middle-box {
+
+    padding: 30px 15px;
+}
+.bottom-box {
+    padding: 30px 15px 30px;
+}
+}
+</style>
+  <div class="peroni-landing-box">
+    <div class="container">
+<!-- Desktop Banner -->
+    {% if section.settings.banner_image != blank %}
+      <div class="banner mb-4 text-center d-none d-md-block">
+        <img 
+          src="{{ section.settings.banner_image | image_url: width: 1600 }}" 
+          alt="VIP Racing Banner" 
+          class="img-fluid rounded shadow-sm">
+      </div>
+    {% endif %}
+
+    <!-- Mobile Banner -->
+    {% if section.settings.mobile_banner_image != blank %}
+      <div class="banner mb-4 text-center d-block d-md-none">
+        <img 
+          src="{{ section.settings.mobile_banner_image | image_url: width: 800 }}" 
+          alt="VIP Racing Mobile Banner" 
+          class="img-fluid rounded shadow-sm">
+      </div>
+    {% endif %}
+     {% if section.settings.right_heading %}<h2 class="top-title d-block d-md-none">
+            {{ section.settings.right_heading }}
+        </h2>{% endif %}
+     
+<div class="peroni-box col-md-12">
+
+  <div class="row">
+    <div class="form-box left-box col-md-4">
+      {% if section.settings.form_show == true %}  
+       {% if section.settings.form_heading %} 
+         <h2>{{ section.settings.form_heading }}</h2>
+       {% endif %}
+   
+       <div class="klaviyo-form-TD2mTZ"></div>
+        {% comment %} <form>
+            <div class="form-group">
+                <label for="fname">Full Name</label>
+                <input type="text" id="fname" name="contact[fullname]" autocapitalize="words" placeholder="James Worthy">
+            </div>
+            <div class="form-group">
+                <label for="contactFormPhone">Contact Number</label>
+                <input type="tel" name="contact[phone]" id="contactFormPhone" pattern="[0-9]*" placeholder="+971 50 123 4567" autocomplete="off">
+            </div>
+            <div class="form-group">
+                <label for="contactFormEmail">Email Address</label>
+                <input type="email" name="contact[email]" id="contactFormEmail" autocorrect="off" autocapitalize="off" placeholder="Email*" required>
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn" value="Submit">
+            </div>
+        </form> {% endcomment %}
+        {%  endif %}
+        <div class="logo-box">
+            {% if section.settings.logo_heading %}<h3>{{ section.settings.logo_heading }}</h3>{%endif %}
+            <div class="logos">
+                {% if section.settings.first_logo != blank %}<img class="img1" src="{{ section.settings.first_logo | img_url:'original' }}">{% endif %}
+                {% if section.settings.second_logo != blank %}<img class="img2" src="{{ section.settings.second_logo | img_url:'original' }}">{% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="right-box col-md-8">
+        {% if section.settings.right_heading %}<h2 class="d-none d-md-block">
+            {{ section.settings.right_heading }}
+        </h2>{% endif %}
+        <div class="content-box">
+            <div class="top-text">
+                {%if section.settings.top_heading %}<h4>{{ section.settings.top_heading }}</h4>{% endif %}
+                {% if section.settings.top_content %}
+                   {{ section.settings.top_content }}
+                {% endif %}
+            </div>
+            <div class="middle-box">
+                {% if section.settings.middle_heading  %}
+                    <h3>
+                        {{ section.settings.middle_heading }}
+                    </h3>{% endif %}
+                 {%if section.settings.middle_subheading %}<div class="sub-title"><p>{{ section.settings.middle_subheading }}</p></div>{% endif %}   
+                {% if section.settings.middle_content %}
+                    {{ section.settings.middle_content }}
+                {% endif %}
+            </div>
+            <div class="bottom-box">
+                <div class="time-box row">
+                   {% if section.settings.bottom_left %} <div class="col-md-6">
+                        {{ section.settings.bottom_left }}
+                    </div>
+                {% endif %}
+                   {% if section.settings.bottom_left %} <div class="col-md-6">
+                        {{ section.settings.bottom_right }}
+                    </div>
+                {% endif %}
+                </div>
+                <div class="row">
+                <div class="col-12">
+                 {% if section.settings.botom_content %}   <p>
+                        {{ section.settings.botom_content }}
+                    </p>{% endif %}
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+ </div>
+  <div>
+<style>
+  {% if section.settings.bg_image %} .peroni-landing-box:after{
+
+       background-image:url({{ section.settings.bg_image | img_url:'original' }});
+       content: '';
+    position: absolute;
+    display: block;
+    width: 215px;
+    height: 306px;
+    bottom: 32px;
+    right: 3%;
+    background-size: cover;
+
+    }{% endif %}
+</style>
+{% schema %}
+{
+  "name": "Peroni landing Section",
+  "class": "section peroni-landing-page",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "banner_image",
+      "label": "Banner Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_banner_image",
+      "label": "Mobile Banner Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image"
+    },
+    {
+      "type":"header",
+      "content":"Form Section"
+    },
+    {
+      "type":"checkbox",
+      "id":"form_show",
+      "label":"Form Show/Hide",
+      "default":true
+    },
+    {
+      "type":"text",
+      "id":"form_heading",
+      "label":"Form Heading",
+      "default":"Sign up and win"
+    },
+     {
+      "type":"header",
+      "content":"Logo Box"
+    },
+    {
+      "type":"text",
+      "id":"logo_heading",
+      "label":"Heading",
+      "default":"Participating Stores"
+    },
+
+    {
+      "type":"image_picker",
+      "id":"first_logo",
+      "label":"Logo Image"
+    },
+    {
+      "type":"image_picker",
+      "id":"second_logo",
+      "label":"Logo Image"
+    },
+    {
+      "type":"header",
+      "content":"Right Column"
+    },
+    {
+      "type":"text",
+      "id":"right_heading",
+      "label":"Heading",
+      "default":"Win an exclusive hospitality experience in abu dhabi"
+    },
+    {
+      "type":"header",
+      "content":"Top box"
+    },
+    {
+      "type":"text",
+      "id":"top_heading",
+      "label":"Title",
+      "default":"PROMOTION MECHANICS"
+    },
+    {
+      "type":"richtext",
+      "id":"top_content",
+      "label":"content"
+    },
+    {
+      "type":"header",
+      "content":"Middle box"
+    },
+    {
+      "type":"text",
+      "id":"middle_heading",
+      "label":"Title",
+      "default":"PRIZE INCLUDES"
+    },
+    {
+      "type":"text",
+      "id":"middle_subheading",
+      "label":"Sub Title",
+      "default":"2X HOSPITALITY TICKETS (WORTH AED 5,995 EACH) "
+    },
+    {
+      "type":"richtext",
+      "id":"middle_content",
+      "label":"content"
+    },
+    {
+      "type":"header",
+      "content":"Bottom box"
+    },
+    {
+      "type":"richtext",
+      "id":"bottom_left",
+      "label":"Left Box"
+    },
+    {
+      "type":"richtext",
+      "id":"bottom_right",
+      "label":"Right Box"
+    },
+    {
+      "type":"richtext",
+      "id":"botom_content",
+      "label":"content"
+    }
+    
+  ]
+}
+{% endschema %}

@@ -1,0 +1,236 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page-corona",
+      "disabled": true,
+      "settings": {
+        "narrow": true,
+        "padding_top": 60,
+        "padding_bottom": 72
+      }
+    },
+    "1760536939cee60cf4": {
+      "type": "apps",
+      "blocks": {
+        "klaviyo_email_marketing_sms_form_embed_block_pA6tpb": {
+          "type": "shopify://apps/klaviyo-email-marketing-sms/blocks/form-embed-block/2632fe16-c075-4321-a88b-50b567f42507",
+          "disabled": true,
+          "settings": {
+            "formId": "XvqHkd"
+          }
+        }
+      },
+      "block_order": [
+        "klaviyo_email_marketing_sms_form_embed_block_pA6tpb"
+      ],
+      "custom_css": [
+        "form {margin: 0 auto; padding: 25px 40px 25px 25px !important; border-radius: 12px !important; float: none !important;}",
+        ".page-width {background-color: #17416f; padding-top: 100px; background-repeat: no-repeat; background-position: 94% 85%; background-size: 260px; padding-bottom: 400px; background-image: url(\"https://cdn.shopify.com/s/files/1/0500/1664/9366/files/image_1_7.png?v=1760606444\");}",
+        "form img {border-radius: 0 !important;}",
+        "form > div {margin: 0 !important; display: flex; justify-content: center;}"
+      ],
+      "settings": {
+        "include_margins": true,
+        "show_divider": false,
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "quiz_crossip_n6nbKz": {
+      "type": "quiz-crossip",
+      "blocks": {
+        "question_rJGF7j": {
+          "type": "question",
+          "settings": {
+            "question_text": "Pick Your Moment:",
+            "option_1_text": "Brunch / daytime fun",
+            "option_1_sku": "fresh",
+            "option_1_points": 1,
+            "option_2_text": "Dinner / date night",
+            "option_2_sku": "pure",
+            "option_2_points": 1,
+            "option_3_text": "Late night / after hours",
+            "option_3_sku": "dandy",
+            "option_3_points": 1,
+            "option_4_text": "Pre drinks / party time",
+            "option_4_sku": "blazing",
+            "option_4_points": 1
+          }
+        },
+        "question_cTFz87": {
+          "type": "question",
+          "settings": {
+            "question_text": "Pick Your Moment:",
+            "option_1_text": "Brunch / daytime fun",
+            "option_1_sku": "fresh",
+            "option_1_points": 1,
+            "option_2_text": "Dinner / date night",
+            "option_2_sku": "pure",
+            "option_2_points": 1,
+            "option_3_text": "Late night / after hours",
+            "option_3_sku": "dandy",
+            "option_3_points": 1,
+            "option_4_text": "Pre drinks / party time",
+            "option_4_sku": "blazing",
+            "option_4_points": 1
+          }
+        },
+        "question_jR7awz": {
+          "type": "question",
+          "settings": {
+            "question_text": "Pick Your Moment:",
+            "option_1_text": "Brunch / daytime fun",
+            "option_1_sku": "fresh",
+            "option_1_points": 1,
+            "option_2_text": "Dinner / date night",
+            "option_2_sku": "pure",
+            "option_2_points": 1,
+            "option_3_text": "Late night / after hours",
+            "option_3_sku": "dandy",
+            "option_3_points": 1,
+            "option_4_text": "Pre drinks / party time",
+            "option_4_sku": "blazing",
+            "option_4_points": 1
+          }
+        },
+        "question_MjAHXE": {
+          "type": "question",
+          "settings": {
+            "question_text": "What are you in the mood for?",
+            "option_1_text": "Fresh and zesty",
+            "option_1_sku": "fresh",
+            "option_1_points": 2,
+            "option_2_text": "Bold and bittersweet",
+            "option_2_sku": "pure",
+            "option_2_points": 2,
+            "option_3_text": "Rich and smoky",
+            "option_3_sku": "dandy",
+            "option_3_points": 2,
+            "option_4_text": "Juicy and spicy",
+            "option_4_sku": "blazing",
+            "option_4_points": 2
+          }
+        },
+        "question_DNgHc6": {
+          "type": "question",
+          "settings": {
+            "question_text": "What sounds most like you?",
+            "option_1_text": "Open, relaxed, easy going",
+            "option_1_sku": "fresh",
+            "option_1_points": 1,
+            "option_2_text": "Expressive, spontaneous, a bit extra",
+            "option_2_sku": "pure",
+            "option_2_points": 1,
+            "option_3_text": "Cool, confident, understated",
+            "option_3_sku": "dandy",
+            "option_3_points": 1,
+            "option_4_text": "Energetic, bold, a bit mischievous",
+            "option_4_sku": "blazing",
+            "option_4_points": 1
+          }
+        },
+        "question_JJa4aU": {
+          "type": "question",
+          "settings": {
+            "question_text": "What do you want your drink to do?",
+            "option_1_text": "Refresh and lift the mood",
+            "option_1_sku": "fresh",
+            "option_1_points": 2,
+            "option_2_text": "Be a bit of a talking point",
+            "option_2_sku": "pure",
+            "option_2_points": 2,
+            "option_3_text": "Let me sip something great all night",
+            "option_3_sku": "dandy",
+            "option_3_points": 2,
+            "option_4_text": "Wake things up and bring energy",
+            "option_4_sku": "blazing",
+            "option_4_points": 2
+          }
+        },
+        "product_result_jbAMWz": {
+          "type": "product_result",
+          "settings": {
+            "sku_key": "fresh",
+            "product_name": "Crossip Fresh",
+            "product_description": "Light, zesty, and effortlessly refreshing. You keep things easy and bright.",
+            "serve_suggestion": "Best served with tonic and a slice of lime",
+            "product_url": ""
+          }
+        },
+        "product_result_WxF3Q3": {
+          "type": "product_result",
+          "settings": {
+            "sku_key": "pure",
+            "product_name": "Crossip Pure",
+            "product_description": "Bold, expressive, and unapologetically you. A drink that matches your energy.",
+            "serve_suggestion": "Best served with tonic and a slice of lime",
+            "product_url": ""
+          }
+        },
+        "product_result_Jewqni": {
+          "type": "product_result",
+          "settings": {
+            "sku_key": "dandy",
+            "product_name": "Crossip Dandy",
+            "product_description": "Rich, smooth, and understated cool. For those who know what they like.",
+            "serve_suggestion": "Best served with tonic and a slice of lime",
+            "product_url": ""
+          }
+        },
+        "product_result_c44N6K": {
+          "type": "product_result",
+          "settings": {
+            "sku_key": "blazing",
+            "product_name": "Crossip Blazing",
+            "product_description": "Spicy, bold, and full of life. You bring the energy wherever you go.",
+            "serve_suggestion": "Best served with tonic and a slice of lime",
+            "product_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "question_rJGF7j",
+        "question_cTFz87",
+        "question_jR7awz",
+        "question_MjAHXE",
+        "question_DNgHc6",
+        "question_JJa4aU",
+        "product_result_jbAMWz",
+        "product_result_WxF3Q3",
+        "product_result_Jewqni",
+        "product_result_c44N6K"
+      ],
+      "disabled": true,
+      "name": "Quiz Funnel",
+      "settings": {
+        "hero_image": "shopify://shop_images/240405_D2409_4888_Horizontal_1_1.jpg",
+        "hero_title": "Find Your Perfect Match",
+        "hero_subtitle": "Take our quick quiz to discover which drink is made for you.",
+        "hero_cta": "Take the Quiz",
+        "form_title": "Enter Your Details to Meet Your Match",
+        "form_subtitle": "We will reveal your perfect drink and send you something special.",
+        "form_cta": "Reveal My Match",
+        "result_cta": "Shop Now",
+        "klaviyo_list_id": "",
+        "background_color": "#f8f5f0",
+        "text_color": "#1a1a1a",
+        "accent_color": "#2d5016",
+        "card_color": "#ffffff"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "1760536939cee60cf4",
+    "quiz_crossip_n6nbKz"
+  ]
+}

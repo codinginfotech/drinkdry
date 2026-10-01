@@ -1,0 +1,35 @@
+{% comment %}
+  Blog Sidebar Filter (AJAX)
+  Works with Be Yours theme
+{% endcomment %}
+
+<div id="blog-filter-sidebar" class="blog-filter-sidebar">
+  <h3>Filter by Tag</h3>
+  <form id="blogFilterForm">
+    {% assign all_tags = blog.all_tags %}
+    {% for tag in all_tags %}
+      <label class="filter-option">
+        <input type="checkbox" name="tag" value="{{ tag | escape }}">
+        <span>{{ tag }}</span>
+      </label>
+    {% endfor %}
+  </form>
+</div>
+
+<style>
+.blog-filter-sidebar {
+  width: 250px;
+  padding: 20px;
+  border-right: 1px solid #eee;
+}
+.filter-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.filter-option input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+}
+</style>

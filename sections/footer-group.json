@@ -1,0 +1,54 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "t:sections.footer-group.name",
+  "type": "footer",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "custom_css": [],
+      "settings": {
+        "show_divider": true,
+        "footer_logo": "shopify://shop_images/Frame.svg",
+        "double_links": true,
+        "heading1": "About Us",
+        "menu1": "about-us-new",
+        "heading2": "Help center",
+        "menu2": "pages",
+        "heading3": "Shop",
+        "menu3": "categories",
+        "newsletter_enable": true,
+        "newsletter_heading": "Exclusive benefits",
+        "newsletter_text": "<p>Apply for our free membership to receive exclusive deals, news, and events.</p>",
+        "return_url": "",
+        "enable_follow_on_shop": true,
+        "show_social": true,
+        "social_heading": "",
+        "enable_country_selector": true,
+        "enable_language_selector": true,
+        "payment_enable": false,
+        "show_policy": false,
+        "copyright_text": "All rights reserved.",
+        "colors_text": "#17416f",
+        "colors_heading": "#17416f",
+        "colors_link": "#7b828d",
+        "colors_border": "#d2d5d9",
+        "colors_background": "#e2dcd8",
+        "gradient_background": "",
+        "colors_highlight": "#ffb503",
+        "enable_highlight": false,
+        "highlight_style": "marker"
+      }
+    }
+  },
+  "order": [
+    "footer"
+  ]
+}

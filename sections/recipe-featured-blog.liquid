@@ -1,0 +1,635 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --section-padding-top: {{ section.settings.padding_top }}px;
+    --section-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --image-position: {{ section.settings.image_position }};
+    --color-highlight: {{ section.settings.colors_highlight.red }}, {{ section.settings.colors_highlight.green }}, {{ section.settings.colors_highlight.blue }};
+    {% if section.settings.bg_color %}
+        background-color: {{ section.settings.bg_color }};
+    {% endif %}
+ }
+ .recipes-slider .carousel-cell h3 em{
+  font-family: Playfair Display, serif;
+    font-style: italic;
+}
+.recipes-slider{
+    padding:0;
+}
+
+.recipes-slider .carousel-cell{
+      background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    border-radius: 12px;
+    padding: 40px;
+    row-gap: 10px;
+    justify-content: space-between;
+    color:{{ section.settings.txt_color }};
+    margin-right:15px;
+  
+}
+.recipes-slider .carousel-cell h3{
+    margin:0;
+    font-size:24px;
+        min-height: 70px;
+    font-weight:500;
+    color:{{ section.settings.txt_color }};
+}
+.recipes-slider .carousel-cell .img-text img{
+  max-width: 100%;
+    height: auto;
+    min-height:inherit;
+}
+.blog__post.slider__slide .carousel-cell .img-text{
+    min-height: 300px;
+    overflow: hidden;
+    position: relative;
+}
+.blog__post.slider__slide .carousel-cell .img-text img{
+  position:absolute;
+  top:0;
+  left:0;
+  border-radius: 15px;
+  object-fit: cover;
+}
+
+.recipes-box-footer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.recipes-box-footer .time{
+    display: flex;
+    align-items: center;
+    column-gap: 5px;
+    font-size:15px;
+    color:#9BACBE;
+}
+.recipes-box-footer a{
+    font-size:12px;
+    color:{{ section.settings.txt_color }};
+    font-weight:bold;
+}
+.recipes-slider-box button .flickity-button-icon{
+    fill:#fff;
+}
+.recipes-slider-box{
+    position:absolute;
+    right:0;
+    top:50%;
+    transform:translateY(-54%);
+    width:100%;
+}
+.recipes-slider-box .flickity-prev-next-button.previous{
+    top: -10%;
+    right: 7%;
+    left: auto;
+}
+.recipes-slider-box button
+{
+    background-color: #204975;
+}
+.recipes-slider-box .flickity-prev-next-button.next{
+        top: -10%;
+    right: 3.5%;
+}
+ .recipes-slider .slider-buttons {
+    position: absolute;
+    z-index: 2;
+    right: 0;
+    bottom: 100%;
+    margin-bottom: 1.5rem;
+}
+.recipes-slider .slider-buttons .slider-button
+{
+  position:static;
+      margin: 0 5px;
+}
+.details-text p{
+  font-size:21px;
+    font-family: "Playfair Display", serif;
+    line-height:100%;
+    color:{{ section.settings.txt_color }};
+}
+@media(max-width:767px){
+  .recipes-slider .carousel-cell .details-text{
+      display:none;
+  }
+  .recipes-slider .carousel-cell .img-text img{
+    min-height:inherit!important;
+  }
+  .blog__post.slider__slide .carousel-cell .img-text {
+    min-height: 251px;
+}
+  .recipes-slider .carousel-cell {
+    padding: 20px 15px;
+}
+.recipes-box-footer {
+    flex-wrap: wrap;
+}
+}
+{%- endstyle -%}
+
+<link rel="stylesheet" href="{{ 'component-slider.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'component-card.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'component-article-card.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'section-recipe-featured-blog.css' | asset_url }}" media="print" onload="this.media='all'">
+
+<noscript>{{ 'component-slider.css' | asset_url | stylesheet_tag }}</noscript>
+<noscript>{{ 'component-card.css' | asset_url | stylesheet_tag }}</noscript>
+<noscript>{{ 'component-article-card.css' | asset_url | stylesheet_tag }}</noscript>
+
+{{ 'section-recipe-featured-blog.css' | asset_url | stylesheet_tag }}
+
+<div class="section--padding{% if section.settings.show_divider %} section--divider{% endif %}">
+  <div class="blog page-width">
+    {%- liquid
+      assign has_mobile_link = false
+      if section.settings.blog != blank and section.settings.show_view_all and section.settings.post_limit < section.settings.blog.articles_count and section.settings.swipe_on_mobile and section.settings.heading == blank
+        assign has_mobile_link = true
+      endif
+    -%}
+    <div class="title-wrapper{% if section.settings.heading == blank %} title-wrapper--no-heading{% endif %}{% if has_mobile_link %} title-wrapper--mobile-link {% endif %} {{ section.settings.heading_alignment }}">
+      <{{ section.settings.heading_tag }} class="title {{ section.settings.heading_size }}" style="color:{{ section.settings.heading_color }}">
+        {%- render 'highlight-text', 
+          hl_input: section.settings.heading, 
+          hl_style: section.settings.highlight_style,
+          hl_enable: section.settings.enable_highlight,
+          hl_animateWrap: true -%}
+      </{{ section.settings.heading_tag }}>
+      
+      {%- if has_mobile_link -%}
+        <a href="{{ section.settings.blog.url }}" class="link link-with-icon large-up-hide">
+          <span class="label">{{ 'sections.featured_blog.view_all' | t }}</span>
+        </a>
+      {%- endif -%}
+    </div>
+    {%- if section.settings.blog != blank and section.settings.blog.articles_count > 0 -%}
+      <slider-component class="slider-mobile-gutter recipes-slider">
+        <ul id="Slider-{{ section.id }}"
+          class="blog__posts articles-wrapper grid grid--2-col{% if section.settings.columns_mobile == '1' %} grid--1-col-mobile{% endif %}{% if section.settings.post_limit < 5 %} grid--{{ section.settings.post_limit }}-col-tablet{% else %} grid--3-col-tablet{% endif %}{% if section.settings.swipe_on_mobile %} slider slider--tablet{% endif %} blog__posts--{{ section.settings.post_limit }}-items slider slider--tablet-up cursor--drag"
+          role="list" is="scroll-snap-slider" data-draggable="{{ section.settings.enable_drag }}"
+        >
+          {%- for article in section.settings.blog.articles limit: section.settings.post_limit -%}
+            <li id="Slide-{{ section.id }}-{{ forloop.index }}"
+              class="blog__post grid__item{% if section.settings.swipe_on_mobile %} slider__slide{% endif %}"
+            >
+            <div class="carousel-cell">
+             <h3> {{ article.title | escape }}<br/>
+                {% if article.metafields.custom.subtitle %} <em>{{ article.metafields.custom.subtitle }}</em>{% endif %}</h3>
+             <div class="img-text">
+                   {%- capture sizes -%}(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | divided_by: 2 }}px, (min-width: 750px) calc((100vw - 10rem) / 2), calc(100vw - 3rem){%- endcapture -%}
+          {{ article.image | image_url: width: 1500 | image_tag:
+            loading: 'lazy',
+            class: 'motion-reduce',
+            sizes: sizes,
+            widths: '165, 360, 535, 750, 1100, 1500',
+            is: 'lazy-image'
+          }}
+          
+            </div>
+               <div class="details-text">
+                  {%- liquid
+                  if article.excerpt.size > 0
+                    echo '<p>'
+                    echo article.excerpt | strip_html | truncatewords: 12
+                    echo '</p>'
+                  else
+                  echo '<p>'
+                    echo article.content | strip_html | truncatewords: 12
+                    echo '</p>'
+                  endif
+                -%}
+              </div>
+             <div class="recipes-box-footer">
+           
+               {% if article.metafields.custom.total_time %} <div class="time"><svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21" fill="none">
+<path d="M10.5 20.1484C16.0139 20.1484 20.5 15.6624 20.5 10.1484C20.5 4.6345 16.0144 0.148438 10.5 0.148438C4.9856 0.148438 0.5 4.63404 0.5 10.1484C0.5 15.6628 4.98606 20.1484 10.5 20.1484ZM10.5 1.52383C15.2556 1.52383 19.1246 5.3928 19.1246 10.1484C19.1246 14.9041 15.2561 18.773 10.5 18.773C5.7439 18.773 1.87539 14.9041 1.87539 10.1484C1.87539 5.3928 5.74436 1.52383 10.5 1.52383Z" fill="#9BACBE"/>
+<path d="M10.2188 11.1484C10.2207 11.1484 10.2222 11.148 10.2241 11.148C10.226 11.148 10.2274 11.1484 10.2293 11.1484H13.7812C14.178 11.1484 14.5 10.8449 14.5 10.471C14.5 10.0966 14.178 9.79351 13.7812 9.79351H10.9376V4.8259C10.9376 4.45149 10.6156 4.14844 10.2188 4.14844C9.82155 4.14844 9.5 4.45149 9.5 4.8259V10.471C9.5 10.8449 9.82155 11.1484 10.2188 11.1484Z" fill="#9BACBE"/>
+</svg> Total time: {{ article.metafields.custom.total_time }}</div>{% endif %}
+                <a href="{{ article.url }}">Read More</a>
+             </div>
+            </div>
+            </li>
+          {%- endfor -%}
+        </ul>
+         <div class="slider-buttons no-js-hidden small-hide">
+          <button type="button" class="slider-button slider-button--prev" name="previous" aria-label="{{ 'general.slider.previous_slide' | t }}" disabled="disabled">
+            {% render 'icon', icon: 'chevron' %}
+          </button>
+          <button type="button" class="slider-button slider-button--next" name="next" aria-label="{{ 'general.slider.next_slide' | t }}">
+            {% render 'icon', icon: 'chevron' %}
+          </button>
+        </div>
+      </slider-component>
+
+      {%- if section.settings.show_view_all and section.settings.post_limit < section.settings.blog.articles_count -%}
+        <div class="view-all center{% if section.settings.swipe_on_mobile and section.settings.heading == blank %} small-hide medium-hide{% endif %}">
+          <a href="{{ section.settings.blog.url }}" class="button-link">
+            {{ 'sections.featured_blog.view_all' | t }}
+          </a>
+        </div>
+      {%- endif -%}
+    {%- else -%}
+      <div class="placeholder">
+        <p class="h2">
+          {{ 'sections.featured_blog.onboarding_title' | t }}
+        </p>
+        <p class="rte-width">
+          {{ 'sections.featured_blog.onboarding_content' | t }}
+        </p>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.recipe-featured-blog.name",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "t:sections.all.bg_color.label"
+    },
+    {
+          "type": "color",
+          "id": "txt_color",
+          "label": "t:sections.all.text_color.label",
+          "default": "#000"
+        },
+    {
+      "type": "blog",
+      "id": "blog",
+      "label": "t:sections.recipe-featured-blog.settings.blog.label"
+    },
+    {
+      "type": "range",
+      "id": "post_limit",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3,
+      "label": "t:sections.recipe-featured-blog.settings.post_limit.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "default": true,
+      "label": "t:sections.recipe-featured-blog.settings.show_view_all.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_divider",
+      "default": false,
+      "label": "t:sections.all.show_divider.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.heading.label"
+    },
+    {
+      "type": "html",
+      "id": "heading",
+      "default": "Blog posts",
+      "label": "t:sections.all.heading.label"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "t:sections.all.text_color.label"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "t:sections.all.heading_size.options__1.label"
+        },
+        {
+          "value": "h1",
+          "label": "t:sections.all.heading_size.options__2.label"
+        },
+        {
+          "value": "h0",
+          "label": "t:sections.all.heading_size.options__3.label"
+        }
+      ],
+      "default": "h1",
+      "label": "t:sections.all.heading_size.label"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "t:sections.all.heading_alignment.label",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.all.heading_alignment.options__1.label"
+        },
+        {
+          "value": "center",
+          "label": "t:sections.all.heading_alignment.options__2.label"
+        },
+        {
+          "value": "right",
+          "label": "t:sections.all.heading_alignment.options__3.label"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "options": [
+        {
+          "value": "h1",
+          "label": "t:sections.all.heading_tag.options__1.label"
+        },
+        {
+          "value": "h2",
+          "label": "t:sections.all.heading_tag.options__2.label"
+        },
+        {
+          "value": "h3",
+          "label": "t:sections.all.heading_tag.options__3.label"
+        },
+        {
+          "value": "h4",
+          "label": "t:sections.all.heading_tag.options__4.label"
+        },
+        {
+          "value": "h5",
+          "label": "t:sections.all.heading_tag.options__5.label"
+        },
+        {
+          "value": "h6",
+          "label": "t:sections.all.heading_tag.options__6.label"
+        },
+        {
+          "value": "div",
+          "label": "t:sections.all.heading_tag.options__7.label"
+        },
+        {
+          "value": "span",
+          "label": "t:sections.all.heading_tag.options__8.label"
+        },
+        {
+          "value": "p",
+          "label": "t:sections.all.heading_tag.options__9.label"
+        }
+      ],
+      "default": "h2",
+      "label": "t:sections.all.heading_tag.label",
+      "info": "t:sections.all.heading_tag.info"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.mobile_layout.header.content"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "options": [
+        {
+          "value": "1",
+          "label": "t:sections.all.mobile_layout.columns_mobile.options__1.label"
+        },
+        {
+          "value": "2",
+          "label": "t:sections.all.mobile_layout.columns_mobile.options__2.label"
+        }
+      ],
+      "default": "1",
+      "label": "t:sections.all.mobile_layout.columns_mobile.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "swipe_on_mobile",
+      "default": false,
+      "label": "t:sections.all.mobile_layout.swipe_on_mobile.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.recipe-featured-blog.settings.header__2.content"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_image",
+      "default": true,
+      "label": "t:sections.recipe-featured-blog.settings.show_image.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_des",
+      "default": true,
+      "label": "Show description"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "t:sections.all.card_image_ratio.options__1.label"
+        },
+        {
+          "value": "square",
+          "label": "t:sections.all.card_image_ratio.options__2.label"
+        },
+        {
+          "value": "portrait",
+          "label": "t:sections.all.card_image_ratio.options__3.label"
+        },
+        {
+          "value": "landscape",
+          "label": "t:sections.all.card_image_ratio.options__4.label"
+        },
+        {
+          "value": "wide",
+          "label": "t:sections.all.card_image_ratio.options__5.label"
+        }
+      ],
+      "default": "landscape",
+      "label": "t:sections.all.card_image_ratio.label",
+      "info": "t:sections.recipe-featured-blog.settings.image_ratio.info"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "options": [
+        {
+          "value": "20% 0",
+          "label": "t:sections.all.image_position.options__1.label"
+        },
+        {
+          "value": "top center",
+          "label": "t:sections.all.image_position.options__2.label"
+        },
+        {
+          "value": "80% 0",
+          "label": "t:sections.all.image_position.options__3.label"
+        },
+        {
+          "value": "20% 50%",
+          "label": "t:sections.all.image_position.options__4.label"
+        },
+        {
+          "value": "center center",
+          "label": "t:sections.all.image_position.options__5.label"
+        },
+        {
+          "value": "80% 50%",
+          "label": "t:sections.all.image_position.options__6.label"
+        },
+        {
+          "value": "20% 100%",
+          "label": "t:sections.all.image_position.options__7.label"
+        },
+        {
+          "value": "bottom center",
+          "label": "t:sections.all.image_position.options__8.label"
+        },
+        {
+          "value": "80% 100%",
+          "label": "t:sections.all.image_position.options__9.label"
+        }
+      ],
+      "default": "center center",
+      "label": "t:sections.all.image_position.label",
+      "info": "t:sections.all.image_position.info"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.colors.header.content"
+    },
+    {
+      "type": "color",
+      "id": "colors_highlight",
+      "label": "t:sections.all.colors.colors_highlight.label",
+      "default": "#ffb503"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.header.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "t:sections.all.padding.padding_top.unit",
+      "label": "t:sections.all.padding.padding_top.label",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "t:sections.all.padding.padding_bottom.unit",
+      "label": "t:sections.all.padding.padding_bottom.label",
+      "default": 36
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.highlight.header.content"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_highlight",
+      "label": "t:sections.all.highlight.enable.label",
+      "info": "t:sections.all.highlight.enable.info",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "highlight_style",
+      "options": [
+        {
+          "value": "marker",
+          "label": "t:sections.all.highlight.style.options__1.label"
+        },
+        {
+          "value": "circle",
+          "label": "t:sections.all.highlight.style.options__2.label"
+        },
+        {
+          "value": "underline",
+          "label": "t:sections.all.highlight.style.options__3.label"
+        },
+        {
+          "value": "bold-underline",
+          "label": "t:sections.all.highlight.style.options__4.label"
+        },
+        {
+          "value": "modern-underline",
+          "label": "t:sections.all.highlight.style.options__5.label"
+        },
+        {
+          "value": "sketch-underline",
+          "label": "t:sections.all.highlight.style.options__6.label"
+        },
+        {
+          "value": "squiggle",
+          "label": "t:sections.all.highlight.style.options__7.label"
+        },
+        {
+          "value": "heavy-squiggle",
+          "label": "t:sections.all.highlight.style.options__8.label"
+        },
+        {
+          "value": "solid-color",
+          "label": "t:sections.all.highlight.style.options__9.label"
+        }
+      ],
+      "default": "marker",
+      "label": "t:sections.all.highlight.style.label"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "title",
+      "name": "t:sections.recipe-featured-blog.blocks.title.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_date",
+          "default": true,
+          "label": "t:sections.recipe-featured-blog.blocks.title.settings.show_date.label"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_author",
+          "default": false,
+          "label": "t:sections.recipe-featured-blog.blocks.title.settings.show_author.label"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_comment_count",
+          "default": false,
+          "label": "t:sections.recipe-featured-blog.blocks.title.settings.show_comment_count.label"
+        }
+      ]
+    },
+    {
+      "type": "summary",
+      "name": "t:sections.recipe-featured-blog.blocks.summary.name",
+      "limit": 1
+    },
+    {
+      "type": "read_more",
+      "name": "t:sections.recipe-featured-blog.blocks.read_more.name",
+      "limit": 1
+    }
+  ]
+ 
+}
+{% endschema %}

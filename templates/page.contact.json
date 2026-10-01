@@ -1,0 +1,181 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "image-banner": {
+      "type": "image-banner",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "We'd love to hear<br><em>from you</em>",
+            "heading_size": "h0",
+            "heading_tag": "h2",
+            "enable_highlight": false,
+            "highlight_style": "marker"
+          }
+        }
+      },
+      "block_order": [
+        "heading"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/section_hero_4.png",
+        "image_position": "top center",
+        "text_box_position": "middle-center",
+        "text_alignment": "center",
+        "image_ratio": "adapt",
+        "show_text_box": false,
+        "full_width": true,
+        "show_divider": false,
+        "image_behavior": "none",
+        "mobile_text_alignment": "center",
+        "mobile_image_ratio": "250px",
+        "stack_images_on_mobile": true,
+        "show_text_below": false,
+        "colors_button_label": "#1a1b18",
+        "colors_button_background": "#ffffff",
+        "colors_text": "#ffffff",
+        "colors_overlay": "#000000",
+        "colors_overlay_opacity": 28,
+        "colors_highlight": "#ffb503",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "guarantees_ggiJz7": {
+      "type": "guarantees",
+      "blocks": {
+        "guarantee_gJkJ4k": {
+          "type": "guarantee",
+          "settings": {
+            "icon": "none",
+            "icon_size": "medium",
+            "custom_icon": "",
+            "title": "Customer Support",
+            "title_size": "h3",
+            "text": "<p><a href=\"mailto:sales@drinkdrystore.com\">sales@drinkdrystore.com</a></p><p>Mobile : <a href=\"tel:+971507055461\">+971 50 705 5461</a></p><p>Whatsapp : <a href=\"https://wa.me/971507055461\" title=\"https://wa.me/971507055461\">+971 50 705 5461</a></p>",
+            "enable_highlight": false,
+            "highlight_style": "marker"
+          }
+        },
+        "guarantee_XCzMRX": {
+          "type": "guarantee",
+          "settings": {
+            "icon": "none",
+            "icon_size": "medium",
+            "custom_icon": "",
+            "title": "Business Inquiries",
+            "title_size": "h3",
+            "text": "<p><a href=\"mailto:sales@drinkdrystore.com\" title=\"mailto:sales@drinkdrystore.com\">sales@drinkdrystore.com</a></p>",
+            "enable_highlight": false,
+            "highlight_style": "marker"
+          }
+        },
+        "guarantee_LxGnB4": {
+          "type": "guarantee",
+          "settings": {
+            "icon": "none",
+            "icon_size": "medium",
+            "custom_icon": "",
+            "title": "Follow Us",
+            "title_size": "h3",
+            "text": "<p>Instagram: <a href=\"https://www.instagram.com/drinkdrystore/\" target=\"_blank\" title=\"https://www.instagram.com/drinkdrystore/\"><span style=\"text-decoration:underline\">@drinkdrystore</span></a></p><p>LinkedIn: <a href=\"https://ae.linkedin.com/company/drink-dry\" target=\"_blank\" title=\"https://ae.linkedin.com/company/drink-dry\"><span style=\"text-decoration:underline\">@drink-dry</span></a></p>",
+            "enable_highlight": false,
+            "highlight_style": "marker"
+          }
+        }
+      },
+      "block_order": [
+        "guarantee_gJkJ4k",
+        "guarantee_XCzMRX",
+        "guarantee_LxGnB4"
+      ],
+      "custom_css": [
+        ".guarantee__item .h3 {font-size: 21px; font-family: Playfair Display, serif; margin-bottom: 20px;}",
+        ".guarantee__item .rte {font-size: 15px;}",
+        ".guarantee__item .rte a {color: #17416f !important; text-decoration: underline;}",
+        ".guarantee__item .rte p {margin: 0 0 5px;}",
+        "slider-component ul {margin-top: 0; border-bottom: 1px solid #ededed;}",
+        "slider-component ul li {padding: 60px 10px 65px; border-right: 1px solid #ededed;}",
+        "slider-component ul li:last-child {border: none;}",
+        ".page-width {border-bottom: 1px solid #ededed;}"
+      ],
+      "name": "t:sections.guarantees.presets.name",
+      "settings": {
+        "bg_color": "",
+        "layout": "default",
+        "column_alignment": "center",
+        "horizontal_content": false,
+        "full_width": true,
+        "show_divider": false,
+        "columns_desktop": 3,
+        "heading": "",
+        "heading_size": "h1",
+        "heading_tag": "h2",
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "use_custom_colors": true,
+        "colors_icon": "#ffffff",
+        "colors_text": "#17416f",
+        "colors_background": "#ffffff",
+        "gradient_background": "",
+        "colors_highlight": "#ffb503",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "enable_highlight": false,
+        "highlight_style": "marker"
+      }
+    },
+    "main": {
+      "type": "main-page-corona",
+      "disabled": true,
+      "settings": {
+        "narrow": false,
+        "padding_top": 60,
+        "padding_bottom": 72
+      }
+    },
+    "form": {
+      "type": "contact-form",
+      "custom_css": [
+        "form-state {max-width: 54%; display: block; margin: 0 auto;}",
+        "form-state form input {border-radius: 30px;}",
+        "form-state form textarea {border-radius: 12px;}",
+        "form-state form label {font-size: 15px; margin-bottom: 5px; font-weight: 500;}",
+        ".contact__button {text-align: center;}",
+        ".contact__button button {font-size: 12px; letter-spacing: 0;}",
+        ".head-cont {text-align: center;}",
+        ".head-cont .title-wrapper {text-align: center; justify-content: center;}",
+        ".head-cont .title-wrapper h2 {font-size: 36px; font-weight: 500;}",
+        ".head-cont {max-width: 500px; margin: 0 auto 40px;}"
+      ],
+      "settings": {
+        "left": "shopify://shop_images/Group_4_6.svg",
+        "right": "shopify://shop_images/Group_5.svg",
+        "return_url": "",
+        "show_phone": true,
+        "show_divider": false,
+        "heading": "Contact Us",
+        "content": "If you have any questions, please fill in this contact form, and our team will reach you back as soon as possible.",
+        "heading_size": "h2",
+        "heading_tag": "h2",
+        "padding_top": 40,
+        "padding_bottom": 60
+      }
+    }
+  },
+  "order": [
+    "image-banner",
+    "guarantees_ggiJz7",
+    "main",
+    "form"
+  ]
+}

@@ -1,0 +1,199 @@
+.faq--colored {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+  background-color: rgba(var(--color-foreground), 0.06);
+}
+
+.faq accordion-tab {
+  display: block;
+}
+
+.faq accordion-tab + accordion-tab {
+  margin-top: 0;
+}
+
+.faq .h3 {
+  margin-top: 0;
+}
+
+.faq .h3 + .rte {
+  margin-top: -1rem;
+  margin-bottom: 3rem;
+}
+
+.faq accordion-tab + .h3 {
+  margin-top: 4rem;
+}
+
+@media screen and (min-width: 750px) {
+  .faq accordion-tab + .h3 {
+    margin-top: 6rem;
+  }
+}
+
+.faq details summary {
+  text-transform: uppercase;
+  font-size: 15px;
+  color: rgba(var(--color-foreground), 0.75);
+}
+.faq details summary span{
+  font-weight:500;
+}
+
+@media screen and (min-width: 750px) {
+  .faq details summary {
+    font-size: 15px;
+  }
+}
+
+.faq details summary > span {
+  display: flex;
+  align-items: center;
+}
+
+.faq details summary .icon {
+  position: relative;
+  flex: 0 0 3.4rem;
+  width: 3.4rem;
+  height: 3.4rem;
+  border-radius: 50%;
+  margin-inline-end: 1.5rem;
+  color: rgb(var(--color-foreground));
+  background-color: rgb(var(--color-background));
+  box-shadow: 0 0 0 0.1rem rgb(var(--color-border));
+  transition-property: transform, color, background-color;
+  transition-timing-function: ease;
+  transition-duration: var(--duration-default);
+}
+
+.faq details summary .icon::before {
+  width: 1.2rem;
+}
+
+.faq details summary .icon::after {
+  height: 1.2rem;
+  transition: height var(--duration-default) ease;
+}
+
+@media screen and (hover: hover) {
+  .faq details:not([open]) summary:hover .icon {
+    transform: rotate(90deg);
+  }
+}
+
+.faq details summary ~ * {
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+}
+
+.faq details[open] summary .icon {
+ /* box-shadow: none;
+  color: rgb(var(--color-background));
+  background-color: rgb(var(--color-foreground));*/
+}
+
+.faq details[open] summary .icon::after {
+  height: 0;
+}
+ .faq accordion-tab summary {
+  padding: 0;
+  color: rgb(var(--color-heading));
+  transition: color var(--duration-default) ease;
+}
+
+.faq accordion-tab summary .icon {
+  position: absolute;
+  top: 50%;
+  right: 1.2rem;
+  margin-top: -0.7rem;
+  width: 1.4rem;
+  height: 1.4rem;
+  transition: transform var(--duration-default) ease;
+}
+
+@media screen and (min-width: 750px) {
+.faq accordion-tab summary .icon {
+    margin-top: -1rem;
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
+.faq accordion-tab summary .icon::after {
+  transition: height var(--duration-default) ease;
+}
+
+.faq accordion-tab details[open] summary {
+  color: rgba(var(--color-foreground), 0.55);
+}
+
+.faq accordion-tab details[open] summary .icon::after {
+  height: 0;
+}
+
+@media screen and (hover: hover) {
+.faq accordion-tab details:not([open]) summary:hover {
+    color: rgba(var(--color-foreground), 0.55);
+  }
+
+.faq accordion-tab details:not([open]) summary:hover .icon {
+    transform: rotate(90deg);
+  }
+}
+
+.faq accordion-tab .summary__title {
+  padding: 2rem 0;
+  display: block;
+}
+
+.faq .grid accordion-tab:first-child summary {
+  margin-top: -1.5rem;
+}
+
+.faq accordion-tab .accordion__title {
+  color: currentColor;
+    font-size: 15px;
+    text-transform: none;
+    font-weight: 500;
+}
+
+.faq .accordion__content {
+  padding: 0 0 3rem;
+  color:#969EAA;
+}
+.faq .accordion__content strong{
+  color: #17416F;
+  font-weight:500;
+}
+.faq .accordion__content li a{
+  color:#969EAA!important;
+}
+@media screen and (min-width: 750px) {
+.faq accordion-tab .summary__title {
+    padding: 2rem 0;
+  }
+
+.faq .grid accordion-tab:first-child summary {
+    margin-top: -3rem;
+  }
+
+.faq .accordion__content {
+    padding-bottom: 5rem;
+    color:#969EAA;
+  }
+}
+.faq accordion-tab summary .icon {
+    position: absolute;
+    top: 50%;
+    right: 1.2rem;
+    margin-top: -.7rem;
+    width: 1.4rem;
+    height: 1.4rem;
+    transition: transform var(--duration-default) ease;
+    box-shadow: none;
+    color: #E64F2A;
+}
+.faq accordion-tab {
+    display: block;
+    border-bottom: .1rem solid rgb(var(--color-border));
+}

@@ -1,0 +1,400 @@
+<section class="vip-racing-experience" style="background: linear-gradient(180deg, #001A43 0%, #002B6A 100%); color: #fff;font-family: 'ITCAvantGardeProBk';">
+  <div class="container py-5">
+
+    <!-- Desktop Banner -->
+    {% if section.settings.banner_image != blank %}
+      <div class="banner mb-4 text-center d-none d-md-block">
+        <img 
+          src="{{ section.settings.banner_image | image_url: width: 1600 }}" 
+          alt="VIP Racing Banner" 
+          class="img-fluid rounded shadow-sm">
+      </div>
+    {% endif %}
+
+    <!-- Mobile Banner -->
+    {% if section.settings.mobile_banner_image != blank %}
+      <div class="banner mb-4 text-center d-block d-md-none">
+        <img 
+          src="{{ section.settings.mobile_banner_image | image_url: width: 800 }}" 
+          alt="VIP Racing Mobile Banner" 
+          class="img-fluid rounded shadow-sm">
+      </div>
+    {% endif %}
+    <!-- Heading -->
+    {% if section.settings.main_heading != blank %}
+      <h1 class="text-center fw-bold text-uppercase mb-5 px-3 mt-5">{{ section.settings.main_heading }}</h1>
+    {% endif %}
+    
+
+    <!-- Two-column layout -->
+    <div class="row g-4 justify-content-center">
+      <!-- Promotion Section -->
+      <div class="col-12 col-md-6 col-lg-6 mb-4">
+        <div class="promo-box h-100 p-4">
+          <h3 class="text-uppercase">{{ section.settings.promo_heading }}</h3>
+          {% if section.settings.promo_subheading %}
+            <span class="prom">
+            {{ section.settings.promo_subheading }}    
+            </span>{% endif %}
+          <div class="promo-text mb-2">
+          {% if section.settings.promo_text %}  {{ section.settings.promo_text }} {% endif %}
+           {% if section.settings.promo_btn %} <div class="promo-button"><a href="{% if section.settings.promo_link %}{{ section.settings.promo_link }}{% endif %}">{{ section.settings.promo_btn }}</a></div>{%endif %}
+          </div>
+         {% if section.settings.promo_date %} <div class="promo-date">
+                {{ section.settings.promo_date }}
+          </div>{% endif %}
+        </div>
+      </div>
+
+      <!-- Prize Section -->
+      <div class="col-12 col-md-6 col-lg-6 mb-4">
+        <div class="prize-box h-100">
+         <div class="prize-inner p-4">   
+          <h3 class="text-uppercase mb-3">{{ section.settings.prize_heading }}</h3>
+          <div class="sap-box">
+          {% if section.settings.prize_title %}
+            <div class="prize-title-box">
+             {{ section.settings.prize_title }}    
+        </div>{% endif %}
+          <div class="prize-text mt-4">
+            {{ section.settings.prize_text }}
+          </div>
+          </div>
+          {% if section.settings.prize_date %} <div class="promo-date">
+                {{ section.settings.prize_date }}
+          </div>{% endif %}
+        </div>
+          {% if section.settings.prize_logo != blank %}
+            <div class="prize_logo text-center">
+              <img 
+                src="{{ section.settings.prize_logo | image_url: width: 250 }}" 
+                alt="Prize Logo" 
+                class="img-fluid" 
+                style="max-width: 200px;">
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Note -->
+    {% if section.settings.note_text != blank %}
+      <p class="note mt-2 text-center small px-3">
+        {{ section.settings.note_text }}
+      </p>
+    {% endif %}
+  </div>
+
+  <style>
+  @font-face {
+    font-family: 'ITCAvantGardeProBk';
+    src: url('https://cdn.shopify.com/s/files/1/0500/1664/9366/files/ITCAvantGardeProBk_c91f4b89-f423-4b17-8b48-d9b86d149274.eot');
+    src: url('https://cdn.shopify.com/s/files/1/0500/1664/9366/files/ITCAvantGardeProBk_c91f4b89-f423-4b17-8b48-d9b86d149274.eot') format('embedded-opentype'),
+         url('https://cdn.shopify.com/s/files/1/0500/1664/9366/files/ITCAvantGardeProBk_a6b175ca-04c5-4f2d-be6e-cf76c48e0d0e.woff2') format('woff2'),
+         url('https://cdn.shopify.com/s/files/1/0500/1664/9366/files/ITCAvantGardeProBk_4cc68410-5458-4658-9558-9f07d4a5e254.woff') format('woff'),
+         url('https://cdn.shopify.com/s/files/1/0500/1664/9366/files/ITCAvantGardeProBk_d5b3acd5-a198-4fc6-b88e-df0aad9f3c1b.ttf') format('truetype'),
+         url('fonts/ITCAvantGardeProBk.svg#ITCAvantGardeProBk') format('svg');
+}
+@font-face {
+    font-family: 'ITCAvantGardeProDemi';
+    src: url('https://cdn.shopify.com/s/files/1/0500/1664/9366/files/ITCAvantGardeProDemi_70075830-a962-4f73-a1fb-1c0f7121078c.eot?v=1761825312');
+    src: url('https://cdn.shopify.com/s/files/1/0500/1664/9366/files/ITCAvantGardeProDemi_70075830-a962-4f73-a1fb-1c0f7121078c.eot?v=1761825312') format('embedded-opentype'),
+         url('https://cdn.shopify.com/s/files/1/0500/1664/9366/files/ITCAvantGardeProDemi_4e9ee4e1-d6a2-48bb-b4bb-bee569e54d3f.woff2?v=1761825311') format('woff2'),
+         url('https://cdn.shopify.com/s/files/1/0500/1664/9366/files/ITCAvantGardeProDemi_f786227a-86e2-43e3-bc81-55ed92bd0dc0.woff?v=1761825311') format('woff'),
+         url('https://cdn.shopify.com/s/files/1/0500/1664/9366/files/ITCAvantGardeProDemi_72113031-9210-4cc1-8870-4d74503597f1.ttf?v=1761825312') format('truetype'),
+         url('fonts/ITCAvantGardeProDemi.svg#ITCAvantGardeProDemi') format('svg');
+}
+.main-content{
+  padding-bottom:0!important;
+}
+.vip-racing-experience a{
+    color:#fff;
+    text-decoration:underline;
+}
+.vip-racing-experience a:hover{
+    color:#fff!important;
+    text-decoration:none;
+}
+
+    .vip-racing-experience {
+    font-family: 'ITCAvantGardeProBk';
+    position:relative;
+}
+ {% if section.settings.bg_image %} .vip-racing-experience:after{
+
+       background-image:url({{ section.settings.bg_image | img_url:'original' }});
+       content: '';
+    position: absolute;
+    display: block;
+    width: 215px;
+    height: 306px;
+    bottom: 32px;
+    right: 5%;
+    background-size: cover;
+
+    }{% endif %}
+    .promo-box h3, .prize-box h3{
+        margin:0;
+        font-size:30px;
+        text-transform:uppercase;
+            letter-spacing: 2px;
+    }
+    .promo-text{
+        text-align:left;
+        
+    }
+    .promo-box span.prom{
+       font-size: 18px;
+    max-width: 70%;
+    padding-bottom: 20px;
+    display: inline-block;
+    line-height: 28px;
+    letter-spacing:1px;
+    }
+    .promo-text p{
+    margin-bottom:5px;
+    letter-spacing: 1px;
+    margin-top: 0;
+    }
+    .promo-box, .prize-box {
+      background-color: rgb(255 255 255 / 47%);
+      color: #fff;
+      transition: all 0.3s ease;
+    }
+    .promo-box, .prize-box {
+
+      text-align:center;
+      border-radius:15px;
+      overflow:hidden;
+    }
+    .promo-button{
+        text-align:center;
+        margin-top:15px;
+    }
+     .promo-button a{
+       background-color: #fff;
+    padding: 12px 20px 8px;
+    text-transform: uppercase;
+    color: #25406B;
+    text-decoration: none;
+    display: inline-flex;
+    font-family: 'ITCAvantGardeProDemi';
+    justify-content: center;
+    align-items: center;
+    line-height: 22px;
+    border-radius: 5px;
+       font-weight: 500;
+    letter-spacing: 1px;
+    }
+    .promo-button a:hover{
+        color: #25406B!important;
+    }
+    .note{
+    font-size: 16px;
+    max-width: 80%;
+    margin: 0 auto;
+    line-height: 26px;
+    margin-bottom: 35px !important;
+      }
+    .promo-box:hover, .prize-box:hover{
+        transform: translateY(-3px);
+    }
+    h1 {
+      font-size: 80px;
+      font-family: 'ITCAvantGardeProDemi';
+      color:#fff;
+    }
+    h3 {
+      font-size: 1.2rem;
+      letter-spacing: 1px;
+      font-family: 'ITCAvantGardeProDemi';
+      color:#fff;
+    }
+    .prize-title{
+        font-size: 19px;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom:0;
+    line-height: 26px;
+    letter-spacing: 2px;
+        word-spacing: -1px;
+        color:#fff;
+    }
+    .yas{
+           font-size: 12px;
+            letter-spacing: 1px;
+    }
+    .prize-text p{
+    font-size: 14px;
+    letter-spacing: 1px;
+    }
+ 
+    .prize_logo{
+       background-color: #fff;
+        padding: 15px 10px;
+    margin-top: 20px;
+    display: inline-block;
+    width: 100%;
+        border-radius: 10px 10px 15px 15px;
+    }
+    .promo-text ul, .prize-text ul {
+      padding-left: 1.5rem;
+    }
+    .promo-text li, .prize-text li {
+      margin-bottom: 6px;
+      font-family: 'ITCAvantGardeProBk';
+    }
+    .promo-date{
+       margin-top:35px;
+    }
+    .promo-date p{
+        margin-bottom:0;
+    }
+    .promo-date .promorun {
+       margin-bottom:20px;
+       font-size:18px;
+       letter-spacing:2px;
+    }
+    .sap-box{
+       background-color: #1C3967;
+    border-radius: 8px;
+    padding: 20px 15px;
+    }
+    .prize-box {
+           display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    }
+    @media (max-width: 768px) {
+      .vip-racing-experience:after {
+    bottom: 3%;
+    right: 0%;
+      }
+      h1 {
+        font-size: 30px;
+      }
+ 
+      .banner img {
+        border-radius: 6px;
+      }
+      .promo-box h3, .prize-box h3 {
+    font-size: 23px;
+}
+.promo-box span.prom {
+    font-size: 16px;
+    max-width: 100%;
+}
+.promo-box{
+  margin-bottom:25px;
+}
+.prize-box .prize-inner{
+   padding-left: 15px !important;
+    padding-right: 15px !important;
+}
+.prize-title br{
+  display:none;
+}
+    }
+  </style>
+</section>
+
+{% schema %}
+{
+  "name": "VIP Racing Experience",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "banner_image",
+      "label": "Banner Image"
+    },
+     {
+      "type": "image_picker",
+      "id": "mobile_banner_image",
+      "label": "Mobile Banner Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image"
+    },
+    {
+      "type": "text",
+      "id": "main_heading",
+      "label": "Main Heading",
+      "default": "Win a VIP Racing Experience in Abu Dhabi!"
+    },
+    {
+      "type": "text",
+      "id": "promo_heading",
+      "label": "Promotion Heading",
+      "default": "Promotion Mechanics"
+    },
+    {
+      "type": "text",
+      "id": "promo_subheading",
+      "label": "Promotion Sub Heading",
+      "default": "Buy a Peroni Nastro Azzurro 0.0% at any Choithrams store and keep your receipt."
+    },
+    {
+      "type": "richtext",
+      "id": "promo_text",
+      "label": "Promotion Text",
+      "default": "<p>Buy a Peroni Nastro Azzurro 0.0% at any Choithrams store and keep your receipt.</p><ul><li>Follow @drinkdrystore & @choithrams on Instagram.</li><li>Like and share this @samplepost and tag @choithrams.</li><li>Send us a WhatsApp message with your details and receipt photo.</li></ul><p><strong>Promotion runs from:</strong><br>13th – 26th November 2025</p>"
+    },
+     {
+      "type": "text",
+      "id": "promo_btn",
+      "label": "Promotion Button"
+     },
+     {
+      "type": "url",
+      "id": "promo_link",
+      "label": "Promotion Link"
+     },
+    {
+      "type": "html",
+      "id": "promo_date",
+      "label": "Promotion Date",
+      "default": "<p>🗓️ PROMOTION RUNS FROM 13TH – 26TH NOVEMBER 2025</p>"
+    },
+    {
+      "type": "text",
+      "id": "prize_heading",
+      "label": "Prize Heading",
+      "default": "Prize Includes"
+    },
+    {
+      "type": "html",
+      "id": "prize_title",
+      "label": "Prize Title"
+    },
+    {
+      "type": "richtext",
+      "id": "prize_text",
+      "label": "Prize Text",
+      "default": "<p><strong>2 General Admission Tickets</strong> to the Formula 1 Etihad Airways Abu Dhabi Grand Prix 2025 – Garden on Yas (Friday Access)</p><p>Includes marina views, concerts, food & beverage zones, and on-track action.</p><p><strong>Winner Announcement:</strong><br>29th November 2025</p>"
+    },
+    {
+      "type": "html",
+      "id": "prize_date",
+      "label": "Prize Date"
+    },
+    {
+      "type": "image_picker",
+      "id": "prize_logo",
+      "label": "Prize Logo"
+    },
+    {
+      "type": "text",
+      "id": "note_text",
+      "label": "Note Text",
+      "default": "Note: The prize will be forfeited if proof of purchase is not provided within 48 hours. Only receipts dated within the promotion period will be accepted."
+    }
+  ],
+  "presets": [
+    {
+      "name": "VIP Racing Experience"
+    }
+  ]
+}
+{% endschema %}

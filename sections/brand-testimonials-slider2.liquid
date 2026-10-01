@@ -1,0 +1,570 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --section-padding-top: {{ section.settings.padding_top }}px;
+    --section-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --card-radius: {{ section.settings.card_radius }}px;
+    --card-width: {{ section.settings.card_width }}px;
+  }
+
+  #shopify-section-{{ section.id }} .brand-testi-slider {
+    padding: var(--section-padding-top) 0 var(--section-padding-bottom);
+    position: relative;
+    overflow: hidden;
+  }
+
+  #shopify-section-{{ section.id }} .brand-testi-slider__heading {
+    color: {{ section.settings.heading_color }};
+    font-size: {{ section.settings.heading_font_size }}px;
+  }
+
+  #shopify-section-{{ section.id }} .brand-testi-slider__arrow {
+    background-color: {{ section.settings.arrow_bg }};
+    color: {{ section.settings.arrow_icon_color }};
+    border: 1px solid {{ section.settings.arrow_border_color }};
+  }
+
+  @media screen and (max-width: 749px) {
+    #shopify-section-{{ section.id }} .brand-testi-slider__heading {
+      font-size: {{ section.settings.heading_font_size | times: 0.65 | round }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="brand-testi-slider">
+  <!-- Background image -->
+  {%- if section.settings.bg_image != blank -%}
+    <img
+      src="{{ section.settings.bg_image | image_url: width: 2000 }}"
+      alt=""
+      loading="lazy"
+      class="brand-testi-slider__bg"
+    />
+  {%- else -%}
+    <div class="brand-testi-slider__bg brand-testi-slider__bg--fallback" style="background-color:{{ section.settings.bg_color }};"></div>
+  {%- endif -%}
+
+  <div class="brand-testi-slider__content page-width">
+    <!-- Header: heading + arrows -->
+    <div class="brand-testi-slider__header">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="brand-testi-slider__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+
+      {%- if section.blocks.size > 1 -%}
+        <div class="brand-testi-slider__arrows">
+          <button class="brand-testi-slider__arrow brand-testi-slider__arrow--prev" aria-label="Previous" data-testi-prev="{{ section.id }}">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <button class="brand-testi-slider__arrow brand-testi-slider__arrow--next" aria-label="Next" data-testi-next="{{ section.id }}">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+      {%- endif -%}
+    </div>
+
+    <!-- Flickity slider -->
+    <div class="brand-testi-slider__track" id="BrandTestiTrack-{{ section.id }}">
+      {%- for block in section.blocks -%}
+        <div class="brand-testi-slider__card" {{ block.shopify_attributes }} {% if block.settings.card_bg != blank %}style="background-color:{{ block.settings.card_bg }};"{% endif %}>
+          {%- if block.settings.avatar != blank -%}
+            <div class="brand-testi-slider__avatar-wrap">
+              <img
+                src="{{ block.settings.avatar | image_url: width: 150 }}"
+                alt="{{ block.settings.name | escape }}"
+                loading="lazy"
+                class="brand-testi-slider__avatar"
+              />
+            </div>
+          {%- endif -%}
+          {%- if block.settings.text != blank -%}
+            <div class="brand-testi-slider__text" {% if block.settings.text_color != blank %}style="color:{{ block.settings.text_color }};"{% endif %}>
+              {{ block.settings.text }}
+            </div>
+          {%- endif -%}
+          {%- if block.settings.name != blank -%}
+            <p class="brand-testi-slider__name" {% if block.settings.name_color != blank %}style="color:{{ block.settings.name_color }};"{% endif %}>
+              {{ block.settings.name }}
+            </p>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+<style>
+  /* ============================================
+     SECTION WRAPPER
+     ============================================ */
+  #shopify-section-{{ section.id }} .brand-testi-slider {
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* ============================================
+     BACKGROUND IMAGE
+     ============================================ */
+  #shopify-section-{{ section.id }} .brand-testi-slider__bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+  }
+
+  #shopify-section-{{ section.id }} .brand-testi-slider__bg--fallback {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+
+  /* ============================================
+     CONTENT (above bg)
+     ============================================ */
+  #shopify-section-{{ section.id }} .brand-testi-slider__content {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ============================================
+     HEADER
+     ============================================ */
+  #shopify-section-{{ section.id }} .brand-testi-slider__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 30px;
+  }
+
+  #shopify-section-{{ section.id }} .brand-testi-slider__heading {
+    margin: 0;
+    text-transform: uppercase;
+    font-weight: 800;
+    line-height: 1.15;
+    font-style: italic;
+    max-width: 450px;
+  }
+
+  /* ============================================
+     ARROWS
+     ============================================ */
+  #shopify-section-{{ section.id }} .brand-testi-slider__arrows {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+    padding-top: 5px;
+  }
+
+  #shopify-section-{{ section.id }} .brand-testi-slider__arrow {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.2s;
+  }
+
+  #shopify-section-{{ section.id }} .brand-testi-slider__arrow:hover {
+    opacity: 0.75;
+  }
+
+  /* ============================================
+     SLIDER TRACK
+     ============================================ */
+  #shopify-section-{{ section.id }} .brand-testi-slider__track {
+    padding: 0;
+  }
+
+  /* Flickity overrides */
+  #shopify-section-{{ section.id }} .brand-testi-slider__track.flickity-enabled {
+    display: block;
+  }
+
+  #shopify-section-{{ section.id }} .brand-testi-slider__track .flickity-viewport {
+    overflow: visible;
+  }
+
+  /* ============================================
+     CARDS
+     ============================================ */
+  #shopify-section-{{ section.id }} .brand-testi-slider__card {
+    width: var(--card-width);
+    background-color: #fff;
+    border-radius: var(--card-radius);
+    padding: 30px;
+    margin-right: {{ section.settings.card_gap }}px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: {{ section.settings.card_min_height }}px;
+    height:100%;
+  }
+
+  /* ============================================
+     AVATAR
+     ============================================ */
+  #shopify-section-{{ section.id }} .brand-testi-slider__avatar-wrap {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 20px;
+    border: 3px solid {{ section.settings.avatar_border_color }};
+    flex-shrink: 0;
+  }
+
+  #shopify-section-{{ section.id }} .brand-testi-slider__avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* ============================================
+     TEXT
+     ============================================ */
+  #shopify-section-{{ section.id }} .brand-testi-slider__text {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #333;
+    margin: 0 0 auto;
+    flex: 1;
+  }
+
+  #shopify-section-{{ section.id }} .brand-testi-slider__text p {
+    margin: 0;
+  }
+
+  /* ============================================
+     NAME
+     ============================================ */
+  #shopify-section-{{ section.id }} .brand-testi-slider__name {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin: 20px 0 0;
+    color: #1a2a3a;
+  }
+
+  /* ============================================
+     MOBILE
+     ============================================ */
+  @media screen and (max-width: 749px) {
+    #shopify-section-{{ section.id }} .brand-testi-slider__card {
+      width: 85vw;
+      min-height: auto;
+      padding: 24px;
+    }
+
+    #shopify-section-{{ section.id }} .brand-testi-slider__header {
+      margin-bottom: 20px;
+    }
+
+    #shopify-section-{{ section.id }} .brand-testi-slider__arrow {
+      width: 38px;
+      height: 38px;
+    }
+  }
+</style>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flickity@2/dist/flickity.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flickity@2/dist/flickity.pkgd.min.js"></script>
+
+<script>
+  (function() {
+    var sectionId = {{ section.id | json }};
+
+    function initTestiSlider() {
+      var track = document.getElementById('BrandTestiTrack-' + sectionId);
+      if (!track || track.children.length === 0) return;
+
+      if (track.flickityInstance) {
+        track.flickityInstance.destroy();
+        track.flickityInstance = null;
+      }
+
+      var flkty = new Flickity(track, {
+        cellAlign: 'left',
+        contain: false,
+        freeScroll: true,
+        friction: 0.2,
+        prevNextButtons: false,
+        pageDots: false,
+        draggable: true,
+        wrapAround: false,
+        selectedAttraction: 0.01,
+        freeScrollFriction: 0.03
+      });
+
+      track.flickityInstance = flkty;
+
+      var prevBtn = document.querySelector('[data-testi-prev="' + sectionId + '"]');
+      var nextBtn = document.querySelector('[data-testi-next="' + sectionId + '"]');
+
+      if (prevBtn) {
+        prevBtn.onclick = function() { flkty.previous(); };
+      }
+      if (nextBtn) {
+        nextBtn.onclick = function() { flkty.next(); };
+      }
+    }
+
+    function waitForFlickity() {
+      if (typeof Flickity !== 'undefined') {
+        initTestiSlider();
+      } else {
+        setTimeout(waitForFlickity, 100);
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', waitForFlickity);
+    } else {
+      waitForFlickity();
+    }
+
+    var resizeTimer;
+    window.addEventListener('resize', function() {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(initTestiSlider, 250);
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Brand Testimonials Slider",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Fallback background color",
+      "default": "#c4a97d"
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "html",
+      "id": "heading",
+      "label": "Heading",
+      "default": "The Corona Cero<br/>Experience"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#1a2a3a"
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size",
+      "min": 20,
+      "max": 60,
+      "step": 2,
+      "default": 40,
+      "unit": "px",
+      "label": "Heading font size"
+    },
+    {
+      "type": "header",
+      "content": "Cards"
+    },
+    {
+      "type": "range",
+      "id": "card_width",
+      "min": 250,
+      "max": 500,
+      "step": 10,
+      "default": 340,
+      "unit": "px",
+      "label": "Card width"
+    },
+    {
+      "type": "range",
+      "id": "card_min_height",
+      "min": 200,
+      "max": 500,
+      "step": 10,
+      "default": 300,
+      "unit": "px",
+      "label": "Card min height"
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "min": 8,
+      "max": 40,
+      "step": 2,
+      "default": 20,
+      "unit": "px",
+      "label": "Gap between cards"
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "default": 14,
+      "unit": "px",
+      "label": "Card corner radius"
+    },
+    {
+      "type": "header",
+      "content": "Avatar"
+    },
+    {
+      "type": "color",
+      "id": "avatar_border_color",
+      "label": "Avatar border color",
+      "default": "#d4e8f5"
+    },
+    {
+      "type": "header",
+      "content": "Arrows"
+    },
+    {
+      "type": "color",
+      "id": "arrow_bg",
+      "label": "Arrow background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "arrow_icon_color",
+      "label": "Arrow icon color",
+      "default": "#1a2a3a"
+    },
+    {
+      "type": "color",
+      "id": "arrow_border_color",
+      "label": "Arrow border color",
+      "default": "#cccccc"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 48,
+      "unit": "px",
+      "label": "Top padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 48,
+      "unit": "px",
+      "label": "Bottom padding"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "avatar",
+          "label": "Avatar"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Testimonial text",
+          "default": "<p>Corona Cero is the ultimate crowd-pleaser for sunset moments, BBQ gatherings, and beach days. Crisp and refreshing, just like the original!</p>"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name",
+          "default": "Alex P."
+        },
+        {
+          "type": "color",
+          "id": "card_bg",
+          "label": "Card background",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text color",
+          "default": "#333333"
+        },
+        {
+          "type": "color",
+          "id": "name_color",
+          "label": "Name color",
+          "default": "#1a2a3a"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brand Testimonials Slider",
+      "blocks": [
+        {
+          "type": "testimonial",
+          "settings": {
+            "text": "<p>Corona Cero is the ultimate crowd-pleaser for sunset moments, BBQ gatherings, and beach days. Crisp and refreshing, just like the original!</p>",
+            "name": "Alex P."
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "text": "<p>So pleasantly surprised by how good Corona Cero tastes. It is now a staple thirst quencher for my weekend parties.</p>",
+            "name": "John Smith"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "text": "<p>Corona Cero is a must try for adventurers. Whenever I'm hitting the trails, it's my go-to refreshment. Light, refreshing, easy to enjoy. Couldn't believe it only has 56 calories in the entire bottle!</p>",
+            "name": "Jake"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "text": "<p>After training I still want to sit down with the team, but without it affecting recovery. Corona Cero lets me join the post-session hangout without thinking twice the next morning.</p>",
+            "name": "Michael"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
