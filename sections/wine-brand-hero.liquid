@@ -1,0 +1,805 @@
+{%- liquid
+  assign logo_pos = section.settings.logo_positioning | default: 'absolute'
+  assign content_position_desktop = section.settings.content_position | default: 'top-center'
+  assign content_position_mobile = section.settings.content_position_mobile | default: 'middle-center'
+  assign content_position = content_position_desktop
+
+  case content_position
+    when 'top-left'
+      assign c_align = 'start'
+      assign c_justify = 'start'
+      assign c_text = 'left'
+    when 'top-center'
+      assign c_align = 'start'
+      assign c_justify = 'center'
+      assign c_text = 'center'
+    when 'top-right'
+      assign c_align = 'start'
+      assign c_justify = 'end'
+      assign c_text = 'right'
+    when 'middle-left'
+      assign c_align = 'center'
+      assign c_justify = 'start'
+      assign c_text = 'left'
+    when 'middle-center'
+      assign c_align = 'center'
+      assign c_justify = 'center'
+      assign c_text = 'center'
+    when 'middle-right'
+      assign c_align = 'center'
+      assign c_justify = 'end'
+      assign c_text = 'right'
+    when 'bottom-left'
+      assign c_align = 'end'
+      assign c_justify = 'start'
+      assign c_text = 'left'
+    when 'bottom-center'
+      assign c_align = 'end'
+      assign c_justify = 'center'
+      assign c_text = 'center'
+    when 'bottom-right'
+      assign c_align = 'end'
+      assign c_justify = 'end'
+      assign c_text = 'right'
+  endcase
+-%}
+
+<div class="wine-hero-wrap" id="wine-hero-{{ section.id }}">
+
+  <div class="wine-hero-slider">
+    {% if section.settings.bg_image != blank %}
+      <div class="wine-hero-slide wine-hero-slide--1">
+        <picture>
+          {% if section.settings.bg_image_mobile != blank %}
+            <source media="(max-width: 749px)" srcset="{{ section.settings.bg_image_mobile | image_url: width: 1000 }}">
+          {% endif %}
+          <img class="wine-hero-bg" src="{{ section.settings.bg_image | image_url: width: 2000 }}" alt="" loading="eager" width="2000" height="1000">
+        </picture>
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="wine-hero-overlay"></div>
+
+  <div class="wine-hero-grid">
+    <!-- Brand logo + content wrapper (positioned at top) -->
+    <div class="wine-hero-container" style="place-self: {{ c_align }} {{ c_justify }};">
+
+      <!-- Logo -->
+      {% if section.settings.brand_logo != blank or section.settings.brand_name != blank %}
+        {% liquid
+          case section.settings.logo_text_alignment
+            when 'center'
+              assign logo_justify = 'center'
+            when 'right'
+              assign logo_justify = 'flex-end'
+            else
+              assign logo_justify = 'flex-start'
+          endcase
+        %}
+        <div class="wine-hero-brand" style="justify-content: {{ logo_justify }};">
+          {% if section.settings.brand_logo != blank %}
+            <img src="{{ section.settings.brand_logo | image_url: width: 400 }}" alt="{{ section.settings.brand_name }}" width="{{ section.settings.brand_logo.width | default: 184 }}" height="{{ section.settings.brand_logo.height | default: 101 }}">
+          {% else %}
+            <p class="wine-hero-brand-text">{{ section.settings.brand_name }}</p>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      <!-- Content (heading + pills) -->
+      <div class="wine-hero-content" style="text-align: {{ section.settings.content_text_alignment }};">
+        {% if section.settings.heading_line1 != blank or section.settings.heading_line2 != blank %}
+          <div class="wine-hero-heading-block">
+            <h1 class="wine-hero-heading">
+              {%- if section.settings.heading_line1 != blank -%}
+                <span class="wine-hero-heading-1">{{ section.settings.heading_line1 }}</span>
+              {%- endif -%}
+              {%- if section.settings.heading_line1 != blank and section.settings.heading_line2 != blank %} {% endif -%}
+              {%- if section.settings.heading_line2 != blank -%}
+                <span class="wine-hero-heading-2">{{ section.settings.heading_line2 }}</span>
+              {%- endif -%}
+            </h1>
+          </div>
+        {% endif %}
+
+        {% if section.settings.description != blank %}
+          <p class="wine-hero-description">{{ section.settings.description }}</p>
+        {% endif %}
+
+        {% if section.settings.button_text != blank %}
+          <a href="{{ section.settings.button_link }}" class="wine-hero-button">
+            {{ section.settings.button_text }}
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  #wine-hero-{{ section.id }} {
+    position: relative;
+    width: 100%;
+    min-height: {{ section.settings.min_height | default: 600 }}px;
+    overflow: hidden;
+    {% if section.settings.font_family != blank %}
+      font-family: {{ section.settings.font_family }};
+    {% endif %}
+    {% if section.settings.line_height != blank %}
+      line-height: {{ section.settings.line_height }};
+    {% endif %}
+    {% if section.settings.letter_spacing != blank %}
+      letter-spacing: {{ section.settings.letter_spacing }};
+    {% endif %}
+    background-color: {{ section.settings.bg_color }};
+    {% if section.settings.heading_font_family != blank %}
+      --heading-font-family: {{ section.settings.heading_font_family }};
+    {% endif %}
+    {% if section.settings.description_font_family != blank %}
+      --description-font-family: {{ section.settings.description_font_family }};
+    {% endif %}
+  }
+
+  /* Slider */
+  #wine-hero-{{ section.id }} .wine-hero-slider {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+
+  #wine-hero-{{ section.id }} .wine-hero-slide {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+  }
+
+  /* Background image */
+  #wine-hero-{{ section.id }} .wine-hero-bg,
+  #wine-hero-{{ section.id }} .wine-hero-slide picture {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  #wine-hero-{{ section.id }} .wine-hero-bg {
+    object-fit: cover;
+    object-position: {{ section.settings.bg_position }};
+  }
+
+  /* Dark overlay */
+  #wine-hero-{{ section.id }} .wine-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: {{ section.settings.overlay_color }};
+    opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+    z-index: 1;
+  }
+
+  /* Main grid */
+  #wine-hero-{{ section.id }} .wine-hero-grid {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template: 1fr / 1fr;
+    padding: {{ section.settings.edge_padding_y }}px {{ section.settings.edge_padding_x }}px;
+    box-sizing: border-box;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  #wine-hero-{{ section.id }} .wine-hero-container {
+    grid-area: 1 / 1;
+    display: flex;
+    flex-direction: column;
+    gap: {{ section.settings.logo_content_gap }}px;
+    max-width: {{ section.settings.content_max_width }}px;
+    width: 100%;
+    {% if logo_pos == 'static' %}
+      position: static;
+    {% else %}
+      position: {% if section.settings.logo_positioning == 'absolute' %}absolute{% else %}relative{% endif %};
+    {% endif %}
+  }
+
+  /* Logo */
+  #wine-hero-{{ section.id }} .wine-hero-brand {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+
+  #wine-hero-{{ section.id }} .wine-hero-brand img {
+    height: {{ section.settings.logo_height }}px;
+    width: auto;
+    display: block;
+  }
+
+  #wine-hero-{{ section.id }} .wine-hero-brand-text {
+    font-size: 24px;
+    font-weight: 700;
+    color: {{ section.settings.heading_color_2 }};
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+  /* Content */
+  #wine-hero-{{ section.id }} .wine-hero-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    pointer-events: auto;
+  }
+
+  #wine-hero-{{ section.id }} .wine-hero-heading {
+    font-size: {{ section.settings.heading_size }}px;
+    font-weight: 400;
+    margin: 0;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    color: {{ section.settings.heading_color_1 }};
+    {% if section.settings.heading_font_family != blank %}
+      font-family: {{ section.settings.heading_font_family }}, 'Playfair Display', Georgia, serif;
+    {% endif %}
+  }
+
+  #wine-hero-{{ section.id }} .wine-hero-heading-1,
+  #wine-hero-{{ section.id }} .wine-hero-heading-2 {
+    display: block;
+  }
+
+  #wine-hero-{{ section.id }} .wine-hero-heading-1 {
+    color: {{ section.settings.heading_color_1 }};
+  }
+
+  #wine-hero-{{ section.id }} .wine-hero-heading-2 {
+    color: {{ section.settings.heading_color_2 }};
+  }
+
+  #wine-hero-{{ section.id }} .wine-hero-description {
+    color: {{ section.settings.description_color | default: '#ffffff' }};
+    font-size: {{ section.settings.description_size }}px;
+    line-height: 1.6;
+    margin: 0;
+    {% if section.settings.description_font_family != blank %}
+      font-family: {{ section.settings.description_font_family }}, 'Playfair Display', Georgia, serif;
+    {% else %}
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    {% endif %}
+  }
+
+  /* Desktop typography (tracking / line height) */
+  @media screen and (min-width: 750px) {
+    {%- if section.settings.heading_line_height != blank or section.settings.heading_letter_spacing != blank %}
+      #wine-hero-{{ section.id }} .wine-hero-heading {
+        {% if section.settings.heading_line_height != blank %}
+          line-height: {{ section.settings.heading_line_height }};
+        {% endif %}
+        {% if section.settings.heading_letter_spacing != blank %}
+          letter-spacing: {{ section.settings.heading_letter_spacing }};
+        {% endif %}
+      }
+    {% endif %}
+
+    {%- if section.settings.heading_letter_spacing contains 'em' or section.settings.heading_letter_spacing contains 'px' %}
+      /* Cancel the trailing letter-spacing after the last glyph so lines stay optically centred */
+      #wine-hero-{{ section.id }} .wine-hero-heading-1,
+      #wine-hero-{{ section.id }} .wine-hero-heading-2 {
+        margin-right: calc(-1 * {{ section.settings.heading_letter_spacing }});
+      }
+    {% endif %}
+
+    {%- if section.settings.description_letter_spacing != blank %}
+      #wine-hero-{{ section.id }} .wine-hero-description {
+        letter-spacing: {{ section.settings.description_letter_spacing }};
+        {% if section.settings.description_letter_spacing contains 'em' or section.settings.description_letter_spacing contains 'px' %}
+          margin-right: calc(-1 * {{ section.settings.description_letter_spacing }});
+        {% endif %}
+      }
+    {% endif %}
+  }
+
+  /* Button */
+  #wine-hero-{{ section.id }} .wine-hero-button {
+    display: inline-block;
+    padding: 14px 40px;
+    background-color: {{ section.settings.button_bg_color }};
+    color: {{ section.settings.button_text_color }};
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    border: 1px solid {{ section.settings.button_bg_color }};
+    pointer-events: auto;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  }
+
+  #wine-hero-{{ section.id }} .wine-hero-button:hover {
+    background-color: transparent;
+    color: {{ section.settings.button_bg_color }};
+  }
+
+  /* Mobile */
+  @media (max-width: 749px) {
+    #wine-hero-{{ section.id }} {
+      min-height: {{ section.settings.min_height_mobile }}px;
+            
+    }
+
+    #wine-hero-{{ section.id }} .wine-hero-overlay {
+      background: {{ section.settings.overlay_color }};
+      opacity: {{ section.settings.overlay_opacity_mobile | divided_by: 100.0 }};
+    }
+
+    #wine-hero-{{ section.id }} .wine-hero-grid {
+      padding: 40px 20px !important;
+    }
+
+    #wine-hero-{{ section.id }} .wine-hero-container {
+      max-width: 100% !important;
+      gap: {{ section.settings.logo_content_gap_mobile | default: 30 }}px;
+    }
+
+    #wine-hero-{{ section.id }} .wine-hero-brand img {
+      height: 74px;
+    }
+
+    #wine-hero-{{ section.id }} .wine-hero-heading {
+      font-size: {{ section.settings.heading_size_mobile | default: 28 }}px;
+    }
+
+    #wine-hero-{{ section.id }} .wine-hero-description {
+      font-size: {{ section.settings.description_size_mobile | default: 14 }}px;
+    }
+
+    {% liquid
+      case section.settings.logo_text_alignment_mobile | default: 'center'
+        when 'center'
+          assign logo_justify_mobile = 'center'
+        when 'right'
+          assign logo_justify_mobile = 'flex-end'
+        else
+          assign logo_justify_mobile = 'flex-start'
+      endcase
+    %}
+
+    #wine-hero-{{ section.id }} .wine-hero-brand {
+      justify-content: {{ logo_justify_mobile }} !important;
+    }
+
+    {% liquid
+      assign mobile_pos = section.settings.content_position_mobile | default: 'middle-center'
+      case mobile_pos
+        when 'top-left'
+          assign m_align = 'start'
+          assign m_justify = 'start'
+        when 'top-center'
+          assign m_align = 'start'
+          assign m_justify = 'center'
+        when 'top-right'
+          assign m_align = 'start'
+          assign m_justify = 'end'
+        when 'middle-left'
+          assign m_align = 'center'
+          assign m_justify = 'start'
+        when 'middle-center'
+          assign m_align = 'center'
+          assign m_justify = 'center'
+        when 'middle-right'
+          assign m_align = 'center'
+          assign m_justify = 'end'
+        when 'bottom-left'
+          assign m_align = 'end'
+          assign m_justify = 'start'
+        when 'bottom-center'
+          assign m_align = 'end'
+          assign m_justify = 'center'
+        when 'bottom-right'
+          assign m_align = 'end'
+          assign m_justify = 'end'
+      endcase
+    %}
+
+    #wine-hero-{{ section.id }} .wine-hero-container {
+      place-self: {{ m_align }} {{ m_justify }} !important;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Wine Brand Hero",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Background & Layout"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image — desktop"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image — mobile"
+    },
+    {
+      "type": "select",
+      "id": "bg_position",
+      "label": "Background focal point",
+      "options": [
+        { "value": "left center", "label": "Left" },
+        { "value": "center center", "label": "Center" },
+        { "value": "right center", "label": "Right" }
+      ],
+      "default": "center center"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Fallback background color",
+      "default": "#1a1a2e"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Overlay color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay opacity — desktop (%)",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity_mobile",
+      "label": "Overlay opacity — mobile (%)",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 55
+    },
+    {
+      "type": "number",
+      "id": "min_height",
+      "label": "Banner height — desktop (px)",
+      "info": "Any pixel value, e.g. 543",
+      "default": 600
+    },
+    {
+      "type": "range",
+      "id": "min_height_mobile",
+      "label": "Banner height — mobile (px)",
+      "min": 300,
+      "max": 800,
+      "step": 20,
+      "default": 500
+    },
+    {
+      "type": "header",
+      "content": "Logo Position"
+    },
+    {
+      "type": "image_picker",
+      "id": "brand_logo",
+      "label": "Brand Logo"
+    },
+    {
+      "type": "text",
+      "id": "brand_name",
+      "label": "Brand Name (fallback if no logo)"
+    },
+    {
+      "type": "range",
+      "id": "logo_height",
+      "label": "Logo height (px)",
+      "min": 40,
+      "max": 200,
+      "step": 2,
+      "default": 100
+    },
+    {
+      "type": "select",
+      "id": "logo_positioning",
+      "label": "Logo positioning",
+      "options": [
+        { "value": "absolute", "label": "Absolute (floating)" },
+        { "value": "static", "label": "Static (inline with content)" }
+      ],
+      "default": "absolute"
+    },
+    {
+      "type": "range",
+      "id": "logo_content_gap",
+      "label": "Gap between logo & content — desktop (px)",
+      "min": 0,
+      "max": 60,
+      "step": 5,
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "logo_content_gap_mobile",
+      "label": "Gap between logo & content — mobile (px)",
+      "min": 0,
+      "max": 60,
+      "step": 5,
+      "default": 30
+    },
+    {
+      "type": "select",
+      "id": "logo_text_alignment",
+      "label": "Logo text alignment (Desktop)",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "logo_text_alignment_mobile",
+      "label": "Logo text alignment (Mobile)",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Content Position & Spacing"
+    },
+    {
+      "type": "select",
+      "id": "content_position",
+      "label": "Logo + Content position (Desktop)",
+      "options": [
+        { "value": "top-left", "label": "Top left" },
+        { "value": "top-center", "label": "Top center" },
+        { "value": "top-right", "label": "Top right" },
+        { "value": "middle-left", "label": "Middle left" },
+        { "value": "middle-center", "label": "Middle center" },
+        { "value": "middle-right", "label": "Middle right" },
+        { "value": "bottom-left", "label": "Bottom left" },
+        { "value": "bottom-center", "label": "Bottom center" },
+        { "value": "bottom-right", "label": "Bottom right" }
+      ],
+      "default": "top-center"
+    },
+    {
+      "type": "select",
+      "id": "content_position_mobile",
+      "label": "Logo + Content position (Mobile)",
+      "options": [
+        { "value": "top-left", "label": "Top left" },
+        { "value": "top-center", "label": "Top center" },
+        { "value": "top-right", "label": "Top right" },
+        { "value": "middle-left", "label": "Middle left" },
+        { "value": "middle-center", "label": "Middle center" },
+        { "value": "middle-right", "label": "Middle right" },
+        { "value": "bottom-left", "label": "Bottom left" },
+        { "value": "bottom-center", "label": "Bottom center" },
+        { "value": "bottom-right", "label": "Bottom right" }
+      ],
+      "default": "middle-center"
+    },
+    {
+      "type": "range",
+      "id": "edge_padding_x",
+      "label": "Horizontal padding (px)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "edge_padding_y",
+      "label": "Vertical padding (px)",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "content_max_width",
+      "label": "Content max width (px)",
+      "min": 300,
+      "max": 900,
+      "step": 10,
+      "default": 650
+    },
+    {
+      "type": "select",
+      "id": "content_text_alignment",
+      "label": "Content text alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "Heading & Text"
+    },
+    {
+      "type": "text",
+      "id": "font_family",
+      "label": "Font family (optional)",
+      "placeholder": "Inherits from theme",
+      "info": "Leave empty to use theme default. Example: 'Playfair Display', Georgia, serif"
+    },
+    {
+      "type": "text",
+      "id": "line_height",
+      "label": "Line height (optional)",
+      "placeholder": "e.g., 1.5, 150%, 1.2"
+    },
+    {
+      "type": "text",
+      "id": "letter_spacing",
+      "label": "Letter spacing (optional)",
+      "placeholder": "e.g., 0.05em, -0.01em, 2px"
+    },
+    {
+      "type": "text",
+      "id": "heading_line1",
+      "label": "Heading Line 1",
+      "info": "Each heading line renders on its own line; use Heading Line 2 for the second line",
+      "default": "Discover the Art of"
+    },
+    {
+      "type": "color",
+      "id": "heading_color_1",
+      "label": "Heading Line 1 color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "text",
+      "id": "heading_line2",
+      "label": "Heading Line 2",
+      "default": "Fine Wine"
+    },
+    {
+      "type": "color",
+      "id": "heading_color_2",
+      "label": "Heading Line 2 / Accent color",
+      "default": "#b8860b"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading size — desktop (px)",
+      "min": 24,
+      "max": 80,
+      "step": 1,
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Heading size — mobile (px)",
+      "min": 18,
+      "max": 50,
+      "step": 1,
+      "default": 28
+    },
+    {
+      "type": "text",
+      "id": "heading_font_family",
+      "label": "Heading font family (optional)",
+      "placeholder": "'Playfair Display', Georgia, serif"
+    },
+    {
+      "type": "text",
+      "id": "heading_letter_spacing",
+      "label": "Heading letter spacing — desktop",
+      "placeholder": "e.g., 0.25em",
+      "default": "-0.01em"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_height",
+      "label": "Heading line height — desktop",
+      "placeholder": "e.g., 1.143, 40px",
+      "default": "1.2"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description text",
+      "default": "Curated collections from celebrated vineyards around the world"
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "description_size",
+      "label": "Description size — desktop (px)",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "description_size_mobile",
+      "label": "Description size — mobile (px)",
+      "min": 12,
+      "max": 18,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "text",
+      "id": "description_font_family",
+      "label": "Description font family (optional)"
+    },
+    {
+      "type": "text",
+      "id": "description_letter_spacing",
+      "label": "Description letter spacing — desktop",
+      "placeholder": "e.g., 0.12em",
+      "info": "'inherit' uses the general letter spacing above",
+      "default": "inherit"
+    },
+    {
+      "type": "header",
+      "content": "Call-to-Action Button"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Button background color",
+      "default": "#b8860b"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text color",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wine Brand Hero"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,309 @@
+<div class="wine-features-bar-wrap" id="wine-features-{{ section.id }}">
+  <div class="wine-features-container page-width">
+
+    <!-- Left Image -->
+    <div class="wine-features-left">
+      {% if section.settings.left_image != blank %}
+        <img
+          src="{{ section.settings.left_image | image_url: width: 1000 }}"
+          alt="Product"
+          loading="eager"
+          class="wine-features-img wine-features-left-img">
+      {% else %}
+        <div class="wine-features-placeholder">Left Image</div>
+      {% endif %}
+    </div>
+
+    <!-- Right Image -->
+    <div class="wine-features-right">
+      {% if section.settings.right_image != blank %}
+        <img
+          src="{{ section.settings.right_image | image_url: width: 500 }}"
+          alt="Features"
+          loading="eager"
+          class="wine-features-img wine-features-right-img">
+      {% else %}
+        <div class="wine-features-placeholder">Right Image</div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<style>
+  #wine-features-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+    padding: {{ section.settings.padding_top }}px {{ section.settings.padding_x }}px {{ section.settings.padding_bottom }}px {{ section.settings.padding_x }}px;
+    overflow: visible;
+    /* Keep the overflowing badge above the hero and the next section */
+    position: relative;
+    z-index: 9;
+  }
+
+  #wine-features-{{ section.id }} .wine-features-container {
+    max-width: inherit;
+    margin: 0 auto;
+    display: flex;
+   justify-content: space-between;
+    gap: {{ section.settings.gap }}px;
+    align-items: center;
+    position: relative;
+  }
+
+  /* Left Image */
+  #wine-features-{{ section.id }} .wine-features-left {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    --img-width: {{ section.settings.left_image_width }}px;
+  }
+
+  #wine-features-{{ section.id }} .wine-features-left-img {
+    width: var(--img-width);
+    height: auto;
+    display: block;
+    object-fit: contain;
+  }
+
+  /* Right Image */
+  #wine-features-{{ section.id }} .wine-features-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    overflow: visible;
+    --img-width: {{ section.settings.right_image_width }}px;
+    position: absolute;
+    right: 0;
+    z-index: 9;
+  }
+
+  #wine-features-{{ section.id }} .wine-features-right-img {
+    width: var(--img-width);
+    height: auto;
+    display: block;
+    object-fit: contain;
+  }
+
+  #wine-features-{{ section.id }} .wine-features-placeholder {
+    width: 300px;
+    height: 300px;
+    background-color: rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    font-size: 18px;
+    border-radius: 8px;
+  }
+
+  @media (min-width: 769px) {
+    /* Edge-to-edge row: the left image starts exactly at "Padding left & right" */
+    #wine-features-{{ section.id }} .wine-features-container {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    /* Badge: centred vertically on the row, placed from the right edge,
+       but never allowed to slide over the left image on narrow screens */
+    #wine-features-{{ section.id }} .wine-features-right {
+      top: 50%;
+      right: auto;
+      left: max(calc(100% - {{ section.settings.right_image_offset | default: 0 }}px - var(--img-width)), {{ section.settings.left_image_width | plus: section.settings.gap }}px);
+      transform: translateY(-50%);
+    }
+  }
+
+  @media (max-width: 768px) {
+    #wine-features-{{ section.id }} {
+      padding: {{ section.settings.padding_top_mobile }}px 10px {{ section.settings.padding_bottom_mobile }}px {{ section.settings.padding_x_mobile }}px;
+    }
+
+    #wine-features-{{ section.id }} .wine-features-container {
+      grid-template-columns: 1fr;
+      gap: {{ section.settings.gap_mobile }}px;
+    }
+
+    #wine-features-{{ section.id }} .wine-features-left {
+      --img-width: {{ section.settings.left_image_width_mobile | default: 150 }}px;
+    }
+
+    #wine-features-{{ section.id }} .wine-features-right {
+      justify-content: {{ section.settings.right_image_position_mobile | default: 'center' }};
+      --img-width: {{ section.settings.right_image_width_mobile | default: 120 }}px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Wine Features Bar",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "image_picker",
+      "id": "left_image",
+      "label": "Left image (PNG, SVG, JPG)"
+    },
+    {
+      "type": "range",
+      "id": "left_image_width",
+      "label": "Left image width (px)",
+      "min": 50,
+      "max": 1000,
+      "step": 10,
+      "default": 400
+    },
+    {
+      "type": "image_picker",
+      "id": "right_image",
+      "label": "Right image (PNG, SVG, JPG)"
+    },
+    {
+      "type": "range",
+      "id": "right_image_width",
+      "label": "Right image width (px)",
+      "min": 50,
+      "max": 250,
+      "step": 2,
+      "default": 150
+    },
+    {
+      "type": "range",
+      "id": "right_image_offset",
+      "label": "Right image offset from right edge — desktop (px)",
+      "info": "Measured from the inner (padded) right edge of the bar",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "right_image_position_mobile",
+      "label": "Right image position on mobile",
+      "options": [
+        { "value": "flex-start", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "flex-end", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Image Size — Desktop"
+    },
+    {
+      "type": "header",
+      "content": "Image Size — Mobile"
+    },
+    {
+      "type": "range",
+      "id": "left_image_width_mobile",
+      "label": "Left image width (px)",
+      "min": 40,
+      "max": 400,
+      "step": 10,
+      "default": 150
+    },
+    {
+      "type": "range",
+      "id": "right_image_width_mobile",
+      "label": "Right image width (px)",
+      "min": 40,
+      "max": 400,
+      "step": 10,
+      "default": 120
+    },
+    {
+      "type": "header",
+      "content": "Spacing — Desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top (px)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom (px)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_x",
+      "label": "Padding left & right (px)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Gap between images (px)",
+      "min": 20,
+      "max": 100,
+      "step": 10,
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Spacing — Mobile"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding top (px)",
+      "min": 0,
+      "max": 80,
+      "step": 10,
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding bottom (px)",
+      "min": 0,
+      "max": 80,
+      "step": 10,
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_x_mobile",
+      "label": "Padding left & right (px)",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "gap_mobile",
+      "label": "Gap between images (px)",
+      "min": 15,
+      "max": 60,
+      "step": 5,
+      "default": 30
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wine Features Bar"
+    }
+  ]
+}
+{% endschema %}

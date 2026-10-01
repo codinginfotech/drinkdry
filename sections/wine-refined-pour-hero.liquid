@@ -1,0 +1,1052 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --hero-bg: url('{{ section.settings.hero_image | image_url }}');
+    --text-color: {{ section.settings.text_color }};
+    --heading-color: {{ section.settings.heading_color }};
+    --button-bg: {{ section.settings.button_bg }};
+    --button-text-color: {{ section.settings.button_text_color }};
+    padding-top: {{ section.settings.padding_top | default: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | default: 0 }}px;
+    background-color: {{ section.settings.bg_color }};
+    --title-font-size: {{ section.settings.title_font_size | default: 64 }}px;
+    --description-font-size: {{ section.settings.description_font_size | default: 16 }}px;
+    --title-font-size-mobile: {{ section.settings.title_font_size_mobile | default: 30 }}px;
+    --description-font-size-mobile: {{ section.settings.description_font_size_mobile | default: 18 }}px;
+    --title-line-height: {{ section.settings.title_line_height | default: 1.15 }};
+    --title-letter-spacing: {{ section.settings.title_letter_spacing | default: '-0.01em' }};
+    --description-line-height: {{ section.settings.description_line_height | default: 1.8 }};
+    --description-letter-spacing: {{ section.settings.description_letter_spacing | default: 'inherit' }};
+    --feature-title-font-size: {{ section.settings.feature_title_font_size | default: 13 }}px;
+    --feature-title-line-height: {{ section.settings.feature_title_line_height | default: 1.2 }};
+    --feature-title-letter-spacing: {{ section.settings.feature_title_letter_spacing | default: '0.1em' }};
+    --feature-description-font-size: {{ section.settings.feature_description_font_size | default: 13 }}px;
+    --feature-description-line-height: {{ section.settings.feature_description_line_height | default: 1.5 }};
+    --feature-description-letter-spacing: {{ section.settings.feature_description_letter_spacing | default: '0' }};
+    {% if section.settings.title_font_family != blank %}
+      --title-font-family: {{ section.settings.title_font_family }};
+    {% endif %}
+    {% if section.settings.description_font_family != blank %}
+      --description-font-family: {{ section.settings.description_font_family }};
+    {% endif %}
+    {% if section.settings.title_font_weight != blank %}
+      --title-font-weight: {{ section.settings.title_font_weight }};
+    {% endif %}
+    {% if section.settings.description_font_weight != blank %}
+      --description-font-weight: {{ section.settings.description_font_weight }};
+    {% endif %}
+    {% if section.settings.feature_title_font_family != blank %}
+      --feature-title-font-family: {{ section.settings.feature_title_font_family }};
+    {% endif %}
+    {% if section.settings.feature_title_font_weight != blank %}
+      --feature-title-font-weight: {{ section.settings.feature_title_font_weight }};
+    {% endif %}
+    {% if section.settings.feature_description_font_family != blank %}
+      --feature-description-font-family: {{ section.settings.feature_description_font_family }};
+    {% endif %}
+    {% if section.settings.feature_description_font_weight != blank %}
+      --feature-description-font-weight: {{ section.settings.feature_description_font_weight }};
+    {% endif %}
+  }
+
+  #shopify-section-{{ section.id }} .wine-hero {
+    position: relative;
+    width: 100%;
+    border-radius: {{ section.settings.border_radius }};
+    overflow: hidden;
+    background-color: {{ section.settings.bg_color }};
+  }
+
+  #shopify-section-{{ section.id }} .wine-hero-image {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  /* display: block overrides base.css `div:empty { display: none }`, which otherwise hides this empty div. */
+  #shopify-section-{{ section.id }} .wine-overlay {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(rgba(0, 0, 0, {{ section.settings.overlay_opacity | divided_by: 100.0 }}), rgba(0, 0, 0, {{ section.settings.overlay_opacity | divided_by: 100.0 }}));
+    z-index: 1;
+  }
+
+  #shopify-section-{{ section.id }} .wine-content {
+    max-width: 600px;
+    color: var(--text-color);
+    z-index: 2;
+    position: absolute;
+    top: 90px;
+    left: 150px;
+    right: auto;
+  }
+
+  #shopify-section-{{ section.id }} .wine-title {
+    font-size: var(--title-font-size);
+    {% if section.settings.title_font_family != blank %}
+      font-family: var(--title-font-family);
+    {% else %}
+      font-family: 'Questa Grande', 'Playfair Display', Georgia, serif;
+    {% endif %}
+    color: var(--heading-color);
+    margin: 0 0 30px 0;
+    {% if section.settings.title_font_weight != blank %}
+      font-weight: var(--title-font-weight);
+    {% else %}
+      font-weight: 400;
+    {% endif %}
+    line-height: var(--title-line-height);
+    letter-spacing: var(--title-letter-spacing);
+  }
+
+  #shopify-section-{{ section.id }} .wine-description {
+    font-size: var(--description-font-size);
+    line-height: var(--description-line-height);
+    margin-bottom: 40px;
+    color: var(--text-color);
+    letter-spacing: var(--description-letter-spacing);
+    {% if section.settings.description_font_family != blank %}
+      font-family: var(--description-font-family);
+    {% endif %}
+    {% if section.settings.description_font_weight != blank %}
+      font-weight: var(--description-font-weight);
+    {% endif %}
+  }
+
+  #shopify-section-{{ section.id }} .wine-description--mobile {
+    display: none;
+  }
+
+  #shopify-section-{{ section.id }} .wine-button {
+    display: inline-block;
+    background-color: var(--button-bg);
+    color: var(--button-text-color);
+    padding: 14px 36px;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+  }
+
+  #shopify-section-{{ section.id }} .wine-button:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+  }
+
+  #shopify-section-{{ section.id }} .wine-features {
+ display: flex;
+    gap: 50px;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    z-index: 3;
+    transform: translateX(-50%);
+    width: 100%;
+    padding: 50px 150px;
+        background-color: #57575680;
+  }
+ 
+  #shopify-section-{{ section.id }} .wine-feature {
+    display: flex;
+    gap: 25px;
+    align-items: flex-start;
+  }
+
+  #shopify-section-{{ section.id }} .wine-feature-icon {
+    width: 70px;
+    height: 70px;
+    border: 2.5px solid var(--text-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 32px;
+    overflow: hidden;
+    background-color: transparent;
+  }
+
+  #shopify-section-{{ section.id }} .wine-feature-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 8px;
+  }
+
+  #shopify-section-{{ section.id }} .wine-feature-content h3 {
+    font-size: var(--feature-title-font-size);
+    {% if section.settings.feature_title_font_weight != blank %}
+      font-weight: var(--feature-title-font-weight);
+    {% else %}
+      font-weight: 700;
+    {% endif %}
+    {% if section.settings.feature_title_font_family != blank %}
+      font-family: var(--feature-title-font-family);
+    {% endif %}
+    letter-spacing: var(--feature-title-letter-spacing);
+    line-height: var(--feature-title-line-height);
+    text-transform: uppercase;
+    margin: 0 0 12px 0;
+    color: var(--heading-color);
+  }
+
+  #shopify-section-{{ section.id }} .wine-feature-content p {
+    font-size: var(--feature-description-font-size);
+    line-height: var(--feature-description-line-height);
+    letter-spacing: var(--feature-description-letter-spacing);
+    margin: 0;
+    color: var(--text-color);
+    {% if section.settings.feature_description_font_family != blank %}
+      font-family: var(--feature-description-font-family);
+    {% endif %}
+    {% if section.settings.feature_description_font_weight != blank %}
+      font-weight: var(--feature-description-font-weight);
+    {% endif %}
+  }
+
+  /* Desktop: the image (1440x1121 on this page, arc top, rounded bottom and features band baked in)
+     is a cover layer; the box keeps the image's aspect ratio and only grows if the content needs more room. */
+  @media screen and (min-width: 769px) {
+    #shopify-section-{{ section.id }} .wine-hero {
+      display: flex;
+      flex-direction: column;
+      {%- if section.settings.hero_image != blank %}
+      aspect-ratio: {{ section.settings.hero_image.aspect_ratio }};
+      {%- else %}
+      min-height: {{ section.settings.min_height }}px;
+      {%- endif %}
+      overflow: clip;
+    }
+
+    #shopify-section-{{ section.id }} .wine-hero-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    #shopify-section-{{ section.id }} .wine-content {
+      position: relative;
+      top: auto;
+      left: auto;
+      max-width: none;
+      padding: clamp(48px, 5.56vw, 80px) 40px 40px clamp(40px, 10.97vw, 158px);
+    }
+
+    #shopify-section-{{ section.id }} .wine-title {
+      max-width: 480px;
+      font-size: var(--title-font-size);
+      line-height: var(--title-line-height);
+      letter-spacing: var(--title-letter-spacing);
+      margin: 0 0 38px;
+    }
+
+    #shopify-section-{{ section.id }} .wine-description {
+      max-width: 555px;
+      font-size: var(--description-font-size);
+      line-height: var(--description-line-height);
+      letter-spacing: var(--description-letter-spacing);
+      margin: 0 0 40px;
+    }
+
+    #shopify-section-{{ section.id }} .wine-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 224px;
+      height: 50px;
+      padding: 0 32px;
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: 0.03em;
+    }
+
+    /* The translucent grey band is baked into the desktop image (bottom 182 of its 1121px), so the
+       features sit exactly over it and scale with the viewport like the image does. */
+    #shopify-section-{{ section.id }} .wine-features {
+      position: absolute;
+      top: auto;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      width: auto;
+      height: 16.24%;
+      transform: none;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 2.45vw;
+      align-items: center;
+      margin: 0;
+      padding: 0 9.59vw;
+      background-color: rgba(87, 87, 86, {{ section.settings.features_overlay_opacity | divided_by: 100.0 }});
+      font-family: 'Public Sans', sans-serif;
+    }
+
+    #shopify-section-{{ section.id }} .wine-feature {
+      gap: 1.94vw;
+      align-items: flex-start;
+    }
+
+    #shopify-section-{{ section.id }} .wine-feature-icon {
+      width: clamp(40px, 5.1vw, 70px);
+      height: clamp(40px, 5.1vw, 70px);
+      border-width: clamp(1.5px, 0.16vw, 2px);
+      margin-top: 0.3vw;
+    }
+
+    #shopify-section-{{ section.id }} .wine-feature-icon picture {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+    }
+
+    #shopify-section-{{ section.id }} .wine-feature-icon img {
+      width: auto;
+      height: auto;
+      max-width: 80%;
+      max-height: 63%;
+      padding: 0;
+    }
+
+    #shopify-section-{{ section.id }} .wine-feature-content {
+      max-width: max(30vw, 250px);
+    }
+
+    #shopify-section-{{ section.id }} .wine-feature-content h3 {
+      {% if section.settings.feature_title_font_family != blank %}
+        font-family: var(--feature-title-font-family);
+      {% else %}
+        font-family: inherit;
+      {% endif %}
+      font-size: var(--feature-title-font-size);
+      {% if section.settings.feature_title_font_weight != blank %}
+        font-weight: var(--feature-title-font-weight);
+      {% else %}
+        font-weight: 700;
+      {% endif %}
+      line-height: var(--feature-title-line-height);
+      letter-spacing: var(--feature-title-letter-spacing);
+      margin: 0 0 0.6em;
+    }
+
+    #shopify-section-{{ section.id }} .wine-feature-content p {
+      {% if section.settings.feature_description_font_family != blank %}
+        font-family: var(--feature-description-font-family);
+      {% else %}
+        font-family: inherit;
+      {% endif %}
+      font-size: var(--feature-description-font-size);
+      {% if section.settings.feature_description_font_weight != blank %}
+        font-weight: var(--feature-description-font-weight);
+      {% else %}
+        font-weight: 400;
+      {% endif %}
+      line-height: var(--feature-description-line-height);
+      letter-spacing: var(--feature-description-letter-spacing);
+    }
+  }
+
+  @media (max-width: 768px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile | default: 0 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile | default: 0 }}px;
+      --text-color: {{ section.settings.text_color_mobile | default: section.settings.text_color }};
+      --heading-color: {{ section.settings.heading_color_mobile | default: section.settings.heading_color }};
+    }
+
+    #shopify-section-{{ section.id }} .wine-hero {
+      border-radius: {{ section.settings.border_radius_mobile }};
+    }
+
+    /* Arc across the top of the photo: a circle ~2.93x the viewport wide drops ~4.3vw at the edges
+       (16px on a 375px phone). The overlay sits inside the same clip, so it only darkens the photo. */
+    #shopify-section-{{ section.id }} .wine-hero-media {
+      position: relative;
+      clip-path: circle(293vw at 50% 293vw);
+    }
+
+    /* Near-black behind the heading and copy, fading out towards the bottom of the photo; over that, the
+       last 164px of the photo fade into the page background so the features start on the fade.
+       bottom: -1px covers the photo's last device-pixel row, which otherwise shows as a faint line. */
+    #shopify-section-{{ section.id }} .wine-overlay {
+      {%- assign overlay_mobile = section.settings.overlay_darkness_mobile | divided_by: 100.0 %}
+      bottom: -1px;
+      background:
+        linear-gradient(180deg, {{ section.settings.bg_color | color_modify: 'alpha', 0 }} calc(100% - 164px), {{ section.settings.bg_color }} 100%),
+        linear-gradient(180deg, rgba(0, 0, 0, {{ overlay_mobile }}) 0, rgba(0, 0, 0, {{ overlay_mobile }}) 70px, rgba(0, 0, 0, 0) 418px);
+    }
+
+    #shopify-section-{{ section.id }} .wine-title {
+      max-width: 250px;
+      font-size: var(--title-font-size-mobile);
+      margin: 0 auto 4px;
+    }
+
+    #shopify-section-{{ section.id }} .wine-feature-content h3 {
+      {%- if section.settings.feature_title_font_family == blank %}
+      font-family: inherit;
+      {%- endif %}
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      margin: 0 0 14px;
+      color: var(--heading-color);
+    }
+
+    #shopify-section-{{ section.id }} .wine-feature-content p {
+      font-size: 17px;
+      line-height: 1.35;
+      margin: 0;
+      color: var(--text-color);
+    }
+
+    /* The design sets the second description narrower than the first, so it breaks after "gentle". */
+    #shopify-section-{{ section.id }} .wine-feature + .wine-feature .wine-feature-content p {
+      max-width: 232px;
+    }
+
+    #shopify-section-{{ section.id }} .wine-description {
+      font-family: 'Public Sans', sans-serif;
+      font-weight: 400;
+      font-size: var(--description-font-size-mobile);
+      line-height: 1.36;
+      margin: 0 0 19px;
+    }
+
+    #shopify-section-{{ section.id }} .wine-description--desktop {
+      display: none;
+    }
+
+    #shopify-section-{{ section.id }} .wine-description--mobile {
+      display: block;
+    }
+
+    #shopify-section-{{ section.id }} .wine-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 224px;
+      height: 50px;
+      padding: 0 32px;
+      border-radius: 50px;
+      font-family: 'Public Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: 0.05em;
+    }
+
+    /* Below the photo, pulled 28px up onto its faded bottom edge; relative + z-index keeps it above the photo. */
+    #shopify-section-{{ section.id }} .wine-features {
+      position: relative;
+      inset: auto;
+      z-index: 2;
+      transform: none;
+      display: flex;
+      flex-direction: column;
+      gap: 23px;
+      margin-top: -28px;
+      padding: 0 15px 20px;
+      background: none;
+      font-family: 'Public Sans', sans-serif;
+    }
+
+    #shopify-section-{{ section.id }} .wine-feature-icon {
+      width: 70px;
+      height: 70px;
+      border: 2px solid var(--heading-color);
+    }
+
+    #shopify-section-{{ section.id }} .wine-feature-icon picture {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Icons show at their own size (44px and 54x42 in the design), capped to fit the circle. */
+    #shopify-section-{{ section.id }} .wine-feature-icon img {
+      width: auto;
+      height: auto;
+      max-width: 85%;
+      max-height: 85%;
+      padding: 0;
+    }
+
+    /* The copy sits on the photo, so it keeps the desktop (over-image) colours; the mobile colours
+       are for the features, which sit below the photo on the page background. */
+    #shopify-section-{{ section.id }} .wine-content {
+      --heading-color: {{ section.settings.heading_color }};
+      --text-color: {{ section.settings.text_color }};
+      color: var(--text-color);
+      z-index: 2;
+      position: absolute;
+      top: 44px;
+      left: 50%;
+      right: auto;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 375px;
+      padding: 0 34px;
+      text-align: center;
+    }
+  }
+{%- endstyle -%}
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;700&display=swap">
+
+<section class="wine-hero">
+  <div class="wine-hero-media">
+    {% if section.settings.hero_image != blank or section.settings.hero_image_mobile != blank %}
+      <picture>
+        {% if section.settings.hero_image_mobile != blank %}
+          <source media="(max-width: 768px)" srcset="{{ section.settings.hero_image_mobile | image_url: width: 768 }}">
+        {% endif %}
+        {% if section.settings.hero_image != blank %}
+          <img src="{{ section.settings.hero_image | image_url: width: 1500 }}" alt="Wine Hero" class="wine-hero-image">
+        {% endif %}
+      </picture>
+    {% endif %}
+
+    <div class="wine-overlay"></div>
+  </div>
+
+  <div class="wine-content">
+    {% if section.settings.title != blank %}
+      <h1 class="wine-title">{{ section.settings.title }}</h1>
+    {% endif %}
+
+    {% if section.settings.description != blank %}
+      <p class="wine-description{% if section.settings.description_mobile != blank %} wine-description--desktop{% endif %}">{{ section.settings.description }}</p>
+    {% endif %}
+
+    {% if section.settings.description_mobile != blank %}
+      <p class="wine-description wine-description--mobile">{{ section.settings.description_mobile }}</p>
+    {% endif %}
+
+    {% if section.settings.button_text != blank and section.settings.button_link != blank %}
+      <a href="{{ section.settings.button_link }}" class="wine-button">{{ section.settings.button_text }}</a>
+    {% endif %}
+  </div>
+
+  <div class="wine-features">
+    <div class="wine-feature">
+      <div class="wine-feature-icon">
+        {% if section.settings.feature1_icon != blank or section.settings.feature1_icon_mobile != blank %}
+          <picture>
+            {% if section.settings.feature1_icon_mobile != blank %}
+              <source media="(max-width: 768px)" srcset="{{ section.settings.feature1_icon_mobile | image_url: width: 100 }}">
+            {% endif %}
+            {% if section.settings.feature1_icon != blank %}
+              <img src="{{ section.settings.feature1_icon | image_url: width: 100 }}" alt="Feature 1 Icon">
+            {% endif %}
+          </picture>
+        {% endif %}
+      </div>
+      <div class="wine-feature-content">
+        {% if section.settings.feature1_title != blank %}
+          <h3>{{ section.settings.feature1_title }}</h3>
+        {% endif %}
+        {% if section.settings.feature1_description != blank %}
+          <p>{{ section.settings.feature1_description }}</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="wine-feature">
+      <div class="wine-feature-icon">
+        {% if section.settings.feature2_icon != blank or section.settings.feature2_icon_mobile != blank %}
+          <picture>
+            {% if section.settings.feature2_icon_mobile != blank %}
+              <source media="(max-width: 768px)" srcset="{{ section.settings.feature2_icon_mobile | image_url: width: 100 }}">
+            {% endif %}
+            {% if section.settings.feature2_icon != blank %}
+              <img src="{{ section.settings.feature2_icon | image_url: width: 100 }}" alt="Feature 2 Icon">
+            {% endif %}
+          </picture>
+        {% endif %}
+      </div>
+      <div class="wine-feature-content">
+        {% if section.settings.feature2_title != blank %}
+          <h3>{{ section.settings.feature2_title }}</h3>
+        {% endif %}
+        {% if section.settings.feature2_description != blank %}
+          <p>{{ section.settings.feature2_description }}</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Wine Refined Pour Hero",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero Background Image (Desktop)"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image_mobile",
+      "label": "Hero Background Image (Mobile)"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "A Refined Pour For Every Occasion"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Crafted from exceptional single origin teas and delicately sparkling, Saicho brings depth, balance and graceful complexity to every occasion. An elegant alcohol-free pour, made to be savoured."
+    },
+    {
+      "type": "textarea",
+      "id": "description_mobile",
+      "label": "Description - Mobile (optional)",
+      "info": "Leave blank to use the description above on mobile too."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Explore The Range"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "text",
+      "id": "title_font_family",
+      "label": "Title font family (optional)",
+      "placeholder": "e.g., Arial, sans-serif"
+    },
+    {
+      "type": "select",
+      "id": "title_font_weight",
+      "label": "Title font weight",
+      "options": [
+        { "value": "300", "label": "Light (300)" },
+        { "value": "400", "label": "Regular (400)" },
+        { "value": "500", "label": "Medium (500)" },
+        { "value": "600", "label": "Semi-bold (600)" },
+        { "value": "700", "label": "Bold (700)" },
+        { "value": "800", "label": "Extra bold (800)" },
+        { "value": "900", "label": "Black (900)" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "label": "Title font size - Desktop (px)",
+      "min": 24,
+      "max": 100,
+      "step": 1,
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "title_font_size_mobile",
+      "label": "Title font size - Mobile (px)",
+      "min": 18,
+      "max": 50,
+      "step": 1,
+      "default": 30
+    },
+    {
+      "type": "text",
+      "id": "description_font_family",
+      "label": "Description font family (optional)",
+      "placeholder": "e.g., Arial, sans-serif"
+    },
+    {
+      "type": "select",
+      "id": "description_font_weight",
+      "label": "Description font weight",
+      "options": [
+        { "value": "300", "label": "Light (300)" },
+        { "value": "400", "label": "Regular (400)" },
+        { "value": "500", "label": "Medium (500)" },
+        { "value": "600", "label": "Semi-bold (600)" },
+        { "value": "700", "label": "Bold (700)" },
+        { "value": "800", "label": "Extra bold (800)" },
+        { "value": "900", "label": "Black (900)" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "description_font_size",
+      "label": "Description font size - Desktop (px)",
+      "min": 12,
+      "max": 32,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "description_font_size_mobile",
+      "label": "Description font size - Mobile (px)",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "default": 18
+    },
+    {
+      "type": "text",
+      "id": "title_line_height",
+      "label": "Title line height (optional)",
+      "placeholder": "e.g., 1.15, 1.2, 1.5"
+    },
+    {
+      "type": "text",
+      "id": "title_letter_spacing",
+      "label": "Title letter spacing (optional)",
+      "placeholder": "e.g., -0.01em, 0.05em, 2px"
+    },
+    {
+      "type": "text",
+      "id": "description_line_height",
+      "label": "Description line height (optional)",
+      "placeholder": "e.g., 1.8, 1.6, 2"
+    },
+    {
+      "type": "text",
+      "id": "description_letter_spacing",
+      "label": "Description letter spacing (optional)",
+      "placeholder": "e.g., inherit, 0.05em, 1px"
+    },
+    {
+      "type": "header",
+      "content": "Feature Title & Description Styling"
+    },
+    {
+      "type": "range",
+      "id": "feature_title_font_size",
+      "label": "Feature title font size (px)",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "default": 13
+    },
+    {
+      "type": "text",
+      "id": "feature_title_font_family",
+      "label": "Feature title font family (optional)",
+      "placeholder": "e.g., Arial, sans-serif"
+    },
+    {
+      "type": "select",
+      "id": "feature_title_font_weight",
+      "label": "Feature title font weight",
+      "options": [
+        { "value": "300", "label": "Light (300)" },
+        { "value": "400", "label": "Regular (400)" },
+        { "value": "500", "label": "Medium (500)" },
+        { "value": "600", "label": "Semi-bold (600)" },
+        { "value": "700", "label": "Bold (700)" },
+        { "value": "800", "label": "Extra bold (800)" },
+        { "value": "900", "label": "Black (900)" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "feature_description_font_size",
+      "label": "Feature description font size (px)",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "default": 13
+    },
+    {
+      "type": "text",
+      "id": "feature_description_font_family",
+      "label": "Feature description font family (optional)",
+      "placeholder": "e.g., Arial, sans-serif"
+    },
+    {
+      "type": "select",
+      "id": "feature_description_font_weight",
+      "label": "Feature description font weight",
+      "options": [
+        { "value": "300", "label": "Light (300)" },
+        { "value": "400", "label": "Regular (400)" },
+        { "value": "500", "label": "Medium (500)" },
+        { "value": "600", "label": "Semi-bold (600)" },
+        { "value": "700", "label": "Bold (700)" },
+        { "value": "800", "label": "Extra bold (800)" },
+        { "value": "900", "label": "Black (900)" }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "feature_title_line_height",
+      "label": "Feature title line height (optional)",
+      "placeholder": "e.g., 1.2, 1.5, 2"
+    },
+    {
+      "type": "text",
+      "id": "feature_title_letter_spacing",
+      "label": "Feature title letter spacing (optional)",
+      "placeholder": "e.g., 0.1em, 0.15em, 2px"
+    },
+    {
+      "type": "text",
+      "id": "feature_description_line_height",
+      "label": "Feature description line height (optional)",
+      "placeholder": "e.g., 1.5, 1.7, 2"
+    },
+    {
+      "type": "text",
+      "id": "feature_description_letter_spacing",
+      "label": "Feature description letter spacing (optional)",
+      "placeholder": "e.g., 0, 0.05em, 1px"
+    },
+    {
+      "type": "header",
+      "content": "Feature 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "feature1_icon",
+      "label": "Icon image (SVG, PNG, JPG)"
+    },
+    {
+      "type": "image_picker",
+      "id": "feature1_icon_mobile",
+      "label": "Icon image - Mobile (SVG, PNG, JPG)"
+    },
+    {
+      "type": "text",
+      "id": "feature1_title",
+      "label": "Feature Title",
+      "default": "Distinctive by Origin"
+    },
+    {
+      "type": "textarea",
+      "id": "feature1_description",
+      "label": "Feature Description",
+      "default": "Each tea is carefully selected for its individual character, then cold-brewed to reveal expressive aromas, elegant structure and a beautifully balanced finish."
+    },
+    {
+      "type": "header",
+      "content": "Feature 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "feature2_icon",
+      "label": "Icon image (SVG, PNG, JPG)"
+    },
+    {
+      "type": "image_picker",
+      "id": "feature2_icon_mobile",
+      "label": "Icon image - Mobile (SVG, PNG, JPG)"
+    },
+    {
+      "type": "text",
+      "id": "feature2_title",
+      "label": "Feature Title",
+      "default": "Crafted with Intention"
+    },
+    {
+      "type": "textarea",
+      "id": "feature2_description",
+      "label": "Feature Description",
+      "default": "Pure ingredients, patient infusion and gentle carbonation create a sophisticated drinking experience that is effortless, expressive and entirely alcohol-free."
+    },
+    {
+      "type": "header",
+      "content": "Colors — Desktop"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_bg",
+      "label": "Button Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#2d2d44"
+    },
+    {
+      "type": "header",
+      "content": "Colors — Mobile"
+    },
+    {
+      "type": "color",
+      "id": "heading_color_mobile",
+      "label": "Heading Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color_mobile",
+      "label": "Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "text",
+      "id": "border_radius",
+      "label": "Border Radius - Desktop",
+      "default": "50px",
+      "placeholder": "50px or 0px 50px 50px 0px"
+    },
+    {
+      "type": "text",
+      "id": "border_radius_mobile",
+      "label": "Border Radius - Mobile",
+      "default": "30px",
+      "placeholder": "30px or 0px 50px 50px 0px"
+    },
+    {
+      "type": "range",
+      "id": "min_height",
+      "label": "Hero Height - Desktop (px)",
+      "min": 300,
+      "max": 800,
+      "step": 50,
+      "default": 600,
+      "info": "Only used when no desktop image is set. Otherwise the desktop image's aspect ratio sets the height."
+    },
+    {
+      "type": "range",
+      "id": "min_height_mobile",
+      "label": "Hero Height - Mobile (px)",
+      "min": 300,
+      "max": 600,
+      "step": 50,
+      "default": 400
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Image Overlay Opacity (%)",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "overlay_darkness_mobile",
+      "label": "Image Overlay - Mobile (%)",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 95,
+      "info": "Dark gradient behind the heading on mobile: this darkness at the top, fading out lower down."
+    },
+    {
+      "type": "range",
+      "id": "features_overlay_opacity",
+      "label": "Features Band Overlay Opacity - Desktop (%)",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 0,
+      "info": "Grey band behind the two features. Keep at 0 when the desktop image already includes the band."
+    },
+    {
+      "type": "range",
+      "id": "padding",
+      "label": "Content Padding (px)",
+      "min": 20,
+      "max": 100,
+      "step": 10,
+      "default": 60
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top - Desktop (px)",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom - Desktop (px)",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top - Mobile (px)",
+      "min": 0,
+      "max": 60,
+      "step": 5,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom - Mobile (px)",
+      "min": 0,
+      "max": 60,
+      "step": 5,
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wine Refined Pour Hero"
+    }
+  ]
+}
+{% endschema %}

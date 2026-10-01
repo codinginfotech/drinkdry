@@ -1413,6 +1413,200 @@ body.template-page-brand .footer .link, body.template-page-brand .footer .copyri
 body.template-page-brand .footer  .newsletter-form .field__input, body.template-page-brand .footer  .newsletter-form .field__input::placeholder, body.template-page-brand .footer .newsletter-form .typeset{
   color:#fff;
 }
+/* Saicho brand page footer (Figma: Saicho Brand Page Desktop) */
+body.template-page-win-brand .footer {
+  background-color: #0B2644;
+  border-top: 0;
+}
+body.template-page-win-brand .footer .accordion__title, body.template-page-win-brand .footer .link.list-social__link{
+  color:#B09C59;
+}
+body.template-page-win-brand .footer .accordion__title {
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+}
+body.template-page-win-brand .footer .link, body.template-page-win-brand .footer .copyright__content, body.template-page-win-brand .footer .copyright__content a, body.template-page-win-brand .footer .newsletter-form .field__button .icon{
+  color:#FFFEF7;
+}
+body.template-page-win-brand .footer  .newsletter-form .field__input, body.template-page-win-brand .footer  .newsletter-form .field__input::placeholder, body.template-page-win-brand .footer .newsletter-form .typeset{
+  color:#FFFEF7;
+}
+body.template-page-win-brand .footer .list-menu__item--link,
+body.template-page-win-brand .footer .newsletter-form .field__input,
+body.template-page-win-brand .footer .newsletter-form .typeset,
+body.template-page-win-brand .footer localization-form .localization-selector {
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 1.3;
+  letter-spacing: 0;
+}
+body.template-page-win-brand .footer .copyright__content {
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 1.6;
+}
+body.template-page-win-brand .footer summary .icon {
+  color: #B09C59;
+}
+body.template-page-win-brand .footer .accordion {
+  border-color: rgba(255, 254, 247, 0.2);
+}
+body.template-page-win-brand .footer .newsletter-form .field__input,
+body.template-page-win-brand .footer .newsletter-form .field:hover .field__input,
+body.template-page-win-brand .footer .newsletter-form .field__input:focus,
+body.template-page-win-brand .footer .newsletter-form .field__input:focus-visible {
+  border-bottom-color: #FFFEF7;
+}
+body.template-page-win-brand .footer .link.list-social__link {
+  color: #B09C59;
+  border-color: rgba(255, 254, 247, 0.6);
+}
+body.template-page-win-brand .footer .list-social__link::after {
+  border-radius: 7px;
+  background-color: #B09C59;
+}
+@media screen and (hover: hover) {
+  body.template-page-win-brand .footer .link.list-social__link:hover {
+    color: #0B2644;
+  }
+}
+body.template-page-win-brand .footer__follow-on-shop {
+  display: none;
+}
+body.template-page-win-brand .footer-logo-section .logo-box {
+  position: relative;
+  background-image: none;
+}
+/* Decorative dot ring at 40%, logo at 50% (cream on navy) */
+body.template-page-win-brand .footer-logo-section .logo-box::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('https://cdn.shopify.com/s/files/1/0500/1664/9366/files/Group_6_1.png?v=1758051222') center / contain no-repeat;
+  opacity: 0.4;
+  pointer-events: none;
+}
+body.template-page-win-brand .footer-logo-section .logo-box img{
+  position: relative;
+  width: 201px;
+  height: auto;
+  filter: brightness(0) invert(1);
+  opacity: 0.5;
+}
+body.template-page-win-brand .footer__localization {
+  justify-content: flex-start;
+  margin: 21px 0 0;
+  font-size: 13px;
+}
+body.template-page-win-brand .footer__localization .localization-form {
+  padding: 0;
+}
+body.template-page-win-brand .footer__localization .localization-form__select {
+  margin: 0;
+  padding: 0;
+}
+body.template-page-win-brand .footer__localization .localization-form__select .icon {
+  display: none;
+}
+body.template-page-win-brand .footer__copyright {
+  margin-top: 6px;
+}
+body.template-page-win-brand .footer__content-bottom {
+  padding-bottom: 0;
+}
+@media screen and (max-width: 989px) {
+  body.template-page-win-brand .footer__localization {
+    justify-content: center;
+  }
+}
+@media screen and (min-width: 990px) {
+  body.template-page-win-brand .footer__content-top {
+    max-width: 1440px;
+    padding: 50px;
+  }
+  body.template-page-win-brand .footer__content-top > .grid {
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    column-gap: 20px;
+  }
+  body.template-page-win-brand .footer__content-top .footer-logo-section {
+    flex: 0 0 387px;
+    width: 387px;
+    max-width: 387px;
+    height: 386px;
+    margin-right: auto;
+    padding: 0;
+  }
+  body.template-page-win-brand .footer-logo-section .logo-box {
+    height: 100%;
+    max-height: none;
+  }
+  /* 318px-tall link group, vertically centred against the 386px logo ring */
+  body.template-page-win-brand .footer__content-top .double_menu,
+  body.template-page-win-brand .footer__content-top > .grid > .footer-block--menu,
+  body.template-page-win-brand .footer__content-top .footer__content-right {
+    flex: 0 0 226px;
+    width: 226px;
+    max-width: 226px;
+    margin-top: 34px;
+    padding: 0;
+  }
+  body.template-page-win-brand .footer__content-top .footer__content-right {
+    flex-basis: 319px;
+    width: 319px;
+    max-width: 319px;
+  }
+  body.template-page-win-brand .footer .double_menu footer-accordion:last-child {
+    margin-top: 14px;
+  }
+  body.template-page-win-brand .footer details[open] summary {
+    padding: 5px 0 3px;
+    margin-bottom: 14px;
+  }
+  body.template-page-win-brand .footer .footer-block__details-content.list-unstyled {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  body.template-page-win-brand .footer__content-right .grid {
+    gap: 0;
+  }
+  body.template-page-win-brand .footer .footer-block--newsletter {
+    margin-top: 0;
+  }
+  body.template-page-win-brand .footer .footer-block--newsletter details[open] summary {
+    margin-bottom: 8px;
+  }
+  body.template-page-win-brand .footer .newsletter-form .typeset {
+    margin-top: 14px;
+  }
+  body.template-page-win-brand .footer__content-right .social-box {
+    margin: 42px 0 0;
+  }
+  body.template-page-win-brand .footer__content-right .social-box .accordion__title:empty {
+    display: none;
+  }
+}
+
+/* Saicho page: page-only versions of global tweaks it was designed with */
+@media screen and (min-width: 990px) {
+  body.template-page-win-brand .grid--rigid.grid--4-col-desktop .grid__item {
+    max-width: calc(27% - var(--grid-horizontal-spacing) * 3 / 4);
+  }
+}
+body.template-page-win-brand .flickity-prev-next-button .flickity-button-icon {
+  left: 28%;
+  top: 31%;
+  width: 41%;
+  height: 38%;
+}
+@media screen and (hover: hover) {
+  body.template-page-win-brand .card-information__text {
+    background-image: none;
+  }
+}
 
 @media screen and (min-width: 990px) {
   .media--cropped {

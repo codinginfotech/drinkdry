@@ -10,15 +10,726 @@
 {
   "sections": {
     "main": {
-      "type": "main-page-corona",
+      "type": "main-page",
+      "disabled": true,
       "settings": {
         "narrow": true,
         "padding_top": 60,
         "padding_bottom": 72
       }
+    },
+    "wine_brand_hero_Mkb7Kg": {
+      "type": "wine-brand-hero",
+      "name": "Wine Brand Hero",
+      "settings": {
+        "bg_image": "shopify://shop_images/Mask_group_9db2576a-0a98-43a6-80e3-d8ad7bbfe77f.png",
+        "bg_image_mobile": "shopify://shop_images/Group_2131328527_35c461a9-f18f-4832-bc8c-fff6a46643dc.png",
+        "bg_position": "center center",
+        "bg_color": "#1a1a2e",
+        "overlay_color": "#000000",
+        "overlay_opacity": 45,
+        "overlay_opacity_mobile": 55,
+        "min_height": 600,
+        "min_height_mobile": 500,
+        "brand_logo": "shopify://shop_images/image_1.png",
+        "brand_name": "",
+        "logo_height": 118,
+        "logo_positioning": "static",
+        "logo_content_gap": 55,
+        "logo_content_gap_mobile": 30,
+        "logo_text_alignment": "center",
+        "logo_text_alignment_mobile": "center",
+        "content_position": "middle-left",
+        "content_position_mobile": "top-center",
+        "edge_padding_x": 60,
+        "edge_padding_y": 56,
+        "content_max_width": 610,
+        "content_text_alignment": "center",
+        "font_family": "FontspringDEMOspanregular",
+        "line_height": "1.2",
+        "letter_spacing": "",
+        "heading_line1": "THE WORLD’S FINEST<br>SPARKLING TEA",
+        "heading_color_1": "#ffffff",
+        "heading_line2": "",
+        "heading_color_2": "#ffffff",
+        "heading_size": 35,
+        "heading_size_mobile": 25,
+        "heading_font_family": "FontspringDEMOspanregular",
+        "heading_letter_spacing": "25%",
+        "heading_line_height": "113%",
+        "description": "Celebration, redefined",
+        "description_color": "#ffffff",
+        "description_size": 24,
+        "description_size_mobile": 17,
+        "description_font_family": "FontspringDEMOspanregular",
+        "description_letter_spacing": "inherit",
+        "button_text": "",
+        "button_link": "",
+        "button_bg_color": "#b8860b",
+        "button_text_color": "#ffffff"
+      }
+    },
+    "wine_features_bar_j4dyVd": {
+      "type": "wine-features-bar",
+      "name": "Wine Features Bar",
+      "settings": {
+        "bg_color": "#b09c59",
+        "left_image": "shopify://shop_images/image_4_387ca5e5-d63a-4ff9-ae94-53d2b5236d45.svg",
+        "left_image_width": 400,
+        "right_image": "shopify://shop_images/image_2_b564b901-34f5-4e6e-97c6-e16696d5f732.svg",
+        "right_image_width": 150,
+        "right_image_offset": 0,
+        "right_image_position_mobile": "center",
+        "left_image_width_mobile": 250,
+        "right_image_width_mobile": 100,
+        "padding_top": 10,
+        "padding_bottom": 10,
+        "padding_x": 20,
+        "gap": 30,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20,
+        "padding_x_mobile": 0,
+        "gap_mobile": 15
+      }
+    },
+    "featured_collection_eRjG3m": {
+      "type": "saicho-featured-collection",
+      "custom_css": [
+        ".card__badge span {border-radius: 12px 100px 100px 100px !important;}",
+        ".price bdi {font-weight: 700;}",
+        ".section--padding .slider-mobile-gutter .view-all {background-color: transparent !important;}"
+      ],
+      "name": "t:sections.featured-collection.presets.name",
+      "settings": {
+        "collection": "saicho",
+        "products_to_show": 12,
+        "horizontal_scroll": true,
+        "show_view_all": true,
+        "view_all_text": "more products",
+        "show_divider": false,
+        "enable_drag": false,
+        "heading": "Saicho Collection",
+        "heading_size": "h1",
+        "heading_alignment": "center",
+        "heading_color": "#575756",
+        "heading_font_family": "FontspringDEMOspanregular",
+        "heading_font_weight": 400,
+        "card_text_font_family": "",
+        "heading_tag": "h2",
+        "columns_mobile": "2",
+        "columns_desktop": "4",
+        "swipe_on_mobile": true,
+        "image_ratio": "adapt",
+        "image_position": "center center",
+        "enable_image_fill": false,
+        "show_secondary_image": false,
+        "secondary_image_max": 1,
+        "show_vendor": false,
+        "show_rating": false,
+        "show_quick_buy": true,
+        "enable_quick_view": false,
+        "enable_color_swatches": false,
+        "enable_countdown": false,
+        "colors_highlight": "#b09c59",
+        "card_text_color": "#242020",
+        "card_price_color": "#242020",
+        "card_sales_price_color": "#000000",
+        "card_compare_price_color": "#b09c59",
+        "vendor_font_weight": "600",
+        "card_bg_color": "#ffffff",
+        "card_badge_text_color": "#ffffff",
+        "card_badge_bg_color": "#b09c59",
+        "badge_border_radius": "0px 50px 0px 50px",
+        "viewall_bg_color": "rgba(0,0,0,0)",
+        "viewall_text_color": "#c2a384",
+        "atc_button_bg": "#b09c59",
+        "atc_button_text": "#ffffff",
+        "atc_button_border_radius": "30px",
+        "show_arrows_desktop": true,
+        "show_arrows_mobile": false,
+        "show_dots_desktop": true,
+        "show_dots_mobile": true,
+        "show_progress_desktop": false,
+        "show_progress_mobile": true,
+        "arrow_bg_color": "#b09c59",
+        "arrow_icon_color": "#ffffff",
+        "padding_top": 72,
+        "padding_bottom": 36,
+        "padding_top_mobile": 30,
+        "padding_bottom_mobile": 30,
+        "enable_highlight": false,
+        "highlight_style": "marker"
+      }
+    },
+    "wine_refined_pour_hero_4nJ3n4": {
+      "type": "wine-refined-pour-hero",
+      "name": "Wine Refined Pour Hero",
+      "settings": {
+        "hero_image": "shopify://shop_images/Mask_group_1_11b44f83-7c4f-4ffd-93fd-2d88f7fa4d5e.png",
+        "hero_image_mobile": "shopify://shop_images/tube-and-paper-box-mockups-on-glass-block-front-view_1_9de46719-f23e-4858-8af8-5aee71410d1e.png",
+        "title": "A Refined Pour For Every Occasion",
+        "description": "Crafted from exceptional single origin teas and delicately sparkling, Saicho brings depth, balance and graceful complexity to every occasion.",
+        "description_mobile": "Crafted from exceptional single origin teas and delicately sparkling, Saicho brings depth, balance and graceful complexity to every occasion. An elegant alcohol-free pour, made to be savoured.",
+        "button_text": "Explore The Range",
+        "button_link": "#",
+        "title_font_family": "FontspringDEMOspanregular",
+        "title_font_weight": "400",
+        "title_font_size": 50,
+        "title_font_size_mobile": 26,
+        "description_font_family": "FontspringDEMOspanregular",
+        "description_font_weight": "400",
+        "description_font_size": 18,
+        "description_font_size_mobile": 14,
+        "title_line_height": "100%",
+        "title_letter_spacing": "0",
+        "description_line_height": "130%",
+        "description_letter_spacing": "0",
+        "feature_title_font_size": 20,
+        "feature_title_font_family": "",
+        "feature_title_font_weight": "700",
+        "feature_description_font_size": 18,
+        "feature_description_font_family": "",
+        "feature_description_font_weight": "400",
+        "feature_title_line_height": "100%",
+        "feature_title_letter_spacing": "4%",
+        "feature_description_line_height": "130%",
+        "feature_description_letter_spacing": "0",
+        "feature1_icon": "shopify://shop_images/Vector.svg",
+        "feature1_icon_mobile": "shopify://shop_images/Vector_1.svg",
+        "feature1_title": "Distinctive by Origin",
+        "feature1_description": "Each tea is carefully selected for its individual character, then cold-brewed to reveal expressive aromas, elegant structure and a beautifully balanced finish.",
+        "feature2_icon": "shopify://shop_images/leaves2-01_1.png",
+        "feature2_icon_mobile": "shopify://shop_images/leaves2-02_1.png",
+        "feature2_title": "Crafted with Intention",
+        "feature2_description": "Pure ingredients, patient infusion and gentle carbonation create a sophisticated drinking experience that is effortless, expressive and entirely alcohol-free.",
+        "heading_color": "#ffffff",
+        "text_color": "#ffffff",
+        "button_bg": "#ffffff",
+        "button_text_color": "#b09c59",
+        "heading_color_mobile": "#b09c59",
+        "text_color_mobile": "#575756",
+        "bg_color": "#fffef7",
+        "border_radius": "50px",
+        "border_radius_mobile": "0",
+        "min_height": 800,
+        "min_height_mobile": 450,
+        "overlay_opacity": 0,
+        "overlay_darkness_mobile": 95,
+        "features_overlay_opacity": 0,
+        "padding": 100,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_mobile": 60,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "refined_pour_8E6nFG": {
+      "type": "refined-pour",
+      "blocks": {
+        "pour_w6Ader": {
+          "type": "pour",
+          "settings": {
+            "collection": "",
+            "custom_image": "shopify://shop_images/img-01_1.png",
+            "custom_name": "JASMINE",
+            "description": ""
+          }
+        },
+        "pour_yEn7p9": {
+          "type": "pour",
+          "settings": {
+            "collection": "",
+            "custom_image": "shopify://shop_images/img-02_1.png",
+            "custom_name": "HOJICHA",
+            "description": ""
+          }
+        },
+        "pour_FJhWph": {
+          "type": "pour",
+          "settings": {
+            "collection": "",
+            "custom_image": "shopify://shop_images/img-03_1.png",
+            "custom_name": "DARJEELING",
+            "description": ""
+          }
+        },
+        "pour_dMtiFD": {
+          "type": "pour",
+          "settings": {
+            "collection": "",
+            "custom_image": "shopify://shop_images/img-04_1.png",
+            "custom_name": "OSMANTHUS",
+            "description": ""
+          }
+        }
+      },
+      "block_order": [
+        "pour_w6Ader",
+        "pour_yEn7p9",
+        "pour_FJhWph",
+        "pour_dMtiFD"
+      ],
+      "name": "A Refined Pour",
+      "settings": {
+        "title": "Expressions",
+        "columns_to_show": 4,
+        "columns_tablet": 3,
+        "columns_mobile": 1,
+        "swipe_on_mobile": true,
+        "gap": 40,
+        "image_width": 400,
+        "bg_color": "#ffffff",
+        "heading_color": "#575756",
+        "text_color": "#b8941f",
+        "label_font_size": 25,
+        "title_font_family": "FontspringDEMOspanregular",
+        "label_font_family": "FontspringDEMOspanregular",
+        "description_font_family": "FontspringDEMOspanregular",
+        "title_font_size": 50,
+        "title_font_weight": "400",
+        "title_line_height": "100%",
+        "title_letter_spacing": "0",
+        "title_color": "#575756",
+        "label_font_weight": "600",
+        "label_line_height": "100%",
+        "label_letter_spacing": "0",
+        "label_color": "#b09c59",
+        "description_font_size": 14,
+        "description_font_weight": "600",
+        "description_line_height": "",
+        "description_letter_spacing": "",
+        "description_color": "",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "featured_recipes_slider_kEmyrL": {
+      "type": "featured-recipes-slider",
+      "blocks": {
+        "recipe_4E9Lnx": {
+          "type": "recipe",
+          "settings": {
+            "recipe_image": "shopify://shop_images/Frame_2131330216_1.jpg",
+            "title": "Discovery Collection",
+            "subtitle": "",
+            "description": "Elegant sparkling teas for refined dining, celebrations, afternoon tea, and everyday enjoyment.",
+            "time": "",
+            "button_url": "#"
+          }
+        },
+        "recipe_yPQrWF": {
+          "type": "recipe",
+          "settings": {
+            "recipe_image": "shopify://shop_images/Frame_2131330216_2.jpg",
+            "title": "Saicho Mini Collection",
+            "subtitle": "",
+            "description": "Sophisticated sparkling tea collection perfect for celebrations, dining, and gifting occasions.",
+            "time": "",
+            "button_url": "#"
+          }
+        },
+        "recipe_PdExb3": {
+          "type": "recipe",
+          "settings": {
+            "title": "Classic Bellini",
+            "subtitle": "",
+            "description": "A bright, peach mocktail with a crisp, sparkling finish.",
+            "time": "Total time: 5 minutes",
+            "button_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "recipe_4E9Lnx",
+        "recipe_yPQrWF",
+        "recipe_PdExb3"
+      ],
+      "name": "Featured Recipes Slider",
+      "settings": {
+        "bg_color": "#fffef7",
+        "txt_color": "#575756",
+        "section_image": "shopify://shop_images/Screenshot_2025-08-27_at_18.08.37_1.jpg",
+        "section_image_width_desktop": 50,
+        "section_image_width_mobile": 100,
+        "heading": "Collections",
+        "heading_color": "#b09c59",
+        "heading_size": "h1",
+        "heading_tag": "h2",
+        "arrow_bg_color": "#b09c59",
+        "arrow_icon_color": "#ffffff",
+        "arrow_bg_color_mobile": "#fffef7",
+        "arrow_icon_color_mobile": "#b09c59",
+        "card_heading_size": 25,
+        "card_heading_color": "#575756",
+        "card_description_size": 18,
+        "card_description_color": "#575756",
+        "card_heading_font_family": "FontspringDEMOspanregular",
+        "card_heading_font_weight": "600",
+        "card_heading_line_height": "114.99%",
+        "card_heading_letter_spacing": "0",
+        "card_description_font_family": "",
+        "card_description_font_weight": "500",
+        "card_description_line_height": "120%",
+        "card_description_letter_spacing": "0",
+        "heading_font_family": "FontspringDEMOspanregular",
+        "heading_font_size": 50,
+        "heading_font_weight": "400",
+        "heading_line_height": "80%",
+        "heading_letter_spacing": "0",
+        "read_more_text": "Shop Now",
+        "read_more_color": "#c2a384",
+        "read_more_size": 12,
+        "read_more_alignment": "center",
+        "read_more_decoration": "underline",
+        "show_time": false,
+        "show_time_icon": false,
+        "show_time_text": false,
+        "view_all_label": "VIEW ALL RECIPES",
+        "view_all_url": "",
+        "view_all_color": "#b09c59",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "padding_top_mobile": 27,
+        "padding_bottom_mobile": 27
+      }
+    },
+    "image_carousel_brand_N6HC3T": {
+      "type": "saicho-image-carousel-brand",
+      "blocks": {
+        "slide_bdFAcT": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/f227b5d1d8c4954225d8b42878b1e563074baa89.jpg",
+            "caption": ""
+          }
+        },
+        "slide_tp34zP": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Vintense_Mocktails_20250422_29_1.png",
+            "caption": "Four elegant Saicho sparkling tea bottles, showcasing Osmanthus, Darjeeling, Jasmine, and Hojicha varieties."
+          }
+        },
+        "slide_kN4ELf": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/384dbfa7decb5a6accf5746d7704d56783e50935.jpg",
+            "caption": ""
+          }
+        },
+        "slide_e7QE6T": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/3c212b1b3ee7313b1d0f6a388bae890bb25cbed8.jpg",
+            "caption": ""
+          }
+        },
+        "slide_bDxdaA": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/0bdedb8627b753228c4d9fabc545440d8b3ec355.jpg",
+            "caption": ""
+          }
+        }
+      },
+      "block_order": [
+        "slide_bdFAcT",
+        "slide_tp34zP",
+        "slide_kN4ELf",
+        "slide_e7QE6T",
+        "slide_bDxdaA"
+      ],
+      "custom_css": [
+        ".brand-carousel__header {max-width: 100%;}",
+        ".brand-carousel__heading {margin-bottom: 53px;}",
+        ".brand-carousel__heading {text-transform: none; font-weight: normal;}",
+        ".slider-3d-box {padding-top: 105px;}"
+      ],
+      "name": "Image Carousel - Brand",
+      "settings": {
+        "heading": "Celebrate Every <span>Occasion</span> With",
+        "heading_size": "h1",
+        "heading_font_size": 40,
+        "heading_font_size_mobile": 28,
+        "heading_font_weight": 400,
+        "heading_highlight_color": "#b09c59",
+        "heading_font_family": "FontspringDEMOspanregular",
+        "heading_line_height": "100%",
+        "heading_letter_spacing": "0",
+        "subheading": "",
+        "subheading_size": "h4",
+        "subheading_font_size": 28,
+        "subheading_font_size_mobile": 18,
+        "subheading_font_family": "",
+        "subheading_font_weight": "300",
+        "subheading_line_height": "",
+        "subheading_letter_spacing": "",
+        "logo_image": "shopify://shop_images/image_5.svg",
+        "logo_width": 220,
+        "decor_width": 280,
+        "decor_width_mobile": 140,
+        "decor_opacity": 100,
+        "slide_radius": 12,
+        "coverflow_stretch": 100,
+        "coverflow_depth": 150,
+        "autoplay": false,
+        "autoplay_speed": 5,
+        "caption_font_size": 14,
+        "caption_font_family": "",
+        "caption_font_weight": "400",
+        "caption_line_height": "130%",
+        "caption_letter_spacing": "0",
+        "bg_color": "#fffef7",
+        "bg_image_position": "center center",
+        "overlay_color": "rgba(0,0,0,0)",
+        "heading_color": "#575756",
+        "subheading_color": "#4daad8",
+        "caption_bg_color": "#b09c59",
+        "caption_text_color": "#ffffff",
+        "arrow_bg_color": "#b09c59",
+        "arrow_icon_color": "#ffffff",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20,
+        "compact_mobile": true
+      }
+    },
+    "featured_collaborations_main": {
+      "type": "featured-collaborations",
+      "blocks": {
+        "collab_4": {
+          "type": "collaboration",
+          "settings": {
+            "image": "shopify://shop_images/Screenshot_2026-03-26_at_12.22.31_1.png",
+            "title": "",
+            "button_label": "Kinoya",
+            "button_link": ""
+          }
+        },
+        "collab_5": {
+          "type": "collaboration",
+          "settings": {
+            "image": "shopify://shop_images/anantara_the_palm_exterior_desktop_banner_new_1920x1080_1_9810aa71-b5b0-4b3f-b0a8-c6d43c919d26.png",
+            "title": "",
+            "button_label": "TakaHisa",
+            "button_link": ""
+          }
+        },
+        "collab_6": {
+          "type": "collaboration",
+          "settings": {
+            "image": "shopify://shop_images/sofitel-dubai-the-palm_1_c3effce0-2726-41d6-8b31-d301430c00b7.png",
+            "title": "",
+            "button_label": "Tresind Studio",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "collab_4",
+        "collab_5",
+        "collab_6"
+      ],
+      "name": "Featured Collaborations",
+      "settings": {
+        "logo": "shopify://shop_images/image_5.svg",
+        "logo_width": 150,
+        "heading": "Featured Collaborations",
+        "subheading": "Discover our partnerships with acclaimed chefs and sommeliers who have created bespoke pairings with Saicho.",
+        "heading_alignment": "center",
+        "heading_size": 40,
+        "heading_size_mobile": 28,
+        "heading_color": "#575756",
+        "subheading_color": "#575756",
+        "heading_font_family": "FontspringDEMOspanregular",
+        "heading_font_weight": "400",
+        "heading_line_height": "100%",
+        "heading_letter_spacing": "0",
+        "subheading_font_family": "",
+        "subheading_font_weight": "400",
+        "subheading_line_height": "130%",
+        "subheading_letter_spacing": "0",
+        "caption_color": "#333333",
+        "caption_font_size": 14,
+        "caption_font_family": "",
+        "caption_font_weight": "400",
+        "caption_line_height": "",
+        "caption_letter_spacing": "",
+        "button_bg_color": "#b09c59",
+        "button_text_color": "#ffffff",
+        "enable_carousel": false,
+        "carousel_on_desktop": false,
+        "carousel_on_mobile": true,
+        "button_position": "bottom-left",
+        "bg_color": "#FFFEF7",
+        "columns_desktop": 3,
+        "columns_mobile": 2,
+        "gap_size": 20,
+        "gap_size_mobile": 12,
+        "border_radius": 8,
+        "enable_border": false,
+        "border_color": "rgba(0,0,0,0)",
+        "border_width": 2,
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
+      }
+    },
+    "brands_multicolumn_BmWpDK": {
+      "type": "saicho-brands-multicolumn",
+      "blocks": {
+        "text_qTT9iR": {
+          "type": "text",
+          "settings": {
+            "background_color": "rgba(0,0,0,0)",
+            "heading_color": "#575756",
+            "text_color": "#575756",
+            "image": "shopify://shop_images/fleur-kaan-w4Dj3MshHQ0-unsplash_jpg_2debd774-05d8-4f29-bbbf-b6793a9e0d6d.png",
+            "title": "Amelia",
+            "role": "",
+            "title_size": "h3",
+            "text": "<p>“Saicho feels refined yet effortless, with delicate tea flavours and fine bubbles perfect for dinners, celebrations, or elevating any afternoon.”</p>",
+            "border_width": 1,
+            "border_color": "#b09c59",
+            "content_alignment": "flex-start",
+            "heading_font_family": "FontspringDEMOspanregular",
+            "heading_font_weight": "400",
+            "heading_font_style": "normal",
+            "heading_line_height": "120%",
+            "heading_letter_spacing": "0",
+            "text_font_family": "",
+            "text_font_weight": "400",
+            "text_font_style": "normal",
+            "text_line_height": "130%",
+            "text_letter_spacing": "0"
+          }
+        },
+        "image_ze6E4Q": {
+          "type": "image",
+          "settings": {
+            "background_color": "#f2f2f2",
+            "heading_color": "#000000",
+            "image": "shopify://shop_images/Container_58e8628f-02f1-47f0-aca9-f640d76fa3da.png",
+            "title": "",
+            "url_link": "",
+            "border_width": 0,
+            "border_color": "#cccccc",
+            "heading_font_family": "",
+            "heading_font_weight": "300",
+            "heading_line_height": "",
+            "heading_letter_spacing": ""
+          }
+        },
+        "number_z9c3db": {
+          "type": "number",
+          "settings": {
+            "background_color": "rgba(0,0,0,0)",
+            "text_color": "#333333",
+            "title": "",
+            "number1": "2026",
+            "text1": "Best Wine Alternative Trophy for Saicho Osmanthus",
+            "number2": "150+",
+            "text2": "Michelin-starred restaurants serving Saicho Worldwide",
+            "number3": "0.0%",
+            "text3": "Alcohol in every bottle of Saicho",
+            "border_width": 1,
+            "border_color": "#b09c59",
+            "content_alignment": "flex-start",
+            "heading_font_family": "",
+            "heading_font_weight": "300",
+            "heading_font_style": "normal",
+            "heading_line_height": "",
+            "heading_letter_spacing": "",
+            "number_font_family": "FontspringDEMOspanregular",
+            "number_font_weight": "600",
+            "number_font_style": "normal",
+            "number_line_height": "120%",
+            "number_letter_spacing": "0",
+            "text_font_family": "",
+            "text_font_weight": "600",
+            "text_font_style": "normal",
+            "text_line_height": "130%",
+            "text_letter_spacing": "0"
+          }
+        },
+        "image_jyixpw": {
+          "type": "image",
+          "settings": {
+            "background_color": "#f2f2f2",
+            "heading_color": "#000000",
+            "image": "shopify://shop_images/Container_1_f7f3c85a-597c-4cdd-8309-49fd136b0957.png",
+            "title": "",
+            "url_link": "",
+            "border_width": 0,
+            "border_color": "#cccccc",
+            "heading_font_family": "",
+            "heading_font_weight": "300",
+            "heading_line_height": "",
+            "heading_letter_spacing": ""
+          }
+        }
+      },
+      "block_order": [
+        "text_qTT9iR",
+        "image_ze6E4Q",
+        "number_z9c3db",
+        "image_jyixpw"
+      ],
+      "name": "t:sections.brands-multicolumn.presets.name",
+      "settings": {
+        "bg_color": "#fffef7",
+        "image_ratio": "landscape",
+        "image_position": "center center",
+        "text_alignment": "left",
+        "show_divider": false,
+        "image_width": "full",
+        "columns_desktop": 4,
+        "open_in_new_tab": false,
+        "heading": "Why people<br> \nlove <span>Saicho</span>",
+        "heading_color": "#575756",
+        "heading_size": "h1",
+        "heading_alignment": "left",
+        "heading_tag": "h2",
+        "heading_font_family": "FontspringDEMOspanregular",
+        "heading_font_weight": "400",
+        "heading_line_height": "110%",
+        "heading_letter_spacing": "0",
+        "card_title_font_family": "FontspringDEMOspanregular",
+        "card_title_font_weight": "400",
+        "card_title_line_height": "120%",
+        "card_title_letter_spacing": "0",
+        "description_font_family": "",
+        "description_font_weight": "400",
+        "description_line_height": "",
+        "description_letter_spacing": "",
+        "mobile_text_alignment": "left",
+        "columns_mobile": "1",
+        "swipe_on_mobile": true,
+        "colors_highlight": "#b09c59",
+        "arrow_color": "#ffffff",
+        "arrow_background_color": "#b09c59",
+        "padding_top": 36,
+        "padding_bottom": 100,
+        "card_border_radius": 0,
+        "enable_highlight": false,
+        "highlight_style": "marker",
+        "decor_width": 300,
+        "decor_opacity": 80
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "wine_brand_hero_Mkb7Kg",
+    "wine_features_bar_j4dyVd",
+    "featured_collection_eRjG3m",
+    "wine_refined_pour_hero_4nJ3n4",
+    "refined_pour_8E6nFG",
+    "featured_recipes_slider_kEmyrL",
+    "image_carousel_brand_N6HC3T",
+    "featured_collaborations_main",
+    "brands_multicolumn_BmWpDK"
   ]
 }

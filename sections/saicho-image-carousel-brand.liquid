@@ -1,0 +1,1264 @@
+{%- style -%}
+      #shopify-section-{{ section.id }} {
+        --section-padding-top: {{ section.settings.padding_top }}px;
+        --section-padding-bottom: {{ section.settings.padding_bottom }}px;
+        --color-highlight: {{ section.settings.heading_highlight_color }};
+        --arrow-bg-color: {{ section.settings.arrow_bg_color }};
+        --arrow-icon-color: {{ section.settings.arrow_icon_color }};
+        --heading-font-weight: {{ section.settings.heading_font_weight | default: 400 }};
+        --heading-line-height: {{ section.settings.heading_line_height | default: 'normal' }};
+        --heading-letter-spacing: {{ section.settings.heading_letter_spacing | default: '-2%' }};
+        --subheading-font-weight: {{ section.settings.subheading_font_weight | default: 500 }};
+        --subheading-line-height: {{ section.settings.subheading_line_height | default: '100%' }};
+        --subheading-letter-spacing: {{ section.settings.subheading_letter_spacing | default: '-1.5%' }};
+        --caption-font-weight: {{ section.settings.caption_font_weight | default: 400 }};
+        --caption-line-height: {{ section.settings.caption_line_height | default: 1.6 }};
+        --caption-letter-spacing: {{ section.settings.caption_letter_spacing | default: 'inherit' }};
+        {% if section.settings.heading_font_family != blank %}
+          --heading-font-family: {{ section.settings.heading_font_family }};
+        {% endif %}
+        {% if section.settings.subheading_font_family != blank %}
+          --subheading-font-family: {{ section.settings.subheading_font_family }};
+        {% endif %}
+        {% if section.settings.caption_font_family != blank %}
+          --caption-font-family: {{ section.settings.caption_font_family }};
+        {% endif %}
+      }
+
+      #shopify-section-{{ section.id }} .slider-3d-color {
+        background-color: {{ section.settings.bg_color }};
+        background-repeat: no-repeat;
+        background-position: {{ section.settings.bg_image_position }};
+        background-size: cover;
+        padding-top: var(--section-padding-top);
+        padding-bottom: var(--section-padding-bottom);
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* ── Decorative vine images ── */
+      #shopify-section-{{ section.id }} .decor-img {
+        position: absolute;
+        pointer-events: none;
+        z-index: 0;
+        opacity: {{ section.settings.decor_opacity | divided_by: 100.0 }};
+        display: block;
+      }
+
+      #shopify-section-{{ section.id }} .decor-img-1 {
+        top: -100px;
+        left: 40px;
+        width: {{ section.settings.decor_width }}px;
+        max-width: 100%;
+        transform: rotate(60deg);
+      }
+
+      #shopify-section-{{ section.id }} .decor-img-2 {
+        bottom: 60px;
+        right: 25px;
+        width: {{ section.settings.decor_width }}px;
+        max-width: 100%;
+        transform: rotate(-15.78deg);
+      }
+
+      #shopify-section-{{ section.id }} .container,
+      #shopify-section-{{ section.id }} .slider-3d-box {
+        position: relative;
+        z-index: 1;
+      }
+
+      #shopify-section-{{ section.id }} .brand-carousel__heading {
+        color: {{ section.settings.heading_color }};
+        font-size: {{ section.settings.heading_font_size }}px;
+        text-transform: uppercase;
+        line-height: var(--heading-line-height);
+        margin: 0;
+        letter-spacing: var(--heading-letter-spacing);
+        font-weight: var(--heading-font-weight);
+        {% if section.settings.heading_font_family != blank %}
+          font-family: var(--heading-font-family);
+        {% endif %}
+      }
+      #shopify-section-{{ section.id }} .brand-carousel__heading span{
+         color: {{ section.settings.heading_highlight_color }};
+      } 
+
+      #shopify-section-{{ section.id }} .brand-carousel__subheading {
+        color: {{ section.settings.subheading_color }};
+        font-size: {{ section.settings.subheading_font_size }}px;
+        line-height: var(--subheading-line-height);
+        {% if section.settings.subheading_font_family != blank %}
+          font-family: var(--subheading-font-family);
+        {% else %}
+          font-family: 'CORONABRUSH400';
+        {% endif %}
+        text-transform:uppercase;
+        margin: 0 0 20px;
+        letter-spacing: var(--subheading-letter-spacing);
+        font-weight: var(--subheading-font-weight);
+      }
+
+      #shopify-section-{{ section.id }} .brand-carousel__subheading .points{
+        font-size: {{ section.settings.subheading_font_size | minus: 5 }}px;
+      }
+      #shopify-section-{{ section.id }} .swiper-container-3d .swiper-slide.swiper-slide-active .slide-3d-cont {
+        background-color: {{ section.settings.caption_bg_color }};
+        color: {{ section.settings.caption_text_color }};
+        font-size: {{ section.settings.caption_font_size }}px;
+        font-weight: var(--caption-font-weight);
+        line-height: var(--caption-line-height);
+        letter-spacing: var(--caption-letter-spacing);
+        {% if section.settings.caption_font_family != blank %}
+          font-family: var(--caption-font-family);
+        {% endif %}
+      }
+
+    @media screen and (max-width: 749px) {
+      #shopify-section-{{ section.id }} .slider-3d-color {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    }
+
+     /* ── Decorative vine images ── */
+      #shopify-section-{{ section.id }} .decor-img {
+        position: absolute;
+        pointer-events: none;
+        z-index: 0;
+        opacity: {{ section.settings.decor_opacity | divided_by: 100.0 }};
+        display: block;
+      }
+
+     #shopify-section-{{ section.id }} .decor-img-1,
+     #shopify-section-{{ section.id }} .decor-img-2 {
+       width: {{ section.settings.decor_width_mobile }}px;
+       max-width: 100%;
+     }
+
+      #shopify-section-{{ section.id }} .decor-img-1 {
+        top: -120px;
+        left: -130px;
+        transform: rotate(95.77deg);
+      }
+
+      #shopify-section-{{ section.id }} .decor-img-2 {
+        bottom: -60px;
+        right: -100px;
+        transform: rotate(29.62deg);
+      }
+
+    /* Header */
+    #shopify-section-{{ section.id }} .brand-carousel__header {
+      padding: 42px 16px 0px!important;
+      text-align: center;
+      margin-top:0 !important;
+    }
+
+    #shopify-section-{{ section.id }} .brand-carousel__heading {
+      margin-top:0 !important;
+      font-size: 30px;
+      line-height: 1;
+      margin-bottom: 2px;
+      font-weight:700;
+    }
+
+    #shopify-section-{{ section.id }} .brand-carousel__subheading {
+      font-size: {{ section.settings.subheading_font_size_mobile }}px;
+      margin: 0 0 12px;
+      line-height: 1;
+    }
+
+    #shopify-section-{{ section.id }} .logo_image{
+      margin-bottom: 0px !important;
+    }
+
+    #shopify-section-{{ section.id }} .widget-title img {
+      max-width: 250px !important;
+    }
+
+    /* Remove overlay band */
+    #shopify-section-{{ section.id }} .slider-3d-box:before {
+      display: none;
+    }
+
+    #shopify-section-{{ section.id }} .slider-3d-box {
+      padding: 10px 0 0;
+    }
+
+    /* Slide wrapper */
+    #shopify-section-{{ section.id }} .two .swiper-slide {
+      max-width: 100%;
+      padding: 0 0px;
+    }
+
+    /* Slide image wrapper — needs relative + enough height for caption */
+    #shopify-section-{{ section.id }} .slider-3d-box .slider-image {
+      padding-bottom: 0;
+      border-radius: {{ section.settings.slide_radius }}px;
+      overflow: hidden;
+      position: relative;
+    
+    }
+
+    #shopify-section-{{ section.id }} .slider-3d-box .slider-image img {
+      width: 100%;
+      height: 320px;
+      object-fit: cover;
+      object-position: center;
+      border-radius: {{ section.settings.slide_radius }}px;
+      display: block;
+    
+    }
+
+    /* Caption — absolute INSIDE the image, at bottom */
+    #shopify-section-{{ section.id }} .swiper-container-3d .swiper-slide .slide-3d-cont {
+      display: none !important;
+    }
+
+    #shopify-section-{{ section.id }} .swiper-container-3d .swiper-slide.swiper-slide-active .slide-3d-cont {
+      display: block !important;
+      position: absolute !important;
+      bottom: 12px !important;
+      left: 50% !important;
+      transform: translateX(-50%) !important;
+      width: 90% !important;
+      padding: 14px 18px !important;
+      font-size: {{ section.settings.caption_font_size }}px !important;
+      line-height: 1.5 !important;
+      text-align: center !important;
+      border-radius: 14px !important;
+      background-color: {{ section.settings.caption_bg_color }} !important;
+      color: {{ section.settings.caption_text_color }} !important;
+      z-index: 10 !important;
+    }
+
+    /* Nav arrows centered on image height */
+    #shopify-section-{{ section.id }} .swiper-button-prev,
+    #shopify-section-{{ section.id }} .swiper-button-next {
+      width: 36px;
+      height: 36px;
+      top: 160px;
+      margin-top: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--arrow-bg-color);
+      color: var(--arrow-icon-color);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    @media screen and (max-width: 749px) {
+      #shopify-section-{{ section.id }} .flickity-button-icon {
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+    #shopify-section-{{ section.id }} .swiper-button-prev {
+      left: 2px;
+    }
+
+    #shopify-section-{{ section.id }} .swiper-button-next {
+      right: 2px;
+    }
+
+    #shopify-section-{{ section.id }} .slider-3d-color {
+      background-size: cover;
+      background-position: center top;
+    }
+  }
+{%- endstyle -%}
+
+<div
+  class="slider-3d-color"
+  {% if section.settings.bg_image != blank %}
+    style="background-image:url({{ section.settings.bg_image | img_url:'master' }})"
+  {% endif %}
+>
+
+  <!-- Header area -->
+  <div class="container">
+    <div class="brand-carousel__header">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="brand-carousel__heading {{ section.settings.heading_size }}">
+          {%- render 'highlight-text',
+            hl_input: section.settings.heading,
+            hl_color: section.settings.heading_highlight_color,
+            hl_animateWrap: true -%}
+        </h2>
+      {%- endif -%}
+      {%- if section.settings.subheading != blank -%}
+        <p class="brand-carousel__subheading {{ section.settings.subheading_size }}">
+          {{ section.settings.subheading }}
+        </p>
+      {%- endif -%}
+      {%- if section.settings.logo_image != blank -%}
+        <div class="widget-title not-before">
+          <img
+            src="{{ section.settings.logo_image | img_url:'350x' }}"
+            style="max-width: {{ section.settings.logo_width }}px;"
+          >
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <!-- Slider -->
+  <div class="slider-3d-box">
+    <!-- Decorative vine images -->
+    {%- if section.settings.decor_image_1 != blank -%}
+      <img
+        class="decor-img decor-img-1"
+        src="{{ section.settings.decor_image_1 | img_url: '500x' }}"
+        alt=""
+        loading="lazy"
+      >
+    {%- endif -%}
+    {%- if section.settings.decor_image_2 != blank -%}
+      <img
+        class="decor-img decor-img-2"
+        src="{{ section.settings.decor_image_2 | img_url: '500x' }}"
+        alt=""
+        loading="lazy"
+      >
+    {%- endif -%}
+    <div class="container">
+      <div class="swiper-container two" id="BrandSwiper-{{ section.id }}">
+        <div class="swiper-wrapper">
+          {%- for block in section.blocks -%}
+            <div class="swiper-slide" {{ block.shopify_attributes }}>
+              <div class="slider-image">
+                {%- if block.settings.image != blank -%}
+                  <img
+                    src="{{ block.settings.image | img_url:'master' }}"
+                    alt="{{ block.settings.caption | escape }}"
+                    loading="lazy"
+                  >
+                {%- else -%}
+                  {{ 'image' | placeholder_svg_tag: 'placeholder' }}
+                {%- endif -%}
+              </div>
+              {%- if block.settings.caption != blank -%}
+                <div class="slide-3d-cont">
+                  {{ block.settings.caption }}
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+      <button class="swiper-button-prev" aria-label="Previous">
+        <svg class="flickity-button-icon" viewBox="0 0 100 100"><path d="M 10, 50 L 60, 100 L 70, 90 L 30, 50 L 70, 10 L 60, 0 Z" class="arrow"></path></svg>
+      </button>
+      <button class="swiper-button-next" aria-label="Next">
+        <svg class="flickity-button-icon" viewBox="0 0 100 100"><path d="M 10, 50 L 60, 100 L 70, 90 L 30, 50 L 70, 10 L 60, 0 Z" class="arrow" transform="translate(100, 100) rotate(180)"></path></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<style>
+    /* === Swiper Core === */
+    #shopify-section-{{ section.id }} .swiper-container {
+      margin-left: auto;
+      margin-right: auto;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+      width: 100%;
+    }
+    .slider-3d-box .container{
+       position:relative;
+    }
+    #shopify-section-{{ section.id }} .swiper-wrapper {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      display: flex;
+      transition-property: transform;
+      box-sizing: content-box;
+    }
+
+    #shopify-section-{{ section.id }} .swiper-container-android .swiper-slide,
+    #shopify-section-{{ section.id }} .swiper-wrapper {
+      transform: translate3d(0, 0, 0);
+    }
+
+    #shopify-section-{{ section.id }} .swiper-slide {
+      flex-shrink: 0;
+      width: 100%;
+      height: auto;
+      position: relative;
+    }
+
+    #shopify-section-{{ section.id }} .swiper-slide img {
+      display: block;
+      margin: auto;
+      width: 100%;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    #shopify-section-{{ section.id }} .two .swiper-slide {
+      max-width: 440px;
+      padding: 0 15px;
+    }
+
+    /* === 3D / Coverflow === */
+    #shopify-section-{{ section.id }} .swiper-container-3d {
+      perspective: 1200px;
+    }
+
+    #shopify-section-{{ section.id }} .swiper-container-3d .swiper-wrapper,
+    #shopify-section-{{ section.id }} .swiper-container-3d .swiper-slide,
+    #shopify-section-{{ section.id }} .swiper-container-3d .swiper-slide-shadow-left,
+    #shopify-section-{{ section.id }} .swiper-container-3d .swiper-slide-shadow-right,
+    #shopify-section-{{ section.id }} .swiper-container-3d .swiper-slide-shadow-top,
+    #shopify-section-{{ section.id }} .swiper-container-3d .swiper-slide-shadow-bottom {
+      transform-style: preserve-3d;
+    }
+
+    #shopify-section-{{ section.id }} .swiper-container-3d .swiper-slide-shadow-left {
+      background-image: linear-gradient(to left, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
+    }
+
+    #shopify-section-{{ section.id }} .swiper-container-3d .swiper-slide-shadow-right {
+      background-image: linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
+    }
+
+    #shopify-section-{{ section.id }} .swiper-container-3d .swiper-slide-shadow-left,
+    #shopify-section-{{ section.id }} .swiper-container-3d .swiper-slide-shadow-right,
+    #shopify-section-{{ section.id }} .swiper-container-3d .swiper-slide-shadow-top,
+    #shopify-section-{{ section.id }} .swiper-container-3d .swiper-slide-shadow-bottom {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    #shopify-section-{{ section.id }} .swiper-container-coverflow .swiper-wrapper {
+      -ms-perspective: 1200px;
+    }
+
+    /* === Nav Buttons === */
+    #shopify-section-{{ section.id }} .swiper-button-next,
+    #shopify-section-{{ section.id }} .swiper-button-prev {
+      position: absolute;
+      top: 50%;
+      width: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 44px;
+      margin-top: -22px;
+      z-index: 10;
+      cursor: pointer;
+      background-color: var(--arrow-bg-color);
+      color: var(--arrow-icon-color) !important;
+      border-radius: 50%;
+      border: none;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    }
+
+    #shopify-section-{{ section.id }} .swiper-button-prev {
+      left: -5%;
+    }
+
+    #shopify-section-{{ section.id }} .swiper-button-next {
+      right: -5%;
+    }
+
+    #shopify-section-{{ section.id }} .flickity-button-icon {
+      width: 24px;
+      height: 24px;
+      fill: var(--arrow-icon-color);
+    }
+
+    #shopify-section-{{ section.id }} .flickity-button-icon .arrow {
+      fill: var(--arrow-icon-color);
+    }
+
+    #shopify-section-{{ section.id }} .swiper-button-next.swiper-button-disabled,
+    #shopify-section-{{ section.id }} .swiper-button-prev.swiper-button-disabled {
+      opacity: 0.35;
+      cursor: auto;
+      pointer-events: none;
+    }
+
+    /* === Slider 3D Layout === */
+    #shopify-section-{{ section.id }} .slider-3d-box {
+      padding: 26px 0 0;
+      position: relative;
+    }
+
+    #shopify-section-{{ section.id }} .slider-3d-box .slider-image {
+      padding-bottom: 56px;
+      border-radius: {{ section.settings.slide_radius }}px !important;
+      overflow: hidden;
+     height:100%;
+    }
+
+    #shopify-section-{{ section.id }} .slider-3d-box .slider-image img {
+      border-radius: {{ section.settings.slide_radius }}px !important;
+      height:100%;
+    }
+
+    #shopify-section-{{ section.id }} .slider-3d-box:before {
+      background-color: {{ section.settings.overlay_color }};
+      content: '';
+      display: block;
+      position: absolute;
+      width: 100%;
+      height: 94%;
+      top: 0;
+      border-radius: 16px;
+    }
+
+    /* === Caption (only on active slide) === */
+    #shopify-section-{{ section.id }} .swiper-container-3d .swiper-slide .slide-3d-cont {
+      display: none;
+    }
+
+    #shopify-section-{{ section.id }} .swiper-container-3d .swiper-slide {
+      position: relative;
+    }
+
+    #shopify-section-{{ section.id }} .swiper-container-3d .swiper-slide.swiper-slide-active .slide-3d-cont {
+      display: block;
+      position: absolute;
+      bottom: 0px;
+      text-align: center;
+      border-radius: 16px;
+      padding: 11px 10px;
+      width: 94%;
+      left: 50%;
+      transform: translateX(-50%);
+      line-height: 1.4;
+      z-index: 5;
+    }
+
+    /* === Header === */
+    #shopify-section-{{ section.id }} .brand-carousel__header {
+      text-align: center;
+      padding: 0 20px 0px;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    #shopify-section-{{ section.id }} .widget-title {
+      text-align: center;
+    }
+
+    #shopify-section-{{ section.id }} .widget-title img {
+      display: inline-block;
+      height: auto;
+    }
+
+    /* === Mobile === */
+
+    @media screen and (max-width: 749px) {
+    #shopify-section-{{ section.id }} .slider-3d-color {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+      background-size: cover;
+      background-position: center top;
+    }
+
+    #shopify-section-{{ section.id }} .brand-carousel__header {
+      padding: 0 16px 20px;
+      text-align: center;
+      margin-top: 0 !important;
+    }
+
+    #shopify-section-{{ section.id }} .brand-carousel__heading {
+      margin-top: 0 !important;
+      font-size: {{ section.settings.heading_font_size_mobile }}px;
+      line-height: 1;
+      margin-bottom: 2px;
+      font-weight: 700;
+    }
+
+    #shopify-section-{{ section.id }} .brand-carousel__subheading {
+      font-size: {{ section.settings.subheading_font_size_mobile }}px;
+      margin: 0 0 12px;
+      line-height: 1;
+    }
+
+    #shopify-section-{{ section.id }} .widget-title img {
+      max-width: 180px;
+    }
+
+    /* Keep slide same max-width as desktop so coverflow peeks sides */
+    #shopify-section-{{ section.id }} .two .swiper-slide {
+      max-width: 280px;
+      padding: 0 10px;
+    }
+
+    #shopify-section-{{ section.id }} .slider-3d-box .slider-image {
+      padding-bottom: 56px;
+      border-radius: {{ section.settings.slide_radius }}px;
+      overflow: hidden;
+      position: relative;
+      height:100%;
+    }
+
+    #shopify-section-{{ section.id }} .slider-3d-box .slider-image img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      border-radius: {{ section.settings.slide_radius }}px;
+      display: block;
+      height:100%;
+    }
+
+    #shopify-section-{{ section.id }} .swiper-button-prev,
+    #shopify-section-{{ section.id }} .swiper-button-next {
+      width: 50px;
+      height: 50px;
+      margin-top: -18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--arrow-bg-color) !important;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    #shopify-section-{{ section.id }} .swiper-button-prev { left: 2px; }
+    #shopify-section-{{ section.id }} .swiper-button-next { right: 2px; }
+
+    #shopify-section-{{ section.id }} .swiper-button-prev .flickity-button-icon,
+    #shopify-section-{{ section.id }} .swiper-button-next .flickity-button-icon {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  {%- if section.settings.compact_mobile %}
+  /* === Compact mobile layout (opt-in): one-line heading, 242x289 centre slide with smaller
+     side slides, caption across the slide's bottom. The extra .slider-3d-color in each selector
+     outranks both the rules above and the template's custom CSS. === */
+  @media screen and (max-width: 749px) {
+    #shopify-section-{{ section.id }} .slider-3d-color .brand-carousel__heading {
+      font-size: 20px;
+      margin-bottom: 44px;
+    }
+    #shopify-section-{{ section.id }} .slider-3d-color .widget-title img {
+      width: 227px;
+    }
+    #shopify-section-{{ section.id }} .slider-3d-color .slider-3d-box {
+      padding-top: 37px;
+    }
+    #shopify-section-{{ section.id }} .slider-3d-color .slider-3d-box .container {
+      padding: 0;
+    }
+    #shopify-section-{{ section.id }} .slider-3d-color .two .swiper-slide {
+      max-width: 242px;
+      padding: 0;
+    }
+    /* Side slides come out at ~71% of the centre one (the coverflow settings are shared with desktop). */
+    #shopify-section-{{ section.id }} .slider-3d-color .swiper-container-3d {
+      perspective: 365px;
+    }
+    #shopify-section-{{ section.id }} .slider-3d-color .slider-3d-box .slider-image {
+      padding-bottom: 0;
+      border-radius: 10px !important;
+    }
+    #shopify-section-{{ section.id }} .slider-3d-color .slider-3d-box .slider-image img {
+      height: 289px;
+      border-radius: 10px !important;
+      box-shadow: none;
+    }
+    #shopify-section-{{ section.id }} .slider-3d-color .swiper-container-3d .swiper-slide.swiper-slide-active .slide-3d-cont {
+      box-sizing: border-box;
+      bottom: 0 !important;
+      width: 100% !important;
+      padding: 11px 24px !important;
+      border-radius: 10px !important;
+      font-family: 'Public Sans', sans-serif;
+      font-size: 12px !important;
+      line-height: 17px !important;
+      letter-spacing: 0;
+    }
+    #shopify-section-{{ section.id }} .slider-3d-color .swiper-button-prev,
+    #shopify-section-{{ section.id }} .slider-3d-color .swiper-button-next {
+      width: 48px;
+      height: 48px;
+      margin-top: -24px;
+      box-shadow: none;
+    }
+    #shopify-section-{{ section.id }} .slider-3d-color .swiper-button-prev {
+      left: 11px;
+    }
+    #shopify-section-{{ section.id }} .slider-3d-color .swiper-button-next {
+      right: 11px;
+    }
+  }
+  {%- endif %}
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.4.1/js/swiper.min.js"></script>
+<script>
+        {% comment %} document.addEventListener('DOMContentLoaded', function () {
+          var swiperEl = document.querySelector('#shopify-section-{{ section.id }} .swiper-container.two');
+          if (!swiperEl) return; {% endcomment %}
+
+          {% comment %} new Swiper(swiperEl, {
+            effect: 'coverflow',
+            loop: true,
+            centeredSlides: true,
+            slidesPerView: 'auto',
+            coverflow: {
+              rotate: 0,
+              stretch: {{ section.settings.coverflow_stretch }},
+              depth: {{ section.settings.coverflow_depth }},
+              modifier: 1.5,
+              slideShadows: false,
+            },
+            nextButton: '#shopify-section-{{ section.id }} .swiper-button-next',
+            prevButton: '#shopify-section-{{ section.id }} .swiper-button-prev',
+            autoplay: {% if section.settings.autoplay %}{{ section.settings.autoplay_speed | times: 1000 }}{% else %}0{% endif %},
+            autoplayDisableOnInteraction: true,
+          }); {% endcomment %}
+
+   document.addEventListener('DOMContentLoaded', function () {
+    var swiperEl = document.querySelector('#shopify-section-{{ section.id }} .swiper-container.two');
+    if (!swiperEl) return;
+
+    new Swiper(swiperEl, {
+      effect: 'coverflow',
+      loop: true,
+      centeredSlides: true,
+      slidesPerView: 'auto',
+      coverflow: {
+        rotate: 0,
+        stretch: {{ section.settings.coverflow_stretch }},
+        depth: {{ section.settings.coverflow_depth }},
+        modifier: 1,
+        slideShadows: false,
+      },
+      nextButton: '#shopify-section-{{ section.id }} .swiper-button-next',
+      prevButton: '#shopify-section-{{ section.id }} .swiper-button-prev',
+      autoplay: {% if section.settings.autoplay %}{{ section.settings.autoplay_speed | times: 1000 }}{% else %}0{% endif %},
+      autoplayDisableOnInteraction: true,
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Saicho - Image carousel",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "html",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Enjoy Beer"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "Small"
+        },
+        {
+          "value": "h1",
+          "label": "Medium"
+        },
+        {
+          "value": "h0",
+          "label": "Large"
+        }
+      ],
+      "default": "h1",
+      "label": "Heading size class"
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size",
+      "min": 20,
+      "max": 80,
+      "step": 2,
+      "default": 42,
+      "unit": "px",
+      "label": "Heading font size (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size_mobile",
+      "min": 16,
+      "max": 50,
+      "step": 2,
+      "default": 28,
+      "unit": "px",
+      "label": "Heading font size (mobile)"
+    },
+    {
+      "type": "range",
+      "id": "heading_font_weight",
+      "min": 300,
+      "max": 900,
+      "step": 100,
+      "default": 600,
+      "label": "Heading font weight"
+    },
+    {
+      "type": "color",
+      "id": "heading_highlight_color",
+      "label": "Heading highlight color",
+      "default": "#ffb503"
+    },
+    {
+      "type": "text",
+      "id": "heading_font_family",
+      "label": "Heading font family (optional)",
+      "placeholder": "e.g., Arial, sans-serif"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_height",
+      "label": "Heading line height (optional)",
+      "placeholder": "e.g., normal, 1.2, 1.5"
+    },
+    {
+      "type": "text",
+      "id": "heading_letter_spacing",
+      "label": "Heading letter spacing (optional)",
+      "placeholder": "e.g., -2%, 0.05em, 2px"
+    },
+    {
+      "type": "header",
+      "content": "Subheading"
+    },
+    {
+      "type": "html",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "0.0% Way"
+    },
+    {
+      "type": "select",
+      "id": "subheading_size",
+      "options": [
+        {
+          "value": "h5",
+          "label": "Small"
+        },
+        {
+          "value": "h4",
+          "label": "Medium"
+        },
+        {
+          "value": "h3",
+          "label": "Large"
+        }
+      ],
+      "default": "h4",
+      "label": "Subheading size class"
+    },
+    {
+      "type": "range",
+      "id": "subheading_font_size",
+      "min": 14,
+      "max": 50,
+      "step": 2,
+      "default": 28,
+      "unit": "px",
+      "label": "Subheading font size (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "subheading_font_size_mobile",
+      "min": 10,
+      "max": 30,
+      "step": 2,
+      "default": 18,
+      "unit": "px",
+      "label": "Subheading font size (mobile)"
+    },
+    {
+      "type": "text",
+      "id": "subheading_font_family",
+      "label": "Subheading font family (optional)",
+      "placeholder": "e.g., Arial, sans-serif"
+    },
+    {
+      "type": "select",
+      "id": "subheading_font_weight",
+      "label": "Subheading font weight",
+      "options": [
+        { "value": "300", "label": "Light (300)" },
+        { "value": "400", "label": "Regular (400)" },
+        { "value": "500", "label": "Medium (500)" },
+        { "value": "600", "label": "Semi-bold (600)" },
+        { "value": "700", "label": "Bold (700)" }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "subheading_line_height",
+      "label": "Subheading line height (optional)",
+      "placeholder": "e.g., 100%, 1.2, 1.5"
+    },
+    {
+      "type": "text",
+      "id": "subheading_letter_spacing",
+      "label": "Subheading letter spacing (optional)",
+      "placeholder": "e.g., -1.5%, 0.05em, 2px"
+    },
+    {
+      "type": "header",
+      "content": "Logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_image",
+      "label": "Logo image"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 50,
+      "max": 410,
+      "step": 5,
+      "default": 150,
+      "unit": "px",
+      "label": "Logo max width"
+    },
+    {
+      "type": "header",
+      "content": "Decorative background images"
+    },
+    {
+      "type": "image_picker",
+      "id": "decor_image_1",
+      "label": "Decorative image (top-left)",
+      "info": "Positioned in the upper-left area, between the top and vertical center of the section."
+    },
+    {
+      "type": "image_picker",
+      "id": "decor_image_2",
+      "label": "Decorative image (bottom-right)",
+      "info": "Positioned in the lower-right area, between the vertical center and bottom of the section."
+    },
+    {
+      "type": "range",
+      "id": "decor_width",
+      "min": 100,
+      "max": 500,
+      "step": 10,
+      "default": 280,
+      "unit": "px",
+      "label": "Decorative image width (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "decor_width_mobile",
+      "min": 60,
+      "max": 500,
+      "step": 10,
+      "default": 140,
+      "unit": "px",
+      "label": "Decorative image width (mobile)"
+    },
+    {
+      "type": "range",
+      "id": "decor_opacity",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "default": 100,
+      "label": "Decorative image opacity (%)"
+    },
+    {
+      "type": "header",
+      "content": "Slide settings"
+    },
+    {
+      "type": "range",
+      "id": "slide_radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "default": 12,
+      "unit": "px",
+      "label": "Slide corner radius"
+    },
+    {
+      "type": "header",
+      "content": "3D Coverflow effect"
+    },
+    {
+      "type": "range",
+      "id": "coverflow_stretch",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "default": 100,
+      "label": "Stretch",
+      "info": "Space between slides. Higher = more overlap."
+    },
+    {
+      "type": "range",
+      "id": "coverflow_depth",
+      "min": 50,
+      "max": 300,
+      "step": 10,
+      "default": 150,
+      "label": "Depth",
+      "info": "3D depth effect. Higher = more perspective."
+    },
+    {
+      "type": "header",
+      "content": "Autoplay"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "default": false,
+      "label": "Enable autoplay"
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "default": 5,
+      "unit": "s",
+      "label": "Autoplay speed"
+    },
+    {
+      "type": "header",
+      "content": "Caption"
+    },
+    {
+      "type": "range",
+      "id": "caption_font_size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "default": 14,
+      "unit": "px",
+      "label": "Caption font size"
+    },
+    {
+      "type": "text",
+      "id": "caption_font_family",
+      "label": "Caption font family (optional)",
+      "placeholder": "e.g., Arial, sans-serif"
+    },
+    {
+      "type": "select",
+      "id": "caption_font_weight",
+      "label": "Caption font weight",
+      "options": [
+        { "value": "300", "label": "Light (300)" },
+        { "value": "400", "label": "Regular (400)" },
+        { "value": "500", "label": "Medium (500)" },
+        { "value": "600", "label": "Semi-bold (600)" },
+        { "value": "700", "label": "Bold (700)" }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "caption_line_height",
+      "label": "Caption line height (optional)",
+      "placeholder": "e.g., 1.6, 1.8, 2"
+    },
+    {
+      "type": "text",
+      "id": "caption_letter_spacing",
+      "label": "Caption letter spacing (optional)",
+      "placeholder": "e.g., inherit, 0.05em, 1px"
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Section background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Section background image"
+    },
+    {
+      "type": "select",
+      "id": "bg_image_position",
+      "options": [
+        {
+          "value": "center center",
+          "label": "Center"
+        },
+        {
+          "value": "center top",
+          "label": "Top"
+        },
+        {
+          "value": "center bottom",
+          "label": "Bottom"
+        }
+      ],
+      "default": "center center",
+      "label": "Background image position"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Slider overlay band color",
+      "default": "#c6ad7c42",
+      "info": "The semi-transparent band behind the slides."
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#4daad8"
+    },
+    {
+      "type": "color",
+      "id": "subheading_color",
+      "label": "Subheading color",
+      "default": "#4daad8"
+    },
+    {
+      "type": "color",
+      "id": "caption_bg_color",
+      "label": "Caption background color",
+      "default": "#1a2a3a"
+    },
+    {
+      "type": "color",
+      "id": "caption_text_color",
+      "label": "Caption text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "arrow_bg_color",
+      "label": "Arrow background color",
+      "default": "#e8e8e8"
+    },
+    {
+      "type": "color",
+      "id": "arrow_icon_color",
+      "label": "Arrow icon color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 36,
+      "unit": "px",
+      "label": "Top padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 36,
+      "unit": "px",
+      "label": "Bottom padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 20,
+      "unit": "px",
+      "label": "Top padding (mobile)"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 20,
+      "unit": "px",
+      "label": "Bottom padding (mobile)"
+    },
+    {
+      "type": "checkbox",
+      "id": "compact_mobile",
+      "label": "Compact mobile layout",
+      "info": "One-line heading, smaller logo and a narrower centre slide with the caption across its bottom.",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Slide image"
+        },
+        {
+          "type": "textarea",
+          "id": "caption",
+          "label": "Caption text",
+          "info": "Shown as overlay on the active slide. Leave blank to hide."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image Carousel - Brand",
+      "blocks": [
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "caption": "Loungers lined up, music low, friends close. Corona Cero keeps it cool."
+          }
+        },
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
